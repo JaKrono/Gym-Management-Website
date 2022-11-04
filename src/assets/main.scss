@@ -1,0 +1,23 @@
+@import './base.css';
+
+.text-center{
+    text-align: center;
+}
+
+.bold-title{
+    font-family: IranSans;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+.regular-title{
+    font-family: IranSans;
+    font-weight: 500;
+}
+
+@mixin column-center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+    text-align: center;
+}
