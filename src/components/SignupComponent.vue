@@ -11,15 +11,15 @@
           </div>
         </div>
         <div class="col-lg-8 col-xs-12">
-            <q-form @submit.prevent="signup">
+            <q-form greedy @submit.prevent="signup">
           <q-card class="login-card">
             <q-card-section>
               <span class="bold-title">خوش آمدید</span>
 
-                  <q-input class="q-my-lg text-center" v-model="username" label="نام کاربری" :rules="[rules.required]">
+                  <q-input class="q-my-lg text-center" v-model="username" label="نام کاربری" lazy-rules :rules="[rules.required]">
                 </q-input>
-                <q-input class="q-my-lg text-center" v-model="email" label="ایمیل" :rules="[rules.required, rules.email]"></q-input>
-                <q-input class="q-my-lg text-center" v-model="password" type="password" label="پسورد" :rules="[rules.required]"></q-input>
+                <q-input class="q-my-lg text-center" v-model="email" label="ایمیل" lazy-rules :rules="[rules.required, rules.email]"></q-input>
+                <q-input class="q-my-lg text-center" v-model="password" type="password" label="پسورد" lazy-rules :rules="[rules.required,rules.password]"></q-input>
                 
             </q-card-section>
             <q-card-actions align="center">
