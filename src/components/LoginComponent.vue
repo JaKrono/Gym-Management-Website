@@ -3,14 +3,14 @@
       <div class="row">
         <div class="col-lg-8 col-md-8 col-xs-12">
 
-          <q-form @submit.prevent="submitForm">
+          <q-form greedy @submit.prevent="submitForm">
           <q-card class="login-card">
             <q-card-section>
               <span class="bold-title">خوش آمدید</span>
 
-                <q-input class="q-my-lg text-center" v-model="username" label="نام کاربری" :rules="[rules.required]">
+                <q-input class="q-my-lg text-center" v-model="username" label="نام کاربری" lazy-rules :rules="[rules.required]">
                 </q-input>
-                <q-input class="q-my-lg text-center" v-model="password" type="password" label="پسورد" :rules="[rules.required]"></q-input>
+                <q-input class="q-my-lg text-center" v-model="password" type="password" label="پسورد" lazy-rules :rules="[rules.required, rules.password]"></q-input>
                 <p class="q-my-lg text-center">رمز عبورتان را فراموش کردید؟</p>
                 
               </q-card-section>
@@ -60,6 +60,7 @@ import { defineComponent } from 'vue';
   })
 </script>
 <style lang="scss">
+  //TODO: move all shared classes to one file
   // @import "../assets/main.scss";
     .login-card{
         width: 100%;
@@ -76,6 +77,7 @@ import { defineComponent } from 'vue';
       }
       .side-card{
         background-image: url('card.jpg');
+        background-position: center top;
         height:100%;
         background-size: cover;
         filter:blur(5px)
