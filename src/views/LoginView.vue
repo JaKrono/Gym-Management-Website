@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-center content-center">
-        <LoginComponent @submitForm="login" @signup="changeState" v-if="state===1"></LoginComponent>
-        <SignupComponent @submitForm="signup" @login="changeState" v-else></SignupComponent>
+        <LoginComponent @submitForm="submitLoginForm" @signup="changeState" v-if="state===1"></LoginComponent>
+        <SignupComponent @submitForm="submitSignupForm" @login="changeState" v-else></SignupComponent>
     </div>
 </template>
 <script lang="ts">
@@ -9,6 +9,7 @@ import LoginComponent from '../components/LoginComponent.vue'
 import SignupComponent from "../components/SignupComponent.vue"
 import { defineComponent } from 'vue'
 import { mapActions } from 'vuex'
+import type { LoginModel, SignupModel } from '@/common/interfaces'
 
     export default defineComponent({
         components:{ LoginComponent, SignupComponent },
@@ -22,6 +23,18 @@ import { mapActions } from 'vuex'
                 login: 'user/login',
                 signup:'user/signup'
             }),
+            async submitLoginForm(model:LoginModel){
+                const result = await this.login(model)
+                if(result){
+                    this.$router.push('/dashboard')
+                }
+            },
+            async submitSignupForm(model:SignupModel){
+                const result = await this.signup(model)
+                if(result){
+                    this.$router.push('/dashboard')
+                }
+            },
             changeState(event:number){
                 this.state = event;
             }
