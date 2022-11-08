@@ -60,6 +60,7 @@ import { defineComponent } from 'vue';
   })
 </script>
 <style lang="scss">
+  //TODO: move all shared classes to one file
   // @import "../assets/main.scss";
     .login-card{
         width: 100%;
@@ -76,6 +77,7 @@ import { defineComponent } from 'vue';
       }
       .side-card{
         background-image: url('card.jpg');
+        background-position: center top;
         height:100%;
         background-size: cover;
         filter:blur(5px)
