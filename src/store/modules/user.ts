@@ -18,26 +18,28 @@ export default{
         async login({commit,dispatch}:any,loginModel:LoginModel){
             const response = await Authentication.login(loginModel)
 
-            if(response.status === 400){
-                dispatch('notification/showNotification',{message:response.data.non_field_errors, type:'negative', timeout:2000}, {root:true})
+            if(!response || response.status === 400){
+                dispatch('notification/showNotification',{message:response?.data.non_field_errors || "خطا در برقراری ازتباط", type:'negative', timeout:2000}, {root:true})
+                return false;
             }
             else{
                 commit('setToken',response.data.token)
                 commit('setIsSignedIn',true)
                 dispatch('notification/showNotification',{message:'ورود موفق', type:'positive', timeout:2000}, {root:true})
-
+                return true;
             }
         },
         async signup({commit, dispatch}:any,signup:SignupModel){
             const response = await Authentication.signup(signup)
-            if(response.status === 400){
-                dispatch('notification/showNotification',{message:response.data.non_field_errors, type:'negative', timeout:2000}, {root:true})
+            if(!response || response.status === 400){
+                dispatch('notification/showNotification',{message:response?.data.non_field_errors || "خطا در برقراری ازتباط", type:'negative', timeout:2000}, {root:true})
+                return false;
             }
             else{
                 commit('setToken',response.data.token)
                 commit('setIsSignedIn',true)
                 dispatch('notification/showNotification',{message:'ورود موفق', type:'positive', timeout:2000}, {root:true})
-
+                return true;
             }
         }
     }
