@@ -5,7 +5,7 @@
             <div class="avatar-field">
                 <img class="avatar-icon" src="src/assets/images/avtar-icon.png" alt="avatar-icon">
             </div>
-            <div class="mobile-edit-button">
+            <div class="mobile-edit-button" @click="editModalShow = true">
                 <img class="edit-icon" src="src/assets/images/edit-icon.png" alt="edit-icon">
             </div>
             <div class="avatar-detail-field">
