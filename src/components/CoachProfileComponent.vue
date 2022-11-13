@@ -17,8 +17,8 @@
                     </div>
                 </div>
                 <div class="button-field">
-                    <div class="button-option message-btn">پیام</div>
-                    <div class="button-option edit-btn">ویرایش</div>
+                    <div class="button-option message-btn" @click="messageModalShow = true">پیام</div>
+                    <div class="button-option edit-btn" @click="editModalShow = true">ویرایش</div>
                 </div>
             </div>
             <div class="page-section">
@@ -70,13 +70,25 @@
         </div>
     </div>
     <div v-if="messageModalShow" class="modal-shadow">
-        <div class="message-modal">
-
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="close-icon" src="src/assets/images/close-icon.svg" alt="close-icon"
+                    @click="messageModalShow = false">
+            </div>
+            <div class="modal-container">
+                <div>Message Modal</div>
+            </div>
         </div>
     </div>
     <div v-if="editModalShow" class="modal-shadow">
-        <div class="edit-modal">
-
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="close-icon" src="src/assets/images/close-icon.svg" alt="close-icon"
+                    @click="editModalShow = false">
+            </div>
+            <div class="modal-container">
+                <div>Edit Profile Modal</div>
+            </div>
         </div>
     </div>
 </template>
@@ -93,6 +105,26 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+@keyframes fadeIn {
+    0% {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        background: rgba(0, 0, 0, 0.6);
+    }
+}
+
+@keyframes blowUpModal {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 .centerlize-item {
     display: flex;
     justify-content: center;
@@ -122,6 +154,48 @@ export default defineComponent({
 
     &::-webkit-scrollbar {
         display: none;
+    }
+}
+
+.modal-content {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 320px;
+    max-width: 427px;
+    background-color: #ffffff;
+    padding: 19px 19px 25px 21px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 14px;
+    position: absolute;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .modal-header {
+        display: flex;
+        flex-flow: row nowrap;
+        width: 100%;
+        height: 20px;
+        justify-content: left;
+        margin-bottom: 15px;
+    }
+
+    .close-icon {
+        width: 20px;
+        height: 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    .modal-container {
+        width: 100%;
     }
 }
 
