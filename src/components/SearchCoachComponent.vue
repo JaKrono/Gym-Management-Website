@@ -108,13 +108,14 @@ export default defineComponent({
 
 .page {
     width: 100%;
+    height: 100%;
     background-color: #e8e8e8;
 }
 
 .page-container {
     @extend .centerlize-item;
     flex-flow: row wrap;
-    width: 1516px;
+    max-width: 1516px;
     padding-top: 40px;
 
     .search-section {
@@ -135,6 +136,7 @@ export default defineComponent({
         width: 100%;
         padding: 30px;
         gap: 30px;
+        margin-bottom: 50px;
     }
 }
 
