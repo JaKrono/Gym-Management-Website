@@ -22,14 +22,22 @@
 </script>
 
 <template>
-  <div class="full-page">
-    <ToolbarComponent></ToolbarComponent>
-    <RouterView style="height:100%;" />
-  </div>
+    <q-layout>
+      <q-header class="header-height bg-white">
+        <ToolbarComponent></ToolbarComponent>
+      </q-header>
+      <q-page-container class="page-container">
+        <router-view />
+      </q-page-container>
+    </q-layout>
+    <!-- <RouterView style="height:100%;" /> -->
 </template>
 
 <style scoped>
-  .full-page{
-    height:100vh;
+  .header-height{
+    height: 70px;
+  }
+  .page-container{
+    height: calc(100vh - 70px);
   }
 </style>

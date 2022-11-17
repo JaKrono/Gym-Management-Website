@@ -1,5 +1,8 @@
 <template>
-    <q-toolbar class="bg-primary"></q-toolbar>
+    <q-toolbar class="bg-white text-black toolbar">
+        <!-- <q-btn flat round dense icon="menu" /> -->
+        <!-- <q-toolbar-title>باشگاه ورزشی</q-toolbar-title> -->
+    </q-toolbar>
 </template>
 <script lang="ts">
     import { defineComponent } from 'vue';
@@ -7,4 +10,5 @@
         
     })
 </script>
-<style></style>
+<style scoped>
+</style>
