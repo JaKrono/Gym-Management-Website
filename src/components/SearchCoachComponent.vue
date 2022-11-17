@@ -109,14 +109,12 @@ export default defineComponent({
 .page {
     width: 100%;
     background-color: #e8e8e8;
-    // padding: 50px 0;
 }
 
 .page-container {
     @extend .centerlize-item;
     flex-flow: row wrap;
     width: 1516px;
-    height: 100%;
     padding-top: 40px;
 
     .search-section {
@@ -216,19 +214,16 @@ export default defineComponent({
     }
 
     .page-container {
+        padding-top: 20px;
 
         .result-section {
-            justify-content: center;
+            justify-content: center !important;
             width: 100%;
         }
     }
 }
 
 @media all and (max-width: 1080px) {
-    // .page {
-    // padding: 20px 0;
-    // }
-
     .page-container {
         max-width: 700px;
 
