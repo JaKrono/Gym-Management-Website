@@ -5,8 +5,9 @@
             <div class="avatar-field">
                 <img class="avatar-icon" src="src/assets/images/avtar-icon.png" alt="avatar-icon">
             </div>
-            <div class="mobile-edit-button" @click="editModalShow = true">
-                <img class="edit-icon" src="src/assets/images/edit-icon.png" alt="edit-icon">
+            <div class="mobile-edit-button">
+                <img v-if="false" class="edit-icon" src="src/assets/images/edit-icon.png" alt="edit-icon"
+                    @click="editModalShow = true">
             </div>
             <div class="avatar-detail-field">
                 <div class="avatar-detail">
@@ -17,8 +18,8 @@
                     </div>
                 </div>
                 <div class="button-field">
-                    <div class="button-option message-btn" @click="messageModalShow = true">پیام</div>
-                    <div class="button-option edit-btn" @click="editModalShow = true">ویرایش</div>
+                    <div class="button-option message-btn" @click="inviteModalShow = true">دعوت</div>
+                    <div v-if="false" class="button-option edit-btn" @click="editModalShow = true">ویرایش</div>
                 </div>
             </div>
             <div class="page-section">
@@ -69,14 +70,17 @@
             </div>
         </div>
     </div>
-    <div v-if="messageModalShow" class="modal-shadow">
+    <div v-if="inviteModalShow" class="modal-shadow">
         <div class="modal-content">
             <div class="modal-header">
                 <img class="close-icon" src="src/assets/images/close-icon.svg" alt="close-icon"
-                    @click="messageModalShow = false">
+                    @click="inviteModalShow = false">
             </div>
             <div class="modal-container">
-                <div>Message Modal</div>
+                <textarea class="text-field" cols="30" rows="10"></textarea>
+                <div class="button-field">
+                    <div class="modal-button">ارسال دعوتنامه</div>
+                </div>
             </div>
         </div>
     </div>
@@ -96,7 +100,7 @@
 import { defineComponent } from 'vue';
 export default defineComponent({
     data: () => ({
-        messageModalShow: false,
+        inviteModalShow: false,
         editModalShow: false
     }),
     methods: {
@@ -196,7 +200,39 @@ export default defineComponent({
 
     .modal-container {
         width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        align-content: flex-start;
     }
+
+    .button-field {
+        width: 100%;
+        display: flex;
+        justify-content: left;
+
+        .modal-button {
+            @extend .centerlize-item;
+            width: 120px;
+            height: 40px;
+            border-radius: 5px;
+            color: #ffffff;
+            background-color: #1e90ff;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken(#1e90ff, 10%);
+            }
+        }
+    }
+}
+
+.text-field {
+    width: 100%;
+    height: 180px;
+    margin-bottom: 10px;
 }
 
 .page {

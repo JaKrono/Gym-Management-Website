@@ -194,6 +194,7 @@ export default defineComponent({
         height: 220px;
         background-color: #b4b4b4;
         border-radius: 4px;
+        cursor: pointer;
     }
 
     .coach-detail {
