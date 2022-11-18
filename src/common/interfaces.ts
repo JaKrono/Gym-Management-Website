@@ -33,3 +33,8 @@ export interface CoachAchievementModel {
     title: string,
     dateRange: string
 }
+
+export interface InviteCoachModel {
+    coachId: string,
+    message: string
+}
