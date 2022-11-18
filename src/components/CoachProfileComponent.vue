@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="button-field">
-                    <div class="button-option message-btn" @click="inviteModalShow = true">دعوت</div>
+                    <div class="button-option invite-btn" @click="inviteModalShow = true">دعوت</div>
                     <div v-if="false" class="button-option edit-btn" @click="editModalShow = true">ویرایش</div>
                 </div>
             </div>
@@ -245,7 +245,7 @@ export default defineComponent({
 .header {
     width: 100%;
     height: 150px;
-    background-color: #8Ebc8e;
+    background-color: $primary;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.05);
 }
 
@@ -333,11 +333,11 @@ export default defineComponent({
         cursor: pointer;
     }
 
-    .message-btn {
-        background-color: #1e90ff;
+    .invite-btn {
+        background-color: $primary;
 
         &:hover {
-            background: darken(#1e90ff, 10%);
+            background: darken($primary, 10%);
         }
     }
 
@@ -393,12 +393,12 @@ export default defineComponent({
         }
 
         .main-section {
-            background-color: #fa8128;
+            background-color: $secondary;
             border-radius: 8px 0 0 8px;
         }
 
         .detail-section {
-            background-color: #8ebc8e;
+            background-color: $primary;
             border-radius: 0 8px 8px 0;
         }
     }

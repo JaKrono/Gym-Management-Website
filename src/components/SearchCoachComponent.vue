@@ -109,7 +109,7 @@ export default defineComponent({
 .page {
     width: 100%;
     height: 100%;
-    background-color: #e8e8e8;
+    background-color: $background;
 }
 
 .page-container {
@@ -169,12 +169,12 @@ export default defineComponent({
     height: 40px;
     padding: 5px 10px;
     color: #ffffff;
-    background-color: #1976d2;
+    background-color: $primary;
     border-radius: 5px;
     cursor: pointer;
 
     &:hover {
-        background: darken(#1976d2, 10%);
+        background: darken($primary, 10%);
     }
 }
 
