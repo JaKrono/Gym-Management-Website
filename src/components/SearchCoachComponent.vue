@@ -10,73 +10,23 @@
             </div>
             <div class="result-section">
                 <div class="empty-field ">موردی یافت نشد !</div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
-                <div class="coach-item">
-                    <div class="coach-icon"></div>
-                    <div class="coach-detail bold-font">محمد محمدی</div>
-                    <div class="coach-detail main-font">مربی بدنسازی</div>
-                </div>
+                <CoachComponent2 class="coach-item"></CoachComponent2>
+                <CoachComponent2 class="coach-item"></CoachComponent2>
+                <CoachComponent2 class="coach-item"></CoachComponent2>
+                <CoachComponent2 class="coach-item"></CoachComponent2>
+                <CoachComponent2 class="coach-item"></CoachComponent2>
+                <CoachComponent2 class="coach-item"></CoachComponent2>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import CoachComponent2 from './CoachComponent2.vue';
 export default defineComponent({
+    components: {
+        CoachComponent2
+    },
     data: () => ({
     }),
     methods: {
@@ -179,28 +129,7 @@ export default defineComponent({
 }
 
 .coach-item {
-    display: flex;
-    flex-flow: column;
     width: 260px;
-    height: 340px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    cursor: pointer;
-    padding: 20px;
-
-    .coach-icon {
-        width: 220px;
-        height: 220px;
-        background-color: #b4b4b4;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .coach-detail {
-        text-align: left;
-        margin-top: 10px;
-    }
 }
 
 .empty-field {
