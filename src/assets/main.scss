@@ -21,6 +21,10 @@
     font-size: 1.2em;
 }
 
+.item-fill{
+    flex-grow: 1;
+}
+
 @mixin column-center{
     display: flex;
     flex-direction: column;

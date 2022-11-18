@@ -26,8 +26,9 @@
       <q-header class="header-height bg-white">
         <ToolbarComponent></ToolbarComponent>
       </q-header>
-      <q-page-container class="page-container">
-        <router-view />
+      <q-page-container class="page-container row">
+        <router-view name="RightSidebar" />
+        <router-view class="item-fill" />
       </q-page-container>
     </q-layout>
     <!-- <RouterView style="height:100%;" /> -->

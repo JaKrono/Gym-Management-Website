@@ -15,12 +15,18 @@ const router = createRouter({
     {
       path:'/coach-search',
       name:'coach-search',
-      component:CoachSearch
+      components:{
+        default: () => import("@/views/CoachSearch.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
     },
     {
       path:'/dashboard',
       name:'dashboard',
-      component:DashboardView
+      components:{
+        default: () => import("@/views/DashboardView.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
     },
     // {
     //   path: '/about',

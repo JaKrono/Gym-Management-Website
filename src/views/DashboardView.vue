@@ -1,7 +1,7 @@
 <template>
     <q-page>
-        <div class="search-section bg-secondary">
-            <!-- <div class="row column" style="gap:3em">
+        <!-- <div class="search-section bg-secondary">
+            <div class="row column" style="gap:3em">
             <div class="col-lg-12">
                 <SearchBarComponent></SearchBarComponent>
             </div>
@@ -23,8 +23,8 @@
                     <q-select class="bg-white q-mt-sm" outlined></q-select>
                 </div>  
             </div>
-        </div> -->
-    </div>
+        </div>
+    </div> -->
         <div class="row content-center q-px-lg" style="align-items:center">
 
             <h5 class="">مربی ها</h5>
@@ -32,19 +32,19 @@
             <q-btn @click="navigateToCoachSearch" color="primary" icon="add" style="height:40px">افزودن مربی</q-btn>
         </div>
         <div class="row q-pa-md flex-gap">
-        <div class="grow-flex-1">
+        <div class="col-lg-3">
             <CoachComponent2></CoachComponent2>
         </div>
-        <div class="grow-flex-1">
+        <div class="col-lg-3">
             <CoachComponent2></CoachComponent2>
         </div>
-        <div class="grow-flex-1">
+        <div class="col-lg-3">
             <CoachComponent2></CoachComponent2>
         </div>
-        <div class="grow-flex-1">
+        <div class="col-lg-3">
             <CoachComponent2></CoachComponent2>
         </div>
-        <div class="grow-flex-1">
+        <div class="col-lg-3">
             <CoachComponent2></CoachComponent2>
         </div>
         <!-- <div class="col-lg-3">
