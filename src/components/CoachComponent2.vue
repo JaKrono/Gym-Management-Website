@@ -14,7 +14,7 @@
             <div style="font-size:1.3em">بیژن مرتضوی</div>
             <div>مربی</div>
             <q-space></q-space>
-            <q-btn color="primary" outline>مشاهده پروفایل</q-btn>
+            <q-btn @click="showCoachClicked" color="primary" outline>مشاهده پروفایل</q-btn>
         </div>
     </div>
 </template>
@@ -26,6 +26,11 @@ import { defineComponent } from 'vue';
         mounted(){
             console.log(this.isInAddState);
             
+        },
+        methods: {
+            showCoachClicked() {
+                this.$router.push('/coach-profile')
+            }
         }
     })
 </script>

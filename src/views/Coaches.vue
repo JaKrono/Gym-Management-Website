@@ -31,14 +31,14 @@
             <q-space></q-space>
             <q-btn @click="navigateToCoachSearch" color="primary" icon="add" style="height:40px">افزودن مربی</q-btn>
         </div>
-        <div class="row q-pa-md flex-gap">
-        <div class="col-lg-3">
+        <div class="row q-pa-md flex-gap content-start">
+        <div class="col-lg-3 col-sm-5 col-xs-10">
             <CoachComponent2 :isInAddState="false"></CoachComponent2>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-sm-5 col-xs-10">
             <CoachComponent2 :isInAddState="false"></CoachComponent2>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-sm-5 col-xs-10">
             <CoachComponent2 :isInAddState="false"></CoachComponent2>
         </div>
         <!-- <div class="col-lg-3">
@@ -82,7 +82,7 @@ export default defineComponent({
     },
     methods:{
         navigateToCoachSearch(){
-            this.$router.push('/coach-search')
+            this.$router.push('/search-coach')
         }
     }
 })

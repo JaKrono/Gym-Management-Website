@@ -2,6 +2,8 @@ import CoachSearch from '@/views/CoachSearch.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import CoachProfileComponentVue from '@/components/CoachProfileComponent.vue';
+import SearchCoachComponentVue from '@/components/SearchCoachComponent.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +34,19 @@ const router = createRouter({
       name:'coaches',
       components:{
         default: () => import("@/views/Coaches.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path: '/coach-profile',
+      name: 'Coach Profile',
+      component: CoachProfileComponentVue
+    },
+    {
+      path: '/search-coach',
+      name: 'Search Coach',
+      components:{
+        default: () => import("@/components/SearchCoachComponent.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },

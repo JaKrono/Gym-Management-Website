@@ -1,15 +1,15 @@
 <template>
-    <div class="text-center row items-center justify-center">
-        <div class="col-lg-12">
-            <q-avatar size="10em" class="text-white self-center" color="primary" icon="person"></q-avatar>
+    <div class="text-center row space-between items-center justify-center">
+        <div class="col-xs-12">
+            <q-avatar size="10em" class="col-xs-12 text-white self-center" color="primary" icon="person"></q-avatar>
         </div>
-        <div class="col-lg-12">
+        <div class="col-xs-10 col-md-8">
             <q-input class="q-mt-lg" label="نام باشگاه"></q-input>
         </div>
-            <div class="col-lg-12">
+            <div class="col-xs-10 col-md-8">
                 <q-input class="q-mt-lg" label="نام باشگاه"></q-input>
             </div>
-            <div class="col-lg-12">
+            <div class="col-xs-10 col-md-8">
                 <q-input class="q-mt-lg" label="نام باشگاه"></q-input>
             </div>
         </div>
