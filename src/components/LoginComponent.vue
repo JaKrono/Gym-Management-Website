@@ -5,19 +5,27 @@
         <q-form greedy @submit.prevent="submitForm">
           <q-card class="login-card">
             <q-card-section>
-              <span class="bold-title">خوش آمدید</span>
+              <span class="bold-title">
+                <span class="bold-title" v-if="showElementForRole([roles.coach])">
+                  مربی عزیز، 
+                </span>
+                <span class="bold-title" v-if="showElementForRole([roles.owner])">
+                  باشگاه‌دار عزیز، 
+                </span>
+                خوش آمدید
+              </span>
 
-              <q-input class="q-my-md text-center" v-model="username" label="نام کاربری" lazy-rules
+              <q-input class="q-my-sm text-center" v-model="username" label="نام کاربری" lazy-rules
                 :rules="[rules.required]">
               </q-input>
-              <q-input class="q-my-md text-center" v-model="password" type="password" label="رمز عبور" lazy-rules
+              <q-input class="q-my-sm text-center" v-model="password" type="password" label="رمز عبور" lazy-rules
                 :rules="[rules.required, rules.password]"></q-input>
-              <p class="q-my-md text-center">رمز عبورتان را فراموش کردید؟</p>
+              <p class="q-my-sm text-center">رمز عبورتان را فراموش کردید؟</p>
             </q-card-section>
             <q-card-actions align="center">
               <q-btn type="submit" rounded outline color="primary" class="q-mb-lg login-button" label="ورود"></q-btn>
+              <p class="q-my-sm text-center lt-md">حساب کاربری ندارید؟<span class="text-primary cursor-pointer" @click="signupClicked"> ثبت نام کنید.</span></p>
             </q-card-actions>
-            <p class="q-my-md text-center lt-md">حساب کاربری ندارید؟<span class="text-primary cursor-pointer" @click="signupClicked"> ثبت نام کنید.</span></p>
           </q-card>
         </q-form>
       </div>
@@ -27,7 +35,7 @@
         </div>
         <div class="signup-section text-white">
           <span class="bold-title">ثبت نام</span>
-          <p class="text-white q-my-md q-mx-sm">برای مشاهده باشگاه ها ، برنامه ها و مربی ها لطفا ثبت نام کنید.</p>
+          <p class="text-white q-my-sm q-mx-sm">برای مشاهده باشگاه ها ، برنامه ها و مربی ها لطفا ثبت نام کنید.</p>
           <q-btn @click="signupClicked" style="width:100px; margin:0 auto;" rounded outline color="white"
             label="ثبت نام"></q-btn>
         </div>
@@ -39,11 +47,16 @@
 import type { LoginModel } from '@/common/interfaces';
 import { defineComponent } from 'vue';
 import { mapActions } from 'vuex';
+import { roles } from '@/common/enums';
 export default defineComponent({
   name: 'LoginComponent',
+  mixins:[
+
+  ],
   data: () => ({
     username: '',
-    password: ''
+    password: '',
+    roles,
   }),
   mounted() {
 
@@ -57,6 +70,16 @@ export default defineComponent({
     submitForm() {
       const model: LoginModel = { username: this.username, password: this.password }
       this.$emit('submitForm', model)
+    },
+    showElementForRole(roleList: string[]): boolean {
+      let result:boolean = false
+      for (var item in roleList) {
+        result = (this.$route.query.role === roleList[item])
+        if (result) {
+          break
+        }
+      }
+      return result
     }
   }
 })
