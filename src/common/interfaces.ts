@@ -3,7 +3,6 @@ export interface LoginModel {
     password: string
 }
 
-<<<<<<< HEAD
 export interface SignupModel{
     role:string,
     username:string,
@@ -18,17 +17,6 @@ export interface CoachSignupModel extends SignupModel {
 export interface OwnerSignupModel extends SignupModel {
     phoneNumber:string,
     ssn:string
-}
-
-export interface Notification{
-    message:string,
-    type:string,
-    timout:number
-=======
-export interface SignupModel {
-    username: string,
-    email: string,
-    password: string
 }
 
 export interface Notification {
@@ -59,5 +47,4 @@ export interface CoachAchievementModel {
 export interface InviteCoachModel {
     coachId: string,
     message: string
->>>>>>> master
 }
