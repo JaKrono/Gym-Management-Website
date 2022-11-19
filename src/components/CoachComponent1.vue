@@ -10,7 +10,7 @@
             <div>مربی</div>
         </div>
         <div class="col-lg-4 row column justify-end">
-            <q-btn flat color="primary" class="self-end q-mb-auto" round icon="add">
+            <q-btn v-if="isInAddState" flat color="primary" class="self-end q-mb-auto" round icon="add">
                 <!-- <q-icon name="add"></q-icon> -->
             </q-btn>
             <q-btn outline color="primary">مشاهده پروفایل</q-btn>
@@ -20,7 +20,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-    export default defineComponent({})
+    export default defineComponent({
+        props:['isInAddState'],
+        mounted(){
+            console.log(this.isInAddState);
+            
+        }
+    })
 </script>
 <style scoped lang="scss">
     

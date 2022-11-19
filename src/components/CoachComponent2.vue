@@ -3,7 +3,7 @@
         <div class="col-lg-5 bg-primary first-section">
             <div class="row justify-end">
 
-                <q-btn icon="add" flat color="white" rounded fab></q-btn>
+                <q-btn v-if="isInAddState" icon="add" flat color="white" rounded fab></q-btn>
             </div>
             <div class="image-cn">
                 <img src="player.jpg" class="user-image"/>
@@ -21,7 +21,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-    export default defineComponent({})
+    export default defineComponent({
+        props:['isInAddState'],
+        mounted(){
+            console.log(this.isInAddState);
+            
+        }
+    })
 </script>
 <style scoped lang="scss">
     .coach-card{

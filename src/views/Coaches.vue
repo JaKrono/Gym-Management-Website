@@ -33,20 +33,20 @@
         </div>
         <div class="row q-pa-md flex-gap">
         <div class="col-lg-3">
+            <CoachComponent2 :isInAddState="false"></CoachComponent2>
+        </div>
+        <div class="col-lg-3">
+            <CoachComponent2 :isInAddState="false"></CoachComponent2>
+        </div>
+        <div class="col-lg-3">
+            <CoachComponent2 :isInAddState="false"></CoachComponent2>
+        </div>
+        <!-- <div class="col-lg-3">
             <CoachComponent2></CoachComponent2>
         </div>
         <div class="col-lg-3">
             <CoachComponent2></CoachComponent2>
-        </div>
-        <div class="col-lg-3">
-            <CoachComponent2></CoachComponent2>
-        </div>
-        <div class="col-lg-3">
-            <CoachComponent2></CoachComponent2>
-        </div>
-        <div class="col-lg-3">
-            <CoachComponent2></CoachComponent2>
-        </div>
+        </div> -->
         <!-- <div class="col-lg-3">
             <CoachComponent1></CoachComponent1>
         </div>

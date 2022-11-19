@@ -1,5 +1,4 @@
 import CoachSearch from '@/views/CoachSearch.vue'
-import DashboardView from '@/views/DashboardView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
@@ -24,7 +23,15 @@ const router = createRouter({
       path:'/dashboard',
       name:'dashboard',
       components:{
-        default: () => import("@/views/DashboardView.vue"),
+        default: () => import("@/views/Profile.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path:'/coaches',
+      name:'coaches',
+      components:{
+        default: () => import("@/views/Coaches.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },

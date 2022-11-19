@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import rules from './validationRules'
-import { Quasar,Notify } from 'quasar'
+import { Quasar,Notify, type QuasarPluginOptions } from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
 
 import 'quasar/src/css/index.sass'
@@ -14,6 +14,6 @@ app.config.globalProperties.rules = rules
 
 app.use(router)
 app.use(store as any)
-app.use(Quasar,{lang:faIr,plugins:{Notify}})
+app.use(Quasar,{lang:faIr,plugins:{Notify}} as QuasarPluginOptions)
 
 app.mount('#app')
