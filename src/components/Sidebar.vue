@@ -12,7 +12,11 @@ import SidebarItemVue from './SidebarItem.vue';
         data:()=>({
             sideBarOpen:true,
             selectedId:0,
-            items:[{id:1, title:'پروفایل', icon:'dashboard', path:'/dashboard'},{id:2, title:'مربی ها', icon:'person', path:'/coaches'}],
+            items:[
+                {id:1, title:'پروفایل', icon:'dashboard', path:'/dashboard'},
+                {id:2, title:'مربی ها', icon:'person', path:'/coaches'},
+                {id:3, title:'کلاس ها', icon:'class', path:'/club-classes'}
+            ],
             miniState:false
         }),
         methods:{
