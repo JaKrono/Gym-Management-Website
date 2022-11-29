@@ -1,7 +1,7 @@
 <template>
     <div dir="ltr" class="page">
         <div class="toolbar">
-            <q-btn color="primary">افزودن کلاس</q-btn>
+            <q-btn @click="addClassModalShow = true" color="primary">افزودن کلاس</q-btn>
         </div>
         <div class="class-list">
             <ClassComponent></ClassComponent>
@@ -10,6 +10,34 @@
             <ClassComponent></ClassComponent>
             <ClassComponent></ClassComponent>
             <ClassComponent></ClassComponent>
+        </div>
+    </div>
+
+    <div v-if="addClassModalShow" class="modal-shadow">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="close-icon" src="src/assets/images/close-icon.svg" alt="close-icon"
+                    @click="addClassModalShow = false">
+            </div>
+            <div class="modal-container">
+                <div class="add-class-form">
+                    <div class="form-item">
+                        <label class="main-font">نام کلاس:</label>
+                        <input class="form-input" type="text">
+                    </div>
+                    <div class="form-item">
+                        <label class="main-font">نام مربی:</label>
+                        <input class="form-input" type="text">
+                    </div>
+                    <div class="form-item">
+                        <label class="main-font">ساعت کلاس:</label>
+                        <input class="form-input" type="text">
+                    </div>
+                    <div class="form-button-field">
+                        <q-btn color="primary">افزودن کلاس</q-btn>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -21,7 +49,7 @@ export default defineComponent({
         ClassComponent
     },
     data: () => ({
-
+        addClassModalShow: false
     }),
     methods: {
 
@@ -44,6 +72,95 @@ export default defineComponent({
     background-color: $background;
 }
 
+.modal-shadow {
+    width: 100vw;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: #000000, $alpha: 0.6);
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.modal-content {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 320px;
+    max-width: 427px;
+    background-color: #ffffff;
+    padding: 19px 19px 25px 21px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 14px;
+    position: absolute;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .modal-header {
+        display: flex;
+        flex-flow: row nowrap;
+        width: 100%;
+        height: 20px;
+        justify-content: left;
+        margin-bottom: 15px;
+    }
+
+    .close-icon {
+        width: 20px;
+        height: 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    .modal-container {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        align-content: flex-start;
+    }
+
+    .button-field {
+        width: 100%;
+        display: flex;
+        justify-content: left;
+
+        .modal-button {
+            @extend .centerlize-item;
+            width: 120px;
+            height: 40px;
+            border-radius: 5px;
+            color: #ffffff;
+            background-color: #1e90ff;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken(#1e90ff, 10%);
+            }
+        }
+    }
+}
+
 .toolbar {
     width: 100%;
     height: 60px;
@@ -63,5 +180,41 @@ export default defineComponent({
     align-content: flex-start;
     gap: 20px;
     padding: 20px 60px;
+}
+
+.add-class-form {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 20px;
+
+    .form-item {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: left;
+        gap: 5px;
+    }
+
+    .form-input {
+        width: 100%;
+        height: 40px;
+        text-align: left;
+        font-size: 18px;
+        border: 2px solid $background;
+    }
+
+    label {
+        min-width: 100px;
+        text-align: left;
+    }
+
+    .form-button-field {
+        width: 100%;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+    }
 }
 </style>
