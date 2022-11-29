@@ -48,3 +48,9 @@ export interface InviteCoachModel {
     coachId: string,
     message: string
 }
+
+export interface SidebarItemModel{
+    name:string,
+    icon:string,
+    path:string
+}

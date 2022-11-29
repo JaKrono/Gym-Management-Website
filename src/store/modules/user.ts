@@ -4,7 +4,8 @@ export default{
     namespaced: true,
     state : ()=>({
         token:'',
-        isSignedIn:false
+        isSignedIn:false,
+        role:-1
     }),
     mutations : {
         setToken(state:any,token:string){
