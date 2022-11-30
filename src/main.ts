@@ -7,6 +7,7 @@ import { Quasar,Notify, type QuasarPluginOptions } from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
 
 import 'quasar/src/css/index.sass'
+import 'quasar/src/css/flex-addon.sass'
 import './assets/main.scss'
 import faIr from 'quasar/lang/fa-IR'
 const app = createApp(App)

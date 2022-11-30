@@ -50,6 +50,14 @@ const router = createRouter({
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
+    {
+      path: '/chome',
+      name: 'chome',
+      components: {
+        default: () => import("@/views/CHome.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    }
     // {
     //   path: '/about',
     //   name: 'about',

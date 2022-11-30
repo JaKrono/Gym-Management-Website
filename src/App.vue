@@ -39,6 +39,6 @@ export default defineComponent({
     height: 50px;
   }
   .page-container{
-    height: calc(100vh + 80px);
+    min-height: calc(100vh);
   }
 </style>
