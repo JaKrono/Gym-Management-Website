@@ -5,7 +5,7 @@ export default{
     state : ()=>({
         token:'',
         isSignedIn:false,
-        roles:[]
+        role:-1
     }),
     mutations : {
         setToken(state:any,token:string){
