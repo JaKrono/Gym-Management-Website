@@ -46,6 +46,7 @@ export interface CoachAchievementModel {
 
 export interface InviteCoachModel {
     coachId: string,
+    gymId: string,
     message: string
 }
 

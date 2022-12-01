@@ -264,4 +264,11 @@ export default defineComponent({
         align-items: center;
     }
 }
+
+@media all and (max-width: 599.99px) {
+    .class-list {
+        justify-content: center !important;
+        padding: 20px;
+    }
+}
 </style>

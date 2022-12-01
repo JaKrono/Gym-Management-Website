@@ -27,7 +27,13 @@ export default defineComponent({
     },
     methods: {
         showCoachClicked() {
-            this.$router.push({ path: '/coach-profile', query: { coachId: this.coachObject.id, isCoach: 'false' } })
+            let params = {
+                coachId: this.coachObject.id,
+                gymId: '1', //temp gymId
+                isCoach: 'false'
+            };
+
+            this.$router.push({ path: '/coach-profile', query: params })
         }
     }
 })

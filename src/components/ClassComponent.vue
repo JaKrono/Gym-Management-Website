@@ -197,8 +197,8 @@ export default defineComponent({
     display: flex;
     flex-flow: row wrap;
     align-content: flex-start;
-    min-width: 260px;
-    max-width: 260px;
+    min-width: 280px;
+    max-width: 280px;
     height: 160px;
     border-radius: 8px;
     background-color: white;
