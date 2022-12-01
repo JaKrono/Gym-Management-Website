@@ -1,16 +1,22 @@
-import type { InviteCoachModel } from "@/common/interfaces";
+import type { InviteCoachModel, CoachProfileModel } from "@/common/interfaces";
 import client from "./client/axios";
 export default {
 
-    getProfileDetail(id: string) {
+    getCoachProfileDetail(id: string) {
         const endpoint = ''; //API url
-        const response = client.post(endpoint, id)
+        const response = client.get(endpoint);
         return response;
     },
 
     sendInviteMessage(coachInvite: InviteCoachModel) {
         const endpoint = ''; //API url
-        const response = client.post(endpoint, coachInvite)
+        const response = client.post(endpoint, coachInvite);
+        return response;
+    },
+
+    editCoachProfileDetail(coachObject: CoachProfileModel) {
+        const endpoint = ''; //API url
+        const response = client.post(endpoint, coachObject);
         return response;
     }
 }
