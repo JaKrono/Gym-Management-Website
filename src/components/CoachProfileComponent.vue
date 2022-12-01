@@ -114,6 +114,7 @@ import type { InviteCoachModel } from '../common/interfaces';
 
 export default defineComponent({
     data: () => ({
+        coachId: '',
         inviteModalShow: false,
         editModalShow: false,
         isChangablePage: false,
@@ -124,6 +125,11 @@ export default defineComponent({
     }),
     async beforeMount() {
         //it's unsafe methed for handel this issue
+        if (!this.$route.query.coachId) {
+            return;
+        }
+
+        this.coachId = (this.$route.query.coachId)?.toString();
         this.isChangablePage = (this.$route.query.isCoach)?.toString().toLocaleLowerCase() === 'true';
 
         try {
@@ -177,7 +183,7 @@ export default defineComponent({
             this.isMobile = (window.innerWidth < 599.99);
         },
         async initProfile() {//call get profile Detail API
-
+            console.log(this.coachId);
         },
         buttonTitle() {
             return (this.isChangablePage) ? 'ویرایش' : 'دعوت';
