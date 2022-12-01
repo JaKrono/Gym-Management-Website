@@ -1,6 +1,10 @@
 <template>
     <div class="page">
-        <div class="header"></div>
+        <div class="header">
+            <div v-if="!isChangablePage" @click="goToCoachListPage()" class="button-field">
+                <img class="back-button" src="src/assets/images/back-icon.png" alt="back-icon">
+            </div>
+        </div>
         <div class="container">
             <div class="avatar-field">
                 <img class="avatar-icon"
@@ -112,6 +116,7 @@ import type { CoachAchievementModel, CoachProfileModel, CoachDetailModel, Invite
 export default defineComponent({
     data: () => ({
         coachId: '',
+        gymId: '',
         inviteModalShow: false,
         editModalShow: false,
         isChangablePage: false,
@@ -122,11 +127,12 @@ export default defineComponent({
     }),
     async beforeMount() {
         //it's unsafe methed for handel this issue
-        if (!this.$route.query.coachId) {
+        if (!this.$route.query.coachId || !this.$route.query.gymId) {
             return;
         }
 
         this.coachId = (this.$route.query.coachId)?.toString();
+        this.gymId = (this.$route.query.gymId)?.toString();
         this.isChangablePage = (this.$route.query.isCoach)?.toString().toLocaleLowerCase() === 'true';
 
         try {
@@ -202,6 +208,7 @@ export default defineComponent({
 
             this.inviteObject = {
                 coachId: this.profileDto.id,
+                gymId: this.gymId,
                 message: ''
             }
         },
@@ -223,6 +230,11 @@ export default defineComponent({
         },
         sendInviteCoach() {//call invite coach API 
 
+        },
+        goToCoachListPage() {
+            if (!this.isChangablePage) {
+                this.$router.push('/search-coach');
+            }
         }
     }
 })
@@ -362,10 +374,27 @@ export default defineComponent({
 }
 
 .header {
+    display: flex;
+    justify-content: right;
+    padding: 10px;
     width: 100%;
     height: 150px;
     background-color: $primary;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.05);
+
+    .button-field {
+        @extend .centerlize-item;
+        min-width: 35px;
+        max-width: 35px;
+        height: 35px;
+    }
+
+    .back-button {
+        min-width: 30px;
+        max-width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
 }
 
 .container {
