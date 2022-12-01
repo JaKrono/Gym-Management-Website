@@ -11,12 +11,12 @@ export interface SignupModel{
 }
 
 export interface CoachSignupModel extends SignupModel {
-    phoneNumber:string
+    phoneNumber: string
 }
 
 export interface OwnerSignupModel extends SignupModel {
-    phoneNumber:string,
-    ssn:string
+    phoneNumber: string,
+    ssn: string
 }
 
 export interface Notification {
@@ -46,11 +46,20 @@ export interface CoachAchievementModel {
 
 export interface InviteCoachModel {
     coachId: string,
+    gymId: string,
     message: string
 }
 
-export interface SidebarItemModel{
-    name:string,
-    icon:string,
-    path:string
+export interface SidebarItemModel {
+    name: string,
+    icon: string,
+    path: string
+}
+export interface ClassModel {
+    Id: string,
+    gymId: string,
+    name: string,
+    coachName: string,
+    time: string,
+    memberCount: string
 }
