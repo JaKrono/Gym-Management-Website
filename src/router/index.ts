@@ -50,6 +50,14 @@ const router = createRouter({
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
+    {
+      path: '/club-classes',
+      name: 'Club Classes',
+      components: {
+        default: () => import("@/components/ClassesComponent.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
     // {
     //   path: '/about',
     //   name: 'about',
