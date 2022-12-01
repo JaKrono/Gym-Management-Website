@@ -1,15 +1,12 @@
 <template>
     <div dir="ltr" class="page">
         <div class="toolbar">
-            <q-btn @click="addClassModalShow = true" color="primary">افزودن کلاس</q-btn>
+            <q-btn @click="openAddClassModal()" color="primary">افزودن کلاس</q-btn>
         </div>
         <div class="class-list">
-            <ClassComponent></ClassComponent>
-            <ClassComponent></ClassComponent>
-            <ClassComponent></ClassComponent>
-            <ClassComponent></ClassComponent>
-            <ClassComponent></ClassComponent>
-            <ClassComponent></ClassComponent>
+            <template v-for="classItem in classList">
+                <ClassComponent :classObject="classItem"></ClassComponent>
+            </template>
         </div>
     </div>
 
@@ -23,18 +20,18 @@
                 <div class="add-class-form">
                     <div class="form-item">
                         <label class="main-font">نام کلاس:</label>
-                        <input class="form-input" type="text">
+                        <input v-model="newClassObject.name" class="form-input" type="text">
                     </div>
                     <div class="form-item">
                         <label class="main-font">نام مربی:</label>
-                        <input class="form-input" type="text">
+                        <input v-model="newClassObject.coachName" class="form-input" type="text">
                     </div>
                     <div class="form-item">
                         <label class="main-font">ساعت کلاس:</label>
-                        <input class="form-input" type="text">
+                        <input v-model="newClassObject.time" class="form-input" type="text">
                     </div>
                     <div class="form-button-field">
-                        <q-btn color="primary">افزودن کلاس</q-btn>
+                        <q-btn @click="addClass()" color="primary">افزودن کلاس</q-btn>
                     </div>
                 </div>
             </div>
@@ -44,15 +41,65 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ClassComponent from './ClassComponent.vue';
+import type { ClassModel } from '@/common/interfaces';
+
 export default defineComponent({
     components: {
         ClassComponent
     },
     data: () => ({
-        addClassModalShow: false
+        addClassModalShow: false,
+        classList: [] as ClassModel[],
+        newClassObject: {} as ClassModel
     }),
-    methods: {
+    async beforeMount() {
+        await this.getClassList();
 
+        let temp1: ClassModel = {
+            Id: '0',
+            gymId: '1',
+            name: 'بدن سازی',
+            coachName: 'سیدحسام حسینی',
+            memberCount: '20',
+            time: '18 - 20'
+        }
+
+        let temp2: ClassModel = {
+            Id: '1',
+            gymId: '1',
+            name: 'شنا',
+            coachName: 'سیدامیر حسینی',
+            memberCount: '50',
+            time: '14 - 16'
+        }
+
+        this.classList.push(temp1, temp2);
+    },
+    methods: {
+        async getClassList() { // call get classes API
+            try {
+                this.classList;
+            }
+            catch (err) { }
+        },
+        openAddClassModal() {
+            this.addClassModalShow = true;
+
+            this.newClassObject = {
+                Id: '',
+                gymId: '',
+                memberCount: '',
+                name: '',
+                coachName: '',
+                time: ''
+            }
+        },
+        async addClass() { // call add class API
+            try {
+                this.newClassObject;
+            }
+            catch (err) { }
+        }
     }
 })
 </script>

@@ -1,8 +1,7 @@
 <template>
-    <div class="row column coach-card">
+    <div v-if="coachObject" class="row column coach-card">
         <div class="col-lg-5 bg-primary first-section">
             <div class="row justify-end">
-
                 <q-btn v-if="isInAddState" icon="add" flat color="white" rounded fab></q-btn>
             </div>
             <div class="image-cn">
@@ -10,7 +9,6 @@
             </div>
         </div>
         <div class="col-lg-7 q-pa-md second-section row column ">
-
             <div style="font-size:1.3em">{{ coachObject.fullName }}</div>
             <div>مربی</div>
             <q-space></q-space>

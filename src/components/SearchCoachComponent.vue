@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CoachComponent2 from './CoachComponent2.vue';
-import type { CoachProfileModel } from '../common/interfaces';
+import type { CoachProfileModel } from '@/common/interfaces';
 
 export default defineComponent({
     components: {

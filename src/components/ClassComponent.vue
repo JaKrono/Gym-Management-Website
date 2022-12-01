@@ -1,14 +1,14 @@
 <template>
-    <div class="class-box">
+    <div v-if="classObject" class="class-box">
         <div class="class-header">
-            <img @click="editModalShow = true" class="edit-button" src="../assets/images/edit-icon.png"
+            <img @click="openEditModal()" class="edit-button" src="../assets/images/edit-icon.png"
                 alt="edit button icon">
-            <div class="class-name main-font">بدن سازی</div>
+            <div class="class-name main-font">{{ classObject.name }}</div>
         </div>
         <div class="class-detail">
-            <div class="class-detail-item secondary-font">مربی: سیدحسام حسینی</div>
-            <div class="class-detail-item secondary-font">ساعت: 18 - 20</div>
-            <div class="class-detail-item secondary-font">اعضا: 20</div>
+            <div class="class-detail-item secondary-font">مربی: {{ classObject.coachName }}</div>
+            <div class="class-detail-item secondary-font">ساعت: {{ classObject.time }}</div>
+            <div class="class-detail-item secondary-font">اعضا: {{ classObject.memberCount }}</div>
         </div>
     </div>
     <div v-if="editModalShow" class="modal-shadow">
@@ -20,17 +20,18 @@
             <div class="modal-container">
                 <div class="edit-form">
                     <div class="form-item">
-                        <input class="form-input" type="text">
+                        <input v-model="editClassObject.name" class="form-input" type="text">
                         <label class="main-font">:نام کلاس</label>
                     </div>
                     <div class="form-item">
-                        <input class="form-input" type="text">
+                        <input v-model="editClassObject.coachName" class="form-input" type="text">
                         <label class="main-font">:نام مربی</label>
                     </div>
                     <div class="form-item">
-                        <input class="form-input" type="text">
+                        <input v-model="editClassObject.time" class="form-input" type="text">
                         <label class="main-font">:ساعت کلاس</label>
                     </div>
+                    <q-btn @click="editClass()" color="primary">ویرایش</q-btn>
                 </div>
             </div>
         </div>
@@ -38,12 +39,26 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import type { ClassModel } from '@/common/interfaces';
+
 export default defineComponent({
+    props: ['classObject'],
     data: () => ({
-        editModalShow: false
+        editModalShow: false,
+        editClassObject: {} as ClassModel
     }),
     methods: {
+        openEditModal() {
+            this.editModalShow = true;
 
+            this.editClassObject = JSON.parse(JSON.stringify(this.classObject)) as typeof this.classObject;
+        },
+        async editClass() {// call edit class API
+            try {
+                this.editClassObject;
+            }
+            catch (err) { }
+        }
     }
 })
 </script>
@@ -249,6 +264,5 @@ export default defineComponent({
         min-width: 100px;
         text-align: left;
     }
-
 }
 </style>

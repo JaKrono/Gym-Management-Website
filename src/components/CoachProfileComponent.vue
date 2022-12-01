@@ -107,10 +107,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { CoachAchievementModel } from '../common/interfaces';
-import type { CoachProfileModel } from '../common/interfaces';
-import type { CoachDetailModel } from '../common/interfaces';
-import type { InviteCoachModel } from '../common/interfaces';
+import type { CoachAchievementModel, CoachProfileModel, CoachDetailModel, InviteCoachModel } from '@/common/interfaces';
 
 export default defineComponent({
     data: () => ({
