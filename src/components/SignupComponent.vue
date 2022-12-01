@@ -75,13 +75,13 @@ export default defineComponent({
     },
     signup() {
       if (this.$route.query.role == roles.coach) {
-        const model: CoachSignupModel = { role: roles.coach, email: this.email, username: this.username, password: this.password, phoneNumber: this.phoneNumber }
+        const model: CoachSignupModel = { role: 1, email: this.email, username: this.username, password: this.password, phoneNumber: this.phoneNumber }
         this.$emit('submitForm', model)
       } else if (this.$route.query.role == roles.owner) {
-        const model: OwnerSignupModel = { role: roles.owner, email: this.email, username: this.username, password: this.password, phoneNumber: this.phoneNumber, ssn:this.ssn }
+        const model: OwnerSignupModel = { role: 0 , email: this.email, username: this.username, password: this.password, phoneNumber: this.phoneNumber, ssn:this.ssn }
         this.$emit('submitForm', model)
       } else {
-        const model: SignupModel = { role: roles.user, email: this.email, username: this.username, password: this.password }
+        const model: SignupModel = { role: 2, email: this.email, username: this.username, password: this.password }
         this.$emit('submitForm', model)
       }
     },

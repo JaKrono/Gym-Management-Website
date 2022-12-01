@@ -4,7 +4,7 @@ export interface LoginModel {
 }
 
 export interface SignupModel{
-    role:string,
+    role:number,
     username:string,
     email:string,
     password:string
