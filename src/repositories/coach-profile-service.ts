@@ -2,21 +2,21 @@ import type { InviteCoachModel, CoachProfileModel } from "@/common/interfaces";
 import client from "./client/axios";
 export default {
 
-    getCoachProfileDetail(id: string) {
-        const endpoint = ''; //API url
+    getCoachProfileDetail(coachId: string) {
+        const endpoint = `/api/coach/get-coach/${coachId}/`;
         const response = client.get(endpoint);
         return response;
     },
 
-    sendInviteMessage(coachInvite: InviteCoachModel) {
-        const endpoint = ''; //API url
-        const response = client.post(endpoint, coachInvite);
+    editCoachProfileDetail(coachId: string, coachObject: CoachProfileModel) {
+        const endpoint = `/api/coach/update-coach/${coachId}/`;
+        const response = client.post(endpoint, coachObject);
         return response;
     },
 
-    editCoachProfileDetail(coachObject: CoachProfileModel) {
-        const endpoint = ''; //API url
-        const response = client.post(endpoint, coachObject);
+    sendInviteMessage(coachInvite: InviteCoachModel) {
+        const endpoint = '/gym/post-card';
+        const response = client.post(endpoint, coachInvite);
         return response;
     }
 }

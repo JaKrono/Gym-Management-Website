@@ -38,7 +38,8 @@ export default defineComponent({
         this.items = [
             { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard' },
             { id: 2, title: 'مربی ها', icon: 'person', path: '/coaches' },
-            { id: 3, title: 'کلاس ها', icon: 'person', path: '/club-classes' }
+            { id: 3, title: 'کلاس ها', icon: 'class', path: '/club-classes' },
+            { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach' }
         ]
         // }
     },

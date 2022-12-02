@@ -22,10 +22,10 @@
                         <label class="main-font">نام کلاس:</label>
                         <input v-model="newClassObject.name" class="form-input" type="text">
                     </div>
-                    <div class="form-item">
+                    <!-- <div class="form-item">
                         <label class="main-font">نام مربی:</label>
-                        <input v-model="newClassObject.coachName" class="form-input" type="text">
-                    </div>
+                        <input v-model="newClassObject.coachname" class="form-input" type="text">
+                    </div> -->
                     <div class="form-item">
                         <label class="main-font">ساعت کلاس:</label>
                         <input v-model="newClassObject.time" class="form-input" type="text">
@@ -41,44 +41,30 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ClassComponent from './ClassComponent.vue';
-import type { ClassModel } from '@/common/interfaces';
+import type { ClassModel, NewClassModel } from '@/common/interfaces';
+import { mapActions } from 'vuex';
 
 export default defineComponent({
     components: {
         ClassComponent
     },
     data: () => ({
+        gymId: '1',//temp
         addClassModalShow: false,
         classList: [] as ClassModel[],
-        newClassObject: {} as ClassModel
+        newClassObject: {} as NewClassModel
     }),
-    async beforeMount() {
+    async mounted() {
         await this.getClassList();
-
-        let temp1: ClassModel = {
-            Id: '0',
-            gymId: '1',
-            name: 'بدن سازی',
-            coachName: 'سیدحسام حسینی',
-            memberCount: '20',
-            time: '18 - 20'
-        }
-
-        let temp2: ClassModel = {
-            Id: '1',
-            gymId: '1',
-            name: 'شنا',
-            coachName: 'سیدامیر حسینی',
-            memberCount: '50',
-            time: '14 - 16'
-        }
-
-        this.classList.push(temp1, temp2);
     },
     methods: {
-        async getClassList() { // call get classes API
+        ...mapActions({
+            getClassListAsync: 'user/getClassList',
+            addClassAsync: 'user/addClass'
+        }),
+        async getClassList() {
             try {
-                this.classList;
+                this.classList = await this.getClassListAsync();
             }
             catch (err) { }
         },
@@ -86,19 +72,18 @@ export default defineComponent({
             this.addClassModalShow = true;
 
             this.newClassObject = {
-                Id: '',
-                gymId: '',
-                memberCount: '',
+                gym: this.gymId,
                 name: '',
-                coachName: '',
                 time: ''
             }
         },
         async addClass() { // call add class API
             try {
-                this.newClassObject;
+                await this.addClassAsync(this.newClassObject);
             }
             catch (err) { }
+
+            this.addClassModalShow = false;
         }
     }
 })

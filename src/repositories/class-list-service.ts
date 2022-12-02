@@ -1,21 +1,23 @@
-import type { ClassModel } from "@/common/interfaces";
+import type { ClassModel, NewClassModel } from "@/common/interfaces";
 import client from "./client/axios";
 export default {
 
-    getClassList(gymId: string) {
-        const endpoint = `/gym/get_gym_classes?gym=${gymId}`; //API url
+    getClassList() {
+        const endpoint = '/gym/course/';
         const response = client.get(endpoint);
         return response;
     },
 
-    editClassDetail(classObject: ClassModel) {
-        const endpoint = ''; //API url
-        const response = client.post(endpoint, classObject);
+    editClassDetail(classId: string, classObject: ClassModel) {
+        console.log(classId);
+        const endpoint = `/gym/course/${classId}/`;
+        console.log(endpoint);
+        const response = client.put(endpoint, classObject);
         return response;
     },
 
-    addClassItem(classObject: ClassModel) {
-        const endpoint = ''; //API url
+    addClassItem(classObject: NewClassModel) {
+        const endpoint = '/gym/get-post-course';
         const response = client.post(endpoint, classObject);
         return response;
     }
