@@ -144,6 +144,7 @@ export default defineComponent({
         this.coachId = (this.$route.query.coachId)?.toString();
         this.gymId = (this.$route.query.gymId)?.toString();
         this.isChangablePage = (this.$route.query.isCoach)?.toString().toLocaleLowerCase() === 'true';
+        this.onResizePage();
 
         await this.initProfile();
     },
