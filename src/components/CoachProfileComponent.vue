@@ -12,8 +12,8 @@
                     alt="avatar-icon">
             </div>
             <div class="mobile-edit-button">
-                <img v-if="isChangablePage" class="edit-icon" src="src/assets/images/edit-icon.png" alt="edit-icon"
-                    @click="openEditModal()">
+                <img v-if="(isChangablePage && isMobile)" class="edit-icon" src="src/assets/images/edit-icon.png"
+                    alt="edit-icon" @click="openEditModal()">
             </div>
             <div class="avatar-detail-field">
                 <div class="avatar-detail">
@@ -23,7 +23,9 @@
                     <div class="q-py-lg font-size-up-1">{{ profileDto.description }}</div>
                 </div>
                 <div class="button-field">
-                    <q-btn v-if="!isMobile" @click="buttonAction()" color="primary">{{ buttonTitle() }}</q-btn>
+                    <q-btn v-if="bottonButtonShow()" @click="buttonAction()" color="primary">
+                        {{ buttonTitle() }}
+                    </q-btn>
                 </div>
             </div>
             <div class="page-section">
@@ -161,7 +163,7 @@ export default defineComponent({
             editCoachDetailAsync: 'user/editCoachDetail'
         }),
         onResizePage() {
-            this.isMobile = (window.innerWidth < 599.99);
+            this.isMobile = (window.innerWidth <= 599.99);
         },
         async initProfile() {
             try {
@@ -242,6 +244,13 @@ export default defineComponent({
             if (!this.isChangablePage) {
                 this.$router.push('/search-coach');
             }
+        },
+        bottonButtonShow(): boolean {
+            if (this.isChangablePage) {
+                return !this.isMobile;
+            }
+
+            return true;
         }
     }
 })
