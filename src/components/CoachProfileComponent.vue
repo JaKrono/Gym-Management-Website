@@ -8,7 +8,7 @@
         <div class="container">
             <div class="avatar-field">
                 <img class="avatar-icon"
-                    v-bind:src="(profileDto.picUrl) ? profileDto.picUrl : 'src/assets/images/avtar-icon.png'"
+                    v-bind:src="(profileDto.user.picUrl) ? profileDto.user.picUrl : 'src/assets/images/avtar-icon.png'"
                     alt="avatar-icon">
             </div>
             <div class="mobile-edit-button">
@@ -17,7 +17,9 @@
             </div>
             <div class="avatar-detail-field">
                 <div class="avatar-detail">
-                    <div class="font-size-up-5 avatar-name">{{ profileDto.fullName }}</div>
+                    <div class="font-size-up-5 avatar-name">
+                        {{ profileDto.user.first_name + ' ' + profileDto.user.last_name }}
+                    </div>
                     <div class="q-py-lg font-size-up-1">{{ profileDto.description }}</div>
                 </div>
                 <div class="button-field">
@@ -25,18 +27,20 @@
                 </div>
             </div>
             <div class="page-section">
-                <div class="section-title">مشخصات :</div>
+                <div v-if="(profileDto.detail_set && profileDto.detail_set.length !== 0)" class="section-title">مشخصات :
+                </div>
                 <div class="table">
-                    <div v-for="detailItem in profileDto.details" class="table-row">
+                    <div v-for="detailItem in profileDto.detail_set" class="table-row">
                         <div class="table-row-section main-section">{{ detailItem.title }}</div>
                         <div class="table-row-section detail-section">{{ detailItem.value }}</div>
                     </div>
                 </div>
             </div>
             <div class="page-section">
-                <div class="section-title">دستاورد ها :</div>
+                <div v-if="(profileDto.achievement_set && profileDto.achievement_set.length !== 0)"
+                    class="section-title">دستاورد ها :</div>
                 <div class="achievement-list">
-                    <div v-for="achievement in profileDto.achievements" class="achievement-item">
+                    <div v-for="achievement in profileDto.achievement_set" class="achievement-item">
                         <img class="achievement-icon" src="src/assets/images/achievement-icon.png"
                             alt="achievement-icon">
                         <div class="achievement-detail">
@@ -71,8 +75,12 @@
             <div class="modal-container">
                 <div class="edit-modal">
                     <div class="modal-item">
-                        <div class="item-title">نام و نام خانوادگی :</div>
-                        <input class="modal-text-field" v-model="tempProfileObject.fullName" type="text">
+                        <div class="item-title">نام :</div>
+                        <input class="modal-text-field" v-model="tempProfileObject.user.first_name" type="text">
+                    </div>
+                    <div class="modal-item">
+                        <div class="item-title"> نام خانوادگی :</div>
+                        <input class="modal-text-field" v-model="tempProfileObject.user.last_name" type="text">
                     </div>
                     <div class="modal-item">
                         <div class="item-title">بیوگرافی :</div>
@@ -81,7 +89,7 @@
                     <div class="modal-item">
                         <div class="item-title">مشخصات :</div>
                         <div class="edit-detail">
-                            <div v-for="detailItem in tempProfileObject.details" class="edit-detail">
+                            <div v-for="detailItem in tempProfileObject.detail_set" class="edit-detail">
                                 {{ detailItem.title + ':' }}
                                 <input v-model="detailItem.value" type="text">
                             </div>
@@ -90,7 +98,7 @@
                     <div class="modal-item">
                         <div class="item-title">دستاوردها :</div>
                         <div class="edit-achievement">
-                            <div v-for="(achievement, index) in tempProfileObject.achievements"
+                            <div v-for="(achievement, index) in tempProfileObject.achievement_set"
                                 class="edit-achievement-item">
                                 <input v-model="achievement.title" type="text" placeholder="عنوان دستاورد">
                                 <input v-model="achievement.dateRange" type="text" placeholder="بازه دستاورد">
@@ -111,8 +119,9 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { CoachAchievementModel, CoachProfileModel, CoachDetailModel, InviteCoachModel } from '@/common/interfaces';
+import type { CoachAchievementModel, InviteCoachModel, SearchCoachModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
+import { coachProfileService } from "@/repositories/index";
 
 export default defineComponent({
     data: () => ({
@@ -122,8 +131,8 @@ export default defineComponent({
         editModalShow: false,
         isChangablePage: false,
         isMobile: false,
-        profileDto: {} as CoachProfileModel,
-        tempProfileObject: {} as CoachProfileModel,
+        profileDto: {} as SearchCoachModel,
+        tempProfileObject: {} as SearchCoachModel,
         inviteObject: {} as InviteCoachModel
     }),
     async beforeMount() {
@@ -136,45 +145,7 @@ export default defineComponent({
         this.gymId = (this.$route.query.gymId)?.toString();
         this.isChangablePage = (this.$route.query.isCoach)?.toString().toLocaleLowerCase() === 'true';
 
-        try {
-            await this.initProfile();
-        }
-        catch (err) { }
-
-        //mock data
-        let tempAge: CoachDetailModel = {
-            title: 'سن',
-            value: '23'
-        }
-        let tempHeight: CoachDetailModel = {
-            title: 'قد',
-            value: '183'
-        }
-        let tempSex: CoachDetailModel = {
-            title: 'جنسیت',
-            value: 'مرد'
-        }
-
-        let temp1: CoachAchievementModel = {
-            title: 'اولین دستاورد',
-            dateRange: '1399 - 1400'
-        }
-        let temp2: CoachAchievementModel = {
-            title: 'دومین دستاورد',
-            dateRange: '1400 - 1401'
-        }
-
-        this.profileDto = {
-            id: '0',
-            fullName: 'سیدحسام حسینی',
-            description: 'متن تستی',
-            picUrl: '',
-            details: [],
-            achievements: []
-        }
-
-        this.profileDto.details.push(tempHeight, tempAge, tempSex);
-        this.profileDto.achievements?.push(temp1, temp2);
+        await this.initProfile();
     },
     mounted() {
         window.addEventListener('resize', this.onResizePage);
@@ -193,7 +164,14 @@ export default defineComponent({
         },
         async initProfile() {
             try {
-                await this.getCoachDetailAsync(this.coachId);
+                // await this.getCoachDetailAsync(this.coachId);
+                const result = await coachProfileService.getCoachProfileDetail(this.coachId);
+                if (result.status === 200) {
+                    this.profileDto = result.data;
+                }
+                else {
+                    alert('حطا در ارتباط');
+                }
             }
             catch (err) { }
         },
@@ -216,21 +194,28 @@ export default defineComponent({
             this.inviteModalShow = true;
 
             this.inviteObject = {
-                coach: this.profileDto.id,
+                coach: this.profileDto.user_id,
                 gym: this.gymId,
                 describtion: ''
             }
         },
         async editProfile() {
             try {
-                this.profileDto = await this.editCoachDetailAsync(this.coachId, this.tempProfileObject);
+                // this.profileDto = await this.editCoachDetailAsync(this.coachId, this.tempProfileObject);
+                const result = await coachProfileService.editCoachProfileDetail(this.coachId, this.tempProfileObject);
+                if (result.status === 201) {
+                    this.profileDto = result.data;
+                }
+                else {
+                    alert('خطا در ارتباط');
+                }
             }
             catch (err) { }
 
             this.editModalShow = false;
         },
         deleteAchievement(index: number) {
-            this.tempProfileObject.achievements.splice(index, 1);
+            this.tempProfileObject.achievement_set.splice(index, 1);
         },
         addAchievement() {
             let tempAchievement: CoachAchievementModel = {
@@ -238,11 +223,15 @@ export default defineComponent({
                 dateRange: ''
             }
 
-            this.tempProfileObject.achievements.push(tempAchievement);
+            this.tempProfileObject.achievement_set.push(tempAchievement);
         },
         async sendInviteCoach() {
             try {
-                await this.sendInviteAsync(this.inviteObject);
+                // await this.sendInviteAsync(this.inviteObject);
+                const result = await coachProfileService.sendInviteMessage(this.inviteObject);
+                if (result.status !== 200) {
+                    alert('خطا در ارتباط');
+                }
             }
             catch (err) { }
 
