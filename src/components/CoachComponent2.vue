@@ -1,5 +1,5 @@
 <template>
-    <div class="row column coach-card">
+    <div class="row column coach-card q-mx-auto">
         <div class="col-lg-5 bg-primary first-section">
             <div class="row justify-end">
 
@@ -37,6 +37,7 @@ import { defineComponent } from 'vue';
 <style scoped lang="scss">
     .coach-card{
         box-shadow: 0 0 4px 0.3px #000;
+        // max-width: 400px;
         .first-section{
             position: relative;
             height: 150px;
