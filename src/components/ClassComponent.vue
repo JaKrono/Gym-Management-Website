@@ -1,14 +1,14 @@
 <template>
-    <div v-if="classObject" class="class-box">
+    <div v-if="classObjectPerview" class="class-box">
         <div class="class-header">
             <img @click="openEditModal()" class="edit-button" src="../assets/images/edit-icon.png"
                 alt="edit button icon">
-            <div class="class-name main-font">{{ classObject.name }}</div>
+            <div class="class-name main-font">{{ classObjectPerview.name }}</div>
         </div>
         <div class="class-detail">
-            <div class="class-detail-item secondary-font">مربی: {{ classObject.coachName }}</div>
-            <div class="class-detail-item secondary-font">ساعت: {{ classObject.time }}</div>
-            <div class="class-detail-item secondary-font">اعضا: {{ classObject.memberCount }}</div>
+            <div class="class-detail-item secondary-font">مربی: {{ classObjectPerview.coachname }}</div>
+            <div class="class-detail-item secondary-font">ساعت: {{ classObjectPerview.time }}</div>
+            <div class="class-detail-item secondary-font">اعضا: {{ classObjectPerview.memebercount }}</div>
         </div>
     </div>
     <div v-if="editModalShow" class="modal-shadow">
@@ -24,7 +24,7 @@
                         <label class="main-font">:نام کلاس</label>
                     </div>
                     <div class="form-item">
-                        <input v-model="editClassObject.coachName" class="form-input" type="text">
+                        <input v-model="editClassObject.coachname" class="form-input" type="text">
                         <label class="main-font">:نام مربی</label>
                     </div>
                     <div class="form-item">
@@ -40,24 +40,34 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { ClassModel } from '@/common/interfaces';
+import { mapActions } from 'vuex';
 
 export default defineComponent({
     props: ['classObject'],
     data: () => ({
         editModalShow: false,
+        classObjectPerview: {} as ClassModel,
         editClassObject: {} as ClassModel
     }),
+    mounted() {
+        this.classObjectPerview = this.classObject;
+    },
     methods: {
+        ...mapActions({
+            editClassAsync: 'user/editClass'
+        }),
         openEditModal() {
-            this.editModalShow = true;
+            this.editClassObject = JSON.parse(JSON.stringify(this.classObjectPerview)) as typeof this.classObjectPerview;
 
-            this.editClassObject = JSON.parse(JSON.stringify(this.classObject)) as typeof this.classObject;
+            this.editModalShow = true;
         },
-        async editClass() {// call edit class API
+        async editClass() {
             try {
-                this.editClassObject;
+                this.classObjectPerview = await this.editClassAsync(this.editClassObject);
             }
             catch (err) { }
+
+            this.editModalShow = false;
         }
     }
 })

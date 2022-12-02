@@ -8,15 +8,15 @@ export default {
         return response;
     },
 
-    sendInviteMessage(coachInvite: InviteCoachModel) {
-        const endpoint = ''; //API url
-        const response = client.post(endpoint, coachInvite);
-        return response;
-    },
-
     editCoachProfileDetail(coachObject: CoachProfileModel) {
         const endpoint = ''; //API url
         const response = client.post(endpoint, coachObject);
+        return response;
+    },
+
+    sendInviteMessage(coachInvite: InviteCoachModel) {
+        const endpoint = 'gym/post-card';
+        const response = client.post(endpoint, coachInvite);
         return response;
     }
 }

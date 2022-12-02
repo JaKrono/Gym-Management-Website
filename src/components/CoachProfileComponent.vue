@@ -55,7 +55,7 @@
                     @click="inviteModalShow = false">
             </div>
             <div class="modal-container">
-                <textarea v-model="inviteObject.message" class="text-field" cols="30" rows="10"></textarea>
+                <textarea v-model="inviteObject.describtion" class="text-field" cols="30" rows="10"></textarea>
                 <div class="button-field">
                     <q-btn @click="sendInviteCoach()" color="primary">ارسال دعوتنامه</q-btn>
                 </div>
@@ -112,6 +112,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { CoachAchievementModel, CoachProfileModel, CoachDetailModel, InviteCoachModel } from '@/common/interfaces';
+import { mapActions } from 'vuex';
 
 export default defineComponent({
     data: () => ({
@@ -182,6 +183,9 @@ export default defineComponent({
         window.removeEventListener('resize', this.onResizePage);
     },
     methods: {
+        ...mapActions({
+            sendInviteAsync: 'user/sendInvite'
+        }),
         onResizePage() {
             this.isMobile = (window.innerWidth < 599.99);
         },
@@ -207,9 +211,9 @@ export default defineComponent({
             this.inviteModalShow = true;
 
             this.inviteObject = {
-                coachId: this.profileDto.id,
-                gymId: this.gymId,
-                message: ''
+                coach: this.profileDto.id,
+                gym: this.gymId,
+                describtion: ''
             }
         },
         editProfile() {//call update profile API
@@ -228,8 +232,13 @@ export default defineComponent({
 
             this.tempProfileObject.achievements.push(tempAchievement);
         },
-        sendInviteCoach() {//call invite coach API 
+        async sendInviteCoach() {
+            try {
+                await this.sendInviteAsync(this.inviteObject);
+            }
+            catch (err) { }
 
+            this.inviteModalShow = false;
         },
         goToCoachListPage() {
             if (!this.isChangablePage) {

@@ -3,11 +3,11 @@ export interface LoginModel {
     password: string
 }
 
-export interface SignupModel{
-    role:number,
-    username:string,
-    email:string,
-    password:string
+export interface SignupModel {
+    role: number,
+    username: string,
+    email: string,
+    password: string
 }
 
 export interface CoachSignupModel extends SignupModel {
@@ -45,9 +45,9 @@ export interface CoachAchievementModel {
 }
 
 export interface InviteCoachModel {
-    coachId: string,
-    gymId: string,
-    message: string
+    coach: string,
+    gym: string,
+    describtion: string
 }
 
 export interface SidebarItemModel {
@@ -57,9 +57,14 @@ export interface SidebarItemModel {
 }
 export interface ClassModel {
     Id: string,
-    gymId: string,
+    gym: string,
     name: string,
-    coachName: string,
+    coachname: string,
     time: string,
-    memberCount: string
+    memebercount: string
+}
+export interface NewClassModel {
+    gym: string,
+    name: string
+    time: string
 }
