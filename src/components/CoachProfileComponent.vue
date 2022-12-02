@@ -1,69 +1,47 @@
 <template>
     <div class="page">
-        <div class="header"></div>
+        <div class="header">
+            <div v-if="!isChangablePage" @click="goToCoachListPage()" class="button-field">
+                <img class="back-button" src="src/assets/images/back-icon.png" alt="back-icon">
+            </div>
+        </div>
         <div class="container">
             <div class="avatar-field">
-                <img class="avatar-icon" src="src/assets/images/avtar-icon.png" alt="avatar-icon">
+                <img class="avatar-icon"
+                    v-bind:src="(profileDto.picUrl) ? profileDto.picUrl : 'src/assets/images/avtar-icon.png'"
+                    alt="avatar-icon">
             </div>
             <div class="mobile-edit-button">
-                <img v-if="false" class="edit-icon" src="src/assets/images/edit-icon.png" alt="edit-icon"
-                    @click="editModalShow = true">
+                <img v-if="isChangablePage" class="edit-icon" src="src/assets/images/edit-icon.png" alt="edit-icon"
+                    @click="openEditModal()">
             </div>
             <div class="avatar-detail-field">
                 <div class="avatar-detail">
-                    <div class="font-size-up-5">سیدحسام حسینی</div>
-                    <div class="q-py-lg font-size-up-1">متن تستی فقط برای دیدن جای خالی و اندازه ها است.
-                        متن تستی فقط برای دیدن جای خالی و اندازه ها است.
-                        متن تستی فقط برای دیدن جای خالی و اندازه ها است.
-                    </div>
+                    <div class="font-size-up-5 avatar-name">{{ profileDto.fullName }}</div>
+                    <div class="q-py-lg font-size-up-1">{{ profileDto.description }}</div>
                 </div>
                 <div class="button-field">
-                    <div class="button-option invite-btn" @click="inviteModalShow = true">دعوت</div>
-                    <div v-if="false" class="button-option edit-btn" @click="editModalShow = true">ویرایش</div>
+                    <q-btn v-if="!isMobile" @click="buttonAction()" color="primary">{{ buttonTitle() }}</q-btn>
                 </div>
             </div>
             <div class="page-section">
                 <div class="section-title">مشخصات :</div>
                 <div class="table">
-                    <div class="table-row">
-                        <div class="table-row-section main-section">قد</div>
-                        <div class="table-row-section detail-section">183</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="table-row-section main-section">سن</div>
-                        <div class="table-row-section detail-section">23</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="table-row-section main-section">جنسیت</div>
-                        <div class="table-row-section detail-section">مرد</div>
+                    <div v-for="detailItem in profileDto.details" class="table-row">
+                        <div class="table-row-section main-section">{{ detailItem.title }}</div>
+                        <div class="table-row-section detail-section">{{ detailItem.value }}</div>
                     </div>
                 </div>
             </div>
             <div class="page-section">
                 <div class="section-title">دستاورد ها :</div>
                 <div class="achievement-list">
-                    <div class="achievement-item">
+                    <div v-for="achievement in profileDto.achievements" class="achievement-item">
                         <img class="achievement-icon" src="src/assets/images/achievement-icon.png"
                             alt="achievement-icon">
                         <div class="achievement-detail">
-                            <div class="achievement-title">اولین قهرمانی</div>
-                            <div class="achievement-date">1399 - 1398</div>
-                        </div>
-                    </div>
-                    <div class="achievement-item">
-                        <img class="achievement-icon" src="src/assets/images/achievement-icon.png"
-                            alt="achievement-icon">
-                        <div class="achievement-detail">
-                            <div class="achievement-title">دومین قهرمانی</div>
-                            <div class="achievement-date">1400 - 1399</div>
-                        </div>
-                    </div>
-                    <div class="achievement-item">
-                        <img class="achievement-icon" src="src/assets/images/achievement-icon.png"
-                            alt="achievement-icon">
-                        <div class="achievement-detail">
-                            <div class="achievement-title">سومین قهرمانی</div>
-                            <div class="achievement-date">1401 - 1400</div>
+                            <div class="achievement-title">{{ achievement.title }}</div>
+                            <div class="achievement-date">{{ achievement.dateRange }}</div>
                         </div>
                     </div>
                 </div>
@@ -77,9 +55,9 @@
                     @click="inviteModalShow = false">
             </div>
             <div class="modal-container">
-                <textarea class="text-field" cols="30" rows="10"></textarea>
+                <textarea v-model="inviteObject.message" class="text-field" cols="30" rows="10"></textarea>
                 <div class="button-field">
-                    <div class="modal-button">ارسال دعوتنامه</div>
+                    <q-btn @click="sendInviteCoach()" color="primary">ارسال دعوتنامه</q-btn>
                 </div>
             </div>
         </div>
@@ -91,20 +69,173 @@
                     @click="editModalShow = false">
             </div>
             <div class="modal-container">
-                <div>Edit Profile Modal</div>
+                <div class="edit-modal">
+                    <div class="modal-item">
+                        <div class="item-title">نام و نام خانوادگی :</div>
+                        <input class="modal-text-field" v-model="tempProfileObject.fullName" type="text">
+                    </div>
+                    <div class="modal-item">
+                        <div class="item-title">بیوگرافی :</div>
+                        <textarea class="modal-text-field" v-model="tempProfileObject.description"></textarea>
+                    </div>
+                    <div class="modal-item">
+                        <div class="item-title">مشخصات :</div>
+                        <div class="edit-detail">
+                            <div v-for="detailItem in tempProfileObject.details" class="edit-detail">
+                                {{ detailItem.title + ':' }}
+                                <input v-model="detailItem.value" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-item">
+                        <div class="item-title">دستاوردها :</div>
+                        <div class="edit-achievement">
+                            <div v-for="(achievement, index) in tempProfileObject.achievements"
+                                class="edit-achievement-item">
+                                <input v-model="achievement.title" type="text" placeholder="عنوان دستاورد">
+                                <input v-model="achievement.dateRange" type="text" placeholder="بازه دستاورد">
+                                <q-btn @click="deleteAchievement(index)" color="red">حذف</q-btn>
+                            </div>
+                            <div @click="addAchievement()" class="add-achievement-item">افزودن دستاورد</div>
+                        </div>
+                    </div>
+                    <div class="modal-item">
+                        <div class="edit-button-field">
+                            <q-btn @click="editProfile()" color="primary">ذخیره</q-btn>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import type { CoachAchievementModel, CoachProfileModel, CoachDetailModel, InviteCoachModel } from '@/common/interfaces';
+
 export default defineComponent({
     data: () => ({
+        coachId: '',
+        gymId: '',
         inviteModalShow: false,
-        editModalShow: false
+        editModalShow: false,
+        isChangablePage: false,
+        isMobile: false,
+        profileDto: {} as CoachProfileModel,
+        tempProfileObject: {} as CoachProfileModel,
+        inviteObject: {} as InviteCoachModel
     }),
-    methods: {
+    async beforeMount() {
+        //it's unsafe methed for handel this issue
+        if (!this.$route.query.coachId || !this.$route.query.gymId) {
+            return;
+        }
 
+        this.coachId = (this.$route.query.coachId)?.toString();
+        this.gymId = (this.$route.query.gymId)?.toString();
+        this.isChangablePage = (this.$route.query.isCoach)?.toString().toLocaleLowerCase() === 'true';
+
+        try {
+            await this.initProfile();
+        }
+        catch (err) { }
+
+        //mock data
+        let tempAge: CoachDetailModel = {
+            title: 'سن',
+            value: '23'
+        }
+        let tempHeight: CoachDetailModel = {
+            title: 'قد',
+            value: '183'
+        }
+        let tempSex: CoachDetailModel = {
+            title: 'جنسیت',
+            value: 'مرد'
+        }
+
+        let temp1: CoachAchievementModel = {
+            title: 'اولین دستاورد',
+            dateRange: '1399 - 1400'
+        }
+        let temp2: CoachAchievementModel = {
+            title: 'دومین دستاورد',
+            dateRange: '1400 - 1401'
+        }
+
+        this.profileDto = {
+            id: '0',
+            fullName: 'سیدحسام حسینی',
+            description: 'متن تستی',
+            picUrl: '',
+            details: [],
+            achievements: []
+        }
+
+        this.profileDto.details.push(tempHeight, tempAge, tempSex);
+        this.profileDto.achievements?.push(temp1, temp2);
+    },
+    mounted() {
+        window.addEventListener('resize', this.onResizePage);
+    },
+    unmounted() {
+        window.removeEventListener('resize', this.onResizePage);
+    },
+    methods: {
+        onResizePage() {
+            this.isMobile = (window.innerWidth < 599.99);
+        },
+        async initProfile() {//call get profile Detail API
+            console.log(this.coachId);
+        },
+        buttonTitle() {
+            return (this.isChangablePage) ? 'ویرایش' : 'دعوت';
+        },
+        buttonAction() {
+            if (this.isChangablePage) {
+                this.openEditModal();
+            }
+            else {
+                this.openInviteModal();
+            }
+        },
+        openEditModal() {
+            this.editModalShow = true;
+            this.tempProfileObject = JSON.parse(JSON.stringify(this.profileDto)) as typeof this.profileDto;
+        },
+        openInviteModal() {
+            this.inviteModalShow = true;
+
+            this.inviteObject = {
+                coachId: this.profileDto.id,
+                gymId: this.gymId,
+                message: ''
+            }
+        },
+        editProfile() {//call update profile API
+
+            this.profileDto = this.tempProfileObject;
+            this.editModalShow = false;
+        },
+        deleteAchievement(index: number) {
+            this.tempProfileObject.achievements.splice(index, 1);
+        },
+        addAchievement() {
+            let tempAchievement: CoachAchievementModel = {
+                title: '',
+                dateRange: ''
+            }
+
+            this.tempProfileObject.achievements.push(tempAchievement);
+        },
+        sendInviteCoach() {//call invite coach API 
+
+        },
+        goToCoachListPage() {
+            if (!this.isChangablePage) {
+                this.$router.push('/search-coach');
+            }
+        }
     }
 })
 </script>
@@ -243,10 +374,27 @@ export default defineComponent({
 }
 
 .header {
+    display: flex;
+    justify-content: right;
+    padding: 10px;
     width: 100%;
     height: 150px;
     background-color: $primary;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.05);
+
+    .button-field {
+        @extend .centerlize-item;
+        min-width: 35px;
+        max-width: 35px;
+        height: 35px;
+    }
+
+    .back-button {
+        min-width: 30px;
+        max-width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
 }
 
 .container {
@@ -286,7 +434,7 @@ export default defineComponent({
 
     .avatar-detail {
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: column nowrap;
         align-items: center;
         align-content: flex-start;
         justify-content: left;
@@ -296,8 +444,6 @@ export default defineComponent({
 
     .avatar-name {
         width: 100%;
-        font-size: 36px;
-        font-weight: 700;
         text-align: left;
     }
 
@@ -320,33 +466,6 @@ export default defineComponent({
         align-content: flex-start;
         flex-flow: row nowrap;
         gap: 15px;
-    }
-
-    .button-option {
-        @extend .centerlize-item;
-        width: 170px;
-        height: 45px;
-        border-radius: 8px;
-        color: white;
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    .invite-btn {
-        background-color: $primary;
-
-        &:hover {
-            background: darken($primary, 10%);
-        }
-    }
-
-    .edit-btn {
-        background-color: #bebebe;
-
-        &:hover {
-            background: darken(#bebebe, 10%);
-        }
     }
 }
 
@@ -450,7 +569,106 @@ export default defineComponent({
     }
 }
 
-@media all and (min-width: 721px) and (max-width: 1080px) {
+.edit-modal {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 20px;
+    align-content: flex-start;
+
+    .modal-item {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: left;
+        align-items: center;
+        gap: 10px;
+
+        input {
+            width: 100%;
+            height: 40px;
+            border: 1px solid $background;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            border: 1px solid $background;
+        }
+
+        .item-title {
+            width: 100%;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .edit-detail {
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 500;
+            gap: 10px;
+
+            .detail-item {
+                display: flex;
+                flex-flow: row nowrap;
+                gap: 5px;
+            }
+        }
+    }
+}
+
+.modal-text-field {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.edit-button-field {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.edit-achievement {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    gap: 10px;
+
+    .edit-achievement-item {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 15px;
+        justify-content: left;
+        align-items: center;
+        width: 100%;
+        height: 40px;
+    }
+
+    .add-achievement-item {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 5px;
+        background-color: $secondary;
+        color: white;
+        margin-top: 15px;
+        cursor: pointer;
+    }
+}
+
+@media all and (min-width: 600px) and (max-width: 1023.99px) {
     .header {
         height: 100px;
     }
@@ -515,7 +733,7 @@ export default defineComponent({
     }
 }
 
-@media all and (max-width: 720px) {
+@media all and (max-width: 599.99px) {
     .mobile-edit-button {
         width: 100%;
         height: 25px;

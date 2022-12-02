@@ -51,10 +51,26 @@ const router = createRouter({
       }
     },
     {
+      path: '/club-classes',
+      name: 'Club Classes',
+      components: {
+        default: () => import("@/components/ClassesComponent.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
       path: '/chome',
-      name: 'chome',
+      name: 'Customer Home',
       components: {
         default: () => import("@/views/CHome.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path: '/cprofile',
+      name: 'Customer Profile',
+      components: {
+        default: () => import("@/views/CProfile.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     }

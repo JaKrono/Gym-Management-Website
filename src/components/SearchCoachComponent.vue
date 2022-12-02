@@ -4,18 +4,16 @@
             <div class="search-section">
                 <div class="search-bar q-md-sm">
                     <img class="search-icon" style="margin-right: 8px" src="src/assets/images/search-icon.png">
-                    <input type="text" class="search-input" placeholder="لطفا نام مربی مورد نظر خود رو وارد کنید ...">
+                    <input type="text" v-model="coachName" class="search-input"
+                        placeholder="لطفا نام مربی مورد نظر خود رو وارد کنید ...">
                 </div>
-                <div class="search-button">جستجو</div>
+                <q-btn @click="getCoaches()" color="primary">جستجو</q-btn>
             </div>
             <div class="result-section">
-                <div class="empty-field ">موردی یافت نشد !</div>
-                <CoachComponent2 class="coach-item"></CoachComponent2>
-                <CoachComponent2 class="coach-item"></CoachComponent2>
-                <CoachComponent2 class="coach-item"></CoachComponent2>
-                <CoachComponent2 class="coach-item"></CoachComponent2>
-                <CoachComponent2 class="coach-item"></CoachComponent2>
-                <CoachComponent2 class="coach-item"></CoachComponent2>
+                <div v-if="(coachList.length === 0)" class="empty-field ">موردی یافت نشد !</div>
+                <template v-for="coach in coachList">
+                    <CoachComponent2 class="coach-item" :coachObject="coach"></CoachComponent2>
+                </template>
             </div>
         </div>
     </div>
@@ -23,14 +21,48 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CoachComponent2 from './CoachComponent2.vue';
+import type { CoachProfileModel } from '@/common/interfaces';
+
 export default defineComponent({
     components: {
         CoachComponent2
     },
     data: () => ({
+        coachName: '',
+        coachList: [] as CoachProfileModel[]
     }),
-    methods: {
+    beforeMount() {
 
+        //mock data
+        let temp1 = {
+            id: '0',
+            fullName: 'سیدحسام حسینی',
+            description: 'متن تستی',
+            picUrl: '',
+            details: [],
+            achievements: []
+        }
+
+        let temp2 = {
+            id: '1',
+            fullName: 'سیدامیر حسینی',
+            description: 'متن تستی',
+            picUrl: '',
+            details: [],
+            achievements: []
+        }
+
+        this.coachList.push(temp1, temp2);
+    },
+    methods: {
+        async getCoaches() {//call search coach API
+            try {
+                this.coachList;
+            }
+            catch (err) { }
+
+            this.coachName = '';
+        }
     }
 })
 </script>
@@ -115,22 +147,6 @@ export default defineComponent({
     height: 24px;
 }
 
-.search-button {
-    @extend .centerlize-item;
-    @extend .main-font;
-    width: 120px;
-    height: 40px;
-    padding: 5px 10px;
-    color: #ffffff;
-    background-color: $primary;
-    border-radius: 5px;
-    cursor: pointer;
-
-    &:hover {
-        background: darken($primary, 10%);
-    }
-}
-
 .coach-item {
     width: 260px;
 }
@@ -178,10 +194,6 @@ export default defineComponent({
             padding-left: unset;
             font-size: 12px;
         }
-    }
-
-    .search-button {
-        width: 80px;
     }
 
     .empty-field {
