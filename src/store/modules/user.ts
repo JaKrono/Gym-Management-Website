@@ -1,5 +1,6 @@
 import type { ClassModel, LoginModel, SignupModel, NewClassModel, InviteCoachModel, CoachProfileModel } from "@/common/interfaces";
-import { Authentication, classListService, coachProfileService } from "@/repositories/index"
+import { Authentication, classListService, coachProfileService, searchCoachService } from "@/repositories/index";
+
 export default {
     namespaced: true,
     state: () => ({
@@ -66,6 +67,10 @@ export default {
         },
         async editCoachDetail(coachId: string, coachObject: CoachProfileModel) {
             const response = await coachProfileService.editCoachProfileDetail(coachId, coachObject);
+            return response.data;
+        },
+        async searchCoach(coachName: string) {
+            const response = await searchCoachService.searchCoachList(coachName);
             return response.data;
         }
     }

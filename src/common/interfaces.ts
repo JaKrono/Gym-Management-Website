@@ -68,3 +68,18 @@ export interface NewClassModel {
     name: string
     time: string
 }
+
+export interface SearchCoachModel {
+    user_id: string,
+    achievement_set: CoachAchievementModel[],
+    description: string,
+    detail_set: CoachDetailModel[],
+    user: {
+        username: string,
+        first_name: string,
+        last_name: string,
+        gender: string,
+        personal_id: string,
+        picUrl: string
+    }
+}

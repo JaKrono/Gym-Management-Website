@@ -10,9 +10,13 @@
                 <q-btn @click="getCoaches()" color="primary">جستجو</q-btn>
             </div>
             <div class="result-section">
-                <div v-if="(coachList.length === 0)" class="empty-field ">موردی یافت نشد !</div>
-                <template v-for="coach in coachList">
+                <!-- <div v-if="(coachList.length === 0)" class="empty-field ">موردی یافت نشد !</div> -->
+                <!-- <template v-for="coach in coachList">
                     <CoachComponent2 class="coach-item" :coachObject="coach"></CoachComponent2>
+                </template> -->
+                <div v-if="(!flag)" class="empty-field ">موردی یافت نشد !</div>
+                <template v-if="(flag)">
+                    <CoachComponent2 class="coach-item" :coachObject="searchResult"></CoachComponent2>
                 </template>
             </div>
         </div>
@@ -21,7 +25,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CoachComponent2 from './CoachComponent2.vue';
-import type { CoachProfileModel } from '@/common/interfaces';
+import type { CoachProfileModel, SearchCoachModel } from '@/common/interfaces';
+import { mapActions } from 'vuex';
+import { searchCoachService } from "@/repositories/index";
 
 export default defineComponent({
     components: {
@@ -29,35 +35,26 @@ export default defineComponent({
     },
     data: () => ({
         coachName: '',
-        coachList: [] as CoachProfileModel[]
+        coachList: [] as CoachProfileModel[],
+        searchResult: {} as SearchCoachModel,
+        flag: false
     }),
-    beforeMount() {
-
-        //mock data
-        let temp1 = {
-            id: '0',
-            fullName: 'سیدحسام حسینی',
-            description: 'متن تستی',
-            picUrl: '',
-            details: [],
-            achievements: []
-        }
-
-        let temp2 = {
-            id: '1',
-            fullName: 'سیدامیر حسینی',
-            description: 'متن تستی',
-            picUrl: '',
-            details: [],
-            achievements: []
-        }
-
-        this.coachList.push(temp1, temp2);
-    },
     methods: {
-        async getCoaches() {//call search coach API
+        ...mapActions({
+            searchCoachAsync: 'user/searchCoach'
+        }),
+        async getCoaches() {
             try {
-                this.coachList;
+                // this.coachList = await this.searchCoachAsync(this.coachName);
+                const searchCoachOutput = await searchCoachService.searchCoachList(this.coachName);
+                if (searchCoachOutput.status === 200) {
+                    this.searchResult = searchCoachOutput.data;
+                    this.flag = true;
+                }
+                else {
+                    this.flag = false;
+                }
+                console.log(this.searchResult);
             }
             catch (err) { }
 
