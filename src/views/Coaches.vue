@@ -1,58 +1,21 @@
 <template>
     <q-page>
-        <!-- <div class="search-section bg-secondary">
-            <div class="row column" style="gap:3em">
-            <div class="col-lg-12">
-                <SearchBarComponent></SearchBarComponent>
-            </div>
-            <div class="row" style="gap:1em">
-                <div class="filter-item">
-                    <label class="field-label ">رشته:</label>
-                    <q-select class="bg-white q-mt-sm" outlined></q-select>
-                </div>
-                <div class="filter-item">
-                    <label class="field-label ">رشته:</label>
-                    <q-select class="bg-white q-mt-sm" outlined></q-select>
-                </div>
-                <div class="filter-item">
-                    <label class="field-label ">رشته:</label>
-                    <q-select class="bg-white q-mt-sm" outlined></q-select>
-                </div>
-                <div class="filter-item">
-                    <label class="field-label ">رشته:</label>
-                    <q-select class="bg-white q-mt-sm" outlined></q-select>
-                </div>  
-            </div>
-        </div>
-    </div> -->
         <div class="row content-center q-px-lg" style="align-items:center">
 
             <h5 class="">مربی ها</h5>
             <q-space></q-space>
             <q-btn @click="navigateToCoachSearch" color="primary" icon="add" style="height:40px">افزودن مربی</q-btn>
         </div>
-        <div class="row q-pa-md flex-gap content-start">
-        <div class="col-lg-3 col-sm-5 col-xs-10">
-            <CoachComponent2 :isInAddState="false"></CoachComponent2>
-        </div>
-        <div class="col-lg-3 col-sm-5 col-xs-10">
-            <CoachComponent2 :isInAddState="false"></CoachComponent2>
-        </div>
-        <div class="col-lg-3 col-sm-5 col-xs-10">
-            <CoachComponent2 :isInAddState="false"></CoachComponent2>
-        </div>
-        <!-- <div class="col-lg-3">
-            <CoachComponent2></CoachComponent2>
-        </div>
-        <div class="col-lg-3">
-            <CoachComponent2></CoachComponent2>
-        </div> -->
-        <!-- <div class="col-lg-3">
-            <CoachComponent1></CoachComponent1>
-        </div>
-        <div class="col-lg-3">
-            <CoachComponent2></CoachComponent2>
-        </div> -->
+        <div class="row justify-start q-pa-lg" :class="{'justify-center':$q.screen.xs}">
+            <div class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
+                <CoachComponent2 :isInAddState="false"></CoachComponent2>
+            </div>
+            <div class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
+                <CoachComponent2 :isInAddState="false"></CoachComponent2>
+            </div>
+            <div class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
+                <CoachComponent2 :isInAddState="false"></CoachComponent2>
+            </div>
         </div>
         
     </q-page>
@@ -89,12 +52,6 @@ export default defineComponent({
 </script>
 
 <style>
-    .flex-gap{
-        gap:2em;
-    }
-    .filter-item{
-        flex-grow: 1;
-    }
     .dashboard-landing{
         background-color: black;
         height: 200px;

@@ -9,7 +9,7 @@ export default{
     },
 
     signup(signupModel:SignupModel){
-        const endpoint = '/register/'
+        const endpoint = '/auth/users'
         const response = client.post(endpoint,signupModel)
         return response;
     }
