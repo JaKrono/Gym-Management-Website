@@ -1,4 +1,4 @@
-import type { ClassModel, LoginModel, SignupModel, NewClassModel, InviteCoachModel } from "@/common/interfaces";
+import type { ClassModel, LoginModel, SignupModel, NewClassModel, InviteCoachModel, CoachProfileModel } from "@/common/interfaces";
 import { Authentication, classListService, coachProfileService } from "@/repositories/index"
 export default {
     namespaced: true,
@@ -58,6 +58,14 @@ export default {
         },
         async sendInvite(inviteObject: InviteCoachModel) {
             const response = await coachProfileService.sendInviteMessage(inviteObject);
+            return response.data;
+        },
+        async getCoachDetail(coachId: string) {
+            const response = await coachProfileService.getCoachProfileDetail(coachId);
+            return response.data;
+        },
+        async editCoachDetail(coachId: string, coachObject: CoachProfileModel) {
+            const response = await coachProfileService.editCoachProfileDetail(coachId, coachObject);
             return response.data;
         }
     }

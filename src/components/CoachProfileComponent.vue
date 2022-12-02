@@ -184,13 +184,18 @@ export default defineComponent({
     },
     methods: {
         ...mapActions({
-            sendInviteAsync: 'user/sendInvite'
+            sendInviteAsync: 'user/sendInvite',
+            getCoachDetailAsync: 'user/getCoachDetail',
+            editCoachDetailAsync: 'user/editCoachDetail'
         }),
         onResizePage() {
             this.isMobile = (window.innerWidth < 599.99);
         },
-        async initProfile() {//call get profile Detail API
-            console.log(this.coachId);
+        async initProfile() {
+            try {
+                await this.getCoachDetailAsync(this.coachId);
+            }
+            catch (err) { }
         },
         buttonTitle() {
             return (this.isChangablePage) ? 'ویرایش' : 'دعوت';
@@ -216,9 +221,12 @@ export default defineComponent({
                 describtion: ''
             }
         },
-        editProfile() {//call update profile API
+        async editProfile() {
+            try {
+                this.profileDto = await this.editCoachDetailAsync(this.coachId, this.tempProfileObject);
+            }
+            catch (err) { }
 
-            this.profileDto = this.tempProfileObject;
             this.editModalShow = false;
         },
         deleteAchievement(index: number) {
