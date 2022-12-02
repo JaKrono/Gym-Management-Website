@@ -56,7 +56,7 @@ export interface SidebarItemModel {
     path: string
 }
 export interface ClassModel {
-    Id: string,
+    id: string,
     gym: string,
     name: string,
     coachname: string,
