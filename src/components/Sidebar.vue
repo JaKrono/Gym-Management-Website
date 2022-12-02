@@ -42,7 +42,7 @@ import SidebarItemVue from './SidebarItem.vue';
         },
         mounted(){
             // if(this.role === roles.owner){
-                this.items = [{id:1, title:'پروفایل', icon:'dashboard', path:'/dashboard'},{id:3, title:'مربی ها', icon:'person', path:'/coaches'},{id:2, title:'اعضا', icon:'person', path:'/customers'}]
+                this.items = [{id:1, title:'پروفایل', icon:'dashboard', path:'/dashboard'},{id:3, title:'مربی ها', icon:'person', path:'/coaches'},{id:2, title:'اعضا', icon:'groups', path:'/customers'}]
             // }
         },
         methods:{
