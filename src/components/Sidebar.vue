@@ -19,53 +19,59 @@ import { roles } from '@/common/enums';
 import { defineComponent } from 'vue';
 import { mapActions, mapMutations, mapState } from 'vuex';
 import SidebarItemVue from './SidebarItem.vue';
-    export default defineComponent({
-        components:{SidebarItemVue},
-        data:()=>({
-            selectedId:0,
-            items:[] as any,
-            width: window.innerWidth
-        }),
-        computed:{
-            sidebarIsVisible:{
-                get():any{
-                    return this.$store.state.global.sidebarIsVisible as any
-                },
-                set(value:boolean){
-                    this.$store.commit('global/changeSidebarVisibility', value)
-                }
+export default defineComponent({
+    components: { SidebarItemVue },
+    data: () => ({
+        selectedId: 0,
+        items: [] as any,
+        width: window.innerWidth
+    }),
+    computed: {
+        sidebarIsVisible: {
+            get(): any {
+                return this.$store.state.global.sidebarIsVisible as any
             },
-            ...mapState({
-                role: state => state.user.role
-            }),
+            set(value: boolean) {
+                this.$store.commit('global/changeSidebarVisibility', value)
+            }
 
         },
-        mounted(){
-            // if(this.role === roles.owner){
-                this.items = [{id:1, title:'پروفایل', icon:'dashboard', path:'/dashboard'},{id:3, title:'مربی ها', icon:'person', path:'/coaches'},{id:2, title:'اعضا', icon:'groups', path:'/customers'}]
-            // }
+    },
+    mounted() {
+        // if(this.role === roles.owner){
+        this.items = [
+            { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard' },
+            { id: 2, title: 'مربی ها', icon: 'person', path: '/coaches' },
+            { id: 3, title: 'کلاس ها', icon: 'class', path: '/club-classes' },
+            { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach' }
+        ]
+        this.items = [{id:1, title:'پروفایل', icon:'dashboard', path:'/dashboard'},{id:3, title:'مربی ها', icon:'person', path:'/coaches'},{id:2, title:'اعضا', icon:'groups', path:'/customers'}]
+
+        // }
+    },
+    methods: {
+        ...mapMutations({
+            hideSidebar: 'global/hideSidebar',
+            showSidebar: 'global/showSidebar',
+        }),
+        itemClicked(id: number) {
+            this.selectedId = id;
         },
-        methods:{
-            ...mapMutations({
-                hideSidebar:'global/hideSidebar',
-                showSidebar:'global/showSidebar',
-            }),
-            itemClicked(id:number){
-                this.selectedId= id;
-            },
-            isItemSelected(id:number){
-                return this.selectedId === id;
-            }
-        },
-        watch:{
-            '$q.screen.width':function(newValue){
-                if(newValue> 1080)
-                    this.showSidebar();
-                else{
-                    this.hideSidebar();
-                }
+        isItemSelected(id: number) {
+            return this.selectedId === id;
+        }
+    },
+    watch: {
+        '$q.screen.width': function (newValue) {
+            if (newValue > 1080)
+                this.showSidebar();
+            else {
+                this.hideSidebar();
             }
         }
-    })
+    }
+})
 </script>
-<style></style>
+<style>
+
+</style>

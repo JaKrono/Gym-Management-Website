@@ -1,17 +1,15 @@
 <template>
-    <div class="row column coach-card q-mx-auto">
+    <div v-if="coachObject" class="row column coach-card">
         <div class="col-lg-5 bg-primary first-section">
             <div class="row justify-end">
-
                 <q-btn v-if="isInAddState" icon="add" flat color="white" rounded fab></q-btn>
             </div>
             <div class="image-cn">
-                <img src="player.jpg" class="user-image"/>
+                <img v-bind:src="(coachObject.picUrl) ? coachObject.picUrl : 'player.jpg'" class="user-image" />
             </div>
         </div>
         <div class="col-lg-7 q-pa-md second-section row column ">
-            
-            <div style="font-size:1.3em">بیژن مرتضوی</div>
+            <div style="font-size:1.3em">{{ coachObject.fullName }}</div>
             <div>مربی</div>
             <q-space></q-space>
             <q-btn @click="showCoachClicked" color="primary" outline>مشاهده پروفایل</q-btn>
@@ -22,15 +20,18 @@
 import { defineComponent } from 'vue';
 
     export default defineComponent({
-        props:['isInAddState'],
-        mounted(){
-            console.log(this.isInAddState);
-            
-        },
+        props: ['isInAddState', 'coachObject'],
+    
         methods: {
             showCoachClicked() {
-                this.$router.push('/coach-profile')
-            }
+            let params = {
+                coachId: this.coachObject.id,
+                gymId: '1', //temp gymId
+                isCoach: 'false'
+            };
+
+            this.$router.push({ path: '/coach-profile', query: params })
+        }
         }
     })
 </script>
@@ -61,4 +62,5 @@ import { defineComponent } from 'vue';
             height: 300px;
         }
     }
-</style> 
+
+</style>
