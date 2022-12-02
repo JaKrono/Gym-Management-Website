@@ -35,15 +35,16 @@ export default {
 
             if (response.status === 201) {
                 commit('setToken', response.data.token)
-                commit('setIsSignedIn', true)
-                dispatch('notification/showNotification', { message: 'ورود موفق', type: 'positive', timeout: 2000 }, { root: true })
-                return true;
+                return dispatch('login', signup)
+                // commit('setIsSignedIn', true)
+                // dispatch('notification/showNotification', { message: 'ورود موفق', type: 'positive', timeout: 2000 }, { root: true })
+                // return true;
             } else {
                 dispatch('notification/showNotification', { message: response?.data.username[0] || "خطا در برقراری ازتباط", type: 'negative', timeout: 2000 }, { root: true })
-                console.log(response.data.username[0])
                 return false;
             }
         },
+        
         async getClassList() {
             const response = await classListService.getClassList();
             return response.data;

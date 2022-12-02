@@ -7,8 +7,9 @@
 <script lang="ts">
 import LoginComponent from '../components/LoginComponent.vue'
 import SignupComponent from "../components/SignupComponent.vue"
+import { setToken } from '@/repositories/client/axios'
 import { defineComponent } from 'vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import type { LoginModel, SignupModel } from '@/common/interfaces'
 
     export default defineComponent({
@@ -18,6 +19,11 @@ import type { LoginModel, SignupModel } from '@/common/interfaces'
                 state:1
             }
         },
+        computed:{
+            ...mapState({
+                token:state=>state.user.token
+            })
+        },
         methods:{
             ...mapActions({
                 login: 'user/login',
@@ -26,6 +32,7 @@ import type { LoginModel, SignupModel } from '@/common/interfaces'
             async submitLoginForm(model:LoginModel){
                 const result = await this.login(model)
                 if(result){
+                    setToken(this.token)
                     this.$router.push('/dashboard')
                 }
             },

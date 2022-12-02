@@ -3,13 +3,19 @@ import { defineComponent } from 'vue';
 import ToolbarComponent from './components/ToolbarComponent.vue';
 import { Notify } from 'quasar';
 import { mapState } from 'vuex';
+import { setToken } from './repositories/client/axios';
 export default defineComponent({
   components: { ToolbarComponent },
   computed: {
     ...mapState({
       hasNotification: (state: any) => state.notification.hasNotification,
-      notification: (state: any) => state.notification.notification
+      notification: (state: any) => state.notification.notification,
+      token: state => state.user.token
     })
+  },
+  mounted(){
+    if(this.token)
+    setToken(this.token)
   },
 
   watch: {
