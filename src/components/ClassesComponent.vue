@@ -43,6 +43,7 @@ import { defineComponent } from 'vue';
 import ClassComponent from './ClassComponent.vue';
 import type { ClassModel, NewClassModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
+import { classListService } from "@/repositories/index";
 
 export default defineComponent({
     components: {
@@ -64,7 +65,14 @@ export default defineComponent({
         }),
         async getClassList() {
             try {
-                this.classList = await this.getClassListAsync();
+                // this.classList = await this.getClassListAsync();
+                const result = await classListService.getClassList();
+                if (result.status === 200) {
+                    this.classList = result.data;
+                }
+                else {
+                    this.classList = [];
+                }
             }
             catch (err) { }
         },
@@ -77,9 +85,13 @@ export default defineComponent({
                 time: ''
             }
         },
-        async addClass() { // call add class API
+        async addClass() {
             try {
-                await this.addClassAsync(this.newClassObject);
+                // await this.addClassAsync(this.newClassObject);
+                const result = await classListService.addClassItem(this.newClassObject);
+                if (result.status === 201) {
+                    this.classList.push(result.data);
+                }
             }
             catch (err) { }
 
