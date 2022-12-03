@@ -232,7 +232,7 @@ export default defineComponent({
             try {
                 // await this.sendInviteAsync(this.inviteObject);
                 const result = await coachProfileService.sendInviteMessage(this.inviteObject);
-                if (result.status !== 200) {
+                if (result.status !== 201) {
                     alert('خطا در ارتباط');
                 }
             }
