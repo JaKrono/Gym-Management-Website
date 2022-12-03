@@ -1,5 +1,6 @@
 import type { ClassModel, LoginModel, SignupModel, NewClassModel, InviteCoachModel, CoachProfileModel, GymModel } from "@/common/interfaces";
-import { Authentication, classListService, coachProfileService, Gym } from "@/repositories/index"
+import { Authentication, classListService, coachProfileService, Gym,searchCoachService } from "@/repositories/index"
+
 export default {
     namespaced: true,
     state: () => ({
@@ -111,6 +112,10 @@ export default {
             state.role = -1,
             state.userId=null,
             state.gym = {id:null,name:"",address:"",phone:"",gym_reg_code:"",user:null}
+        },
+        async searchCoach(coachName: string) {
+            const response = await searchCoachService.searchCoachList(coachName);
+            return response.data;
         }
     }
 }

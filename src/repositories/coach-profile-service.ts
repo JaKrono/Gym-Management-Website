@@ -1,4 +1,4 @@
-import type { InviteCoachModel, CoachProfileModel } from "@/common/interfaces";
+import type { InviteCoachModel, SearchCoachModel } from "@/common/interfaces";
 import client from "./client/axios";
 export default {
 
@@ -8,9 +8,9 @@ export default {
         return response;
     },
 
-    editCoachProfileDetail(coachId: string, coachObject: CoachProfileModel) {
+    editCoachProfileDetail(coachId: string, coachObject: SearchCoachModel) {
         const endpoint = `/api/coach/update-coach/${coachId}/`;
-        const response = client.post(endpoint, coachObject);
+        const response = client.put(endpoint, coachObject);
         return response;
     },
 

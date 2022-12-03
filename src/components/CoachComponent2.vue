@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="col-lg-7 q-pa-md second-section row column ">
-            <div style="font-size:1.3em">{{ coachObject.fullName }}</div>
+            <div style="font-size:1.3em">{{ getName() }}</div>
             <div>مربی</div>
             <q-space></q-space>
             <q-btn @click="showCoachClicked" color="primary" outline>مشاهده پروفایل</q-btn>
@@ -19,18 +19,24 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-    export default defineComponent({
-        props: ['isInAddState', 'coachObject'],
-    
-        methods: {
-            showCoachClicked() {
+export default defineComponent({
+    props: ['isInAddState', 'coachObject'],
+    mounted() {
+        console.log(this.isInAddState);
+        console.log(this.coachObject);
+    },
+    methods: {
+        showCoachClicked() {
             let params = {
-                coachId: this.coachObject.id,
+                coachId: this.coachObject.user_id,
                 gymId: '1', //temp gymId
                 isCoach: 'false'
             };
 
             this.$router.push({ path: '/coach-profile', query: params })
+        },
+        getName() {
+            return (this.coachObject.user.first_name + ' ' + this.coachObject.user.last_name);
         }
         }
     })
