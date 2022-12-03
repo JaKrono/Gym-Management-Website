@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import CoachProfileComponentVue from '@/components/CoachProfileComponent.vue';
 import SearchCoachComponentVue from '@/components/SearchCoachComponent.vue';
+import store from '@/store';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,6 +12,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
+      meta:{},
       component: LoginView
     },
     {
@@ -24,6 +26,7 @@ const router = createRouter({
     {
       path:'/dashboard',
       name:'dashboard',
+      meta:{requireAuth:true},
       components:{
         default: () => import("@/views/Profile.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
@@ -47,6 +50,14 @@ const router = createRouter({
       name: 'Search Coach',
       components:{
         default: () => import("@/components/SearchCoachComponent.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path:'/customers',
+      name:'customers',
+      components:{
+        default: () => import("@/views/Customers.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
@@ -100,5 +111,12 @@ const router = createRouter({
     // }
   ]
 })
-
+router.beforeEach((to, from, next) => {
+  if(to.meta['requireAuth'] && !store.state.user.isSignedIn ){
+    next('/login')
+  }
+  else{
+    next()
+  }
+})
 export default router

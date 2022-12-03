@@ -8,5 +8,5 @@ client.interceptors.response.use((value:any)=>{
 
 export default client;
 export function setToken(token:string){
-    client.defaults.headers.common['Authorization'] = token;
+    client.defaults.headers.common['Authorization'] = 'token '+token;
 }

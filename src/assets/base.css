@@ -5,6 +5,7 @@
 *{
     font-family: IranSans ;
     font-size:inherit;
+    box-sizing: border-box;
 }
 .fill-page{
     height:100%;

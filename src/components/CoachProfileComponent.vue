@@ -255,7 +255,7 @@ export default defineComponent({
     }
 })
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 @keyframes fadeIn {
     0% {
         background: rgba(0, 0, 0, 0);

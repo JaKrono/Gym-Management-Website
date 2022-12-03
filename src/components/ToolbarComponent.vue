@@ -1,6 +1,10 @@
 <template>
     <q-toolbar class="bg-primary text-black toolbar">
             <q-btn @click="showSidebar" v-if="sidebarIsHidden" color="white" flat icon="menu" />
+            <q-space></q-space>
+            <q-btn flat color="secondary" round class="text-white" icon="person">
+                <!-- <q-avatar color="red"></q-avatar> -->
+            </q-btn>
         <!-- <q-toolbar-title>باشگاه ورزشی</q-toolbar-title> -->
     </q-toolbar>
 </template>

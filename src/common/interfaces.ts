@@ -68,6 +68,14 @@ export interface NewClassModel {
     name: string
     time: string
 }
+export interface GymModel{
+    id:number,
+    name:string,
+    address:string,
+    phone:string,
+    gym_reg_code:string,
+    user:number
+}
 
 export interface CustomerProfileModel {
     username: string,

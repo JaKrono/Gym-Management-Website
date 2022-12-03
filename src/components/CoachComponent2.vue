@@ -38,37 +38,35 @@ export default defineComponent({
         getName() {
             return (this.coachObject.user.first_name + ' ' + this.coachObject.user.last_name);
         }
-    }
-})
+        }
+    })
 </script>
 <style scoped lang="scss">
-.coach-card {
-    box-shadow: 0 0 4px 0.3px #000;
-
-    .first-section {
-        position: relative;
-        height: 150px;
-    }
-
-    .image-cn {
-        width: 100px;
-        height: 100px;
-        overflow: hidden;
-        border-radius: 50%;
-        position: absolute;
-        bottom: -30px;
-        right: 10px;
-
-        .user-image {
+    .coach-card{
+        box-shadow: 0 0 4px 0.3px #000;
+        // max-width: 400px;
+        .first-section{
+            position: relative;
+            height: 150px;
+        }
+        .image-cn{
             width: 100px;
             height: 100px;
-            object-fit: cover;
-            bottom: 0;
+            overflow: hidden;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -30px;
+            right: 10px;
+            .user-image{
+                width:100px;
+                height:100px;
+                object-fit: cover;
+                bottom: 0;
+            }
+        }
+        .second-section{
+            height: 300px;
         }
     }
 
-    .second-section {
-        height: 300px;
-    }
-}
-</style> 
+</style>
