@@ -1,10 +1,12 @@
 <template>
    <q-page>
-      <div class="row content-center q-px-lg">
-         <div class="row col-12 q-pt-lg no-wrap"> 
-            <!-- Hides the extra content in case of long username or email. -->
+      <div class="row col-12 content-center q-px-lg">
+
+         <!-- <div class="row col-12 q-pt-lg no-wrap"> 
+            Hides the extra content in case of long username or email.
             <q-avatar size="6em" class="text-white" icon="person" color="secondary"></q-avatar>
             <div class="column q-ml-md items-start justify-end" >
+               TODO_asghar: Fix ellipsis classes
                <p class="q-mb-sm font-size-up-3 bold-text ellipsis-1"
                   :style="[$q.screen.width >= 1024 ? {'max-width': 'calc(100vw - 148px - 300px)'} : {'max-width': 'calc(100vw - 148px)'}]">
                   {{ this.name || this.username }}
@@ -14,14 +16,14 @@
                   {{ this.phoneNumber || this.email }}
                </p>
             </div>
-         </div>
+         </div> -->
          
          <div class="row col-12 q-my-lg">
 
             <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
                <!-- Can also be favorite or recently added clubs. -->
                <p class="col-sm-auto font-size-up-4 bold-text">باشگاه‌های ثبت نام شده</p>
-               <q-btn class="col-12 col-sm-auto q-px-sm q-mt-sm q-mt-sm-none" color="primary">مدیریت باشگاه‌ها</q-btn>
+               <q-btn @click="navigateToCustomerGyms" class="col-12 col-sm-auto q-px-sm q-mt-sm q-mt-sm-none" color="primary">مدیریت باشگاه‌ها</q-btn>
             </div>
 
             <div class="row col-12">
@@ -45,7 +47,7 @@
                               </q-card-section>
 
                               <q-card-actions class="flex" align="right">
-                                 <q-btn color="secondary">
+                                 <q-btn @click="navigateToGymProfile" color="secondary">
                                     <p class="font-size-down-1">مشاهده اطلاعات</p>
                                  </q-btn>
                               </q-card-actions>
@@ -77,6 +79,12 @@ export default defineComponent({
                {name: 'زورخانه پهلوان بیژن مرتضوی', img: 'gym5.jpg' } ]
    }),
    methods: {
+      navigateToCustomerGyms() {
+         this.$router.push('/cgyms')
+      },
+      navigateToGymProfile() {
+         this.$router.push('/cgymprofile')
+      }
    }
 })
 </script>

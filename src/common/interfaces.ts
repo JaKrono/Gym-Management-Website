@@ -68,3 +68,19 @@ export interface NewClassModel {
     name: string
     time: string
 }
+
+export interface CustomerProfileModel {
+    username: string,
+    email: string,
+    name: string,
+    lastname: string,
+    phoneNumber: string,
+    sex: string
+}
+
+export interface GymModel {
+    name: string,
+    adress: string,
+    phone: string,
+    gym_reg_code: string
+}

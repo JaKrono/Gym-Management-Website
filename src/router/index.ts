@@ -73,6 +73,22 @@ const router = createRouter({
         default: () => import("@/views/CProfile.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
+    },
+    {
+      path: '/cgyms',
+      name: 'Customer Gyms',
+      components: {
+        default: () => import("@/views/CGyms.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path: '/cgymprofile',
+      name: 'Gym Profile',
+      components: {
+        default: () => import("@/views/CGymProfile.vue"),
+        // RightSidebar: () => import("@/components/Sidebar.vue")
+      }
     }
     // {
     //   path: '/about',
