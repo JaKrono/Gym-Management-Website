@@ -9,9 +9,7 @@ export default {
     },
 
     editClassDetail(classId: string, classObject: ClassModel) {
-        console.log(classId);
         const endpoint = `/gym/course/${classId}/`;
-        console.log(endpoint);
         const response = client.put(endpoint, classObject);
         return response;
     },

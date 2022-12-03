@@ -56,7 +56,7 @@ export interface SidebarItemModel {
     path: string
 }
 export interface ClassModel {
-    Id: string,
+    id: string,
     gym: string,
     name: string,
     coachname: string,
@@ -83,4 +83,19 @@ export interface GymModel {
     adress: string,
     phone: string,
     gym_reg_code: string
+}
+
+export interface SearchCoachModel {
+    user_id: string,
+    achievement_set: CoachAchievementModel[],
+    description: string,
+    detail_set: CoachDetailModel[],
+    user: {
+        username: string,
+        first_name: string,
+        last_name: string,
+        gender: string,
+        personal_id: string,
+        picUrl: string
+    }
 }
