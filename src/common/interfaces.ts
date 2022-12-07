@@ -61,12 +61,14 @@ export interface ClassModel {
     name: string,
     coachname: string,
     time: string,
-    memebercount: string
+    memebercount: string,
+    categoryTypes: string
 }
 export interface NewClassModel {
     gym: string,
-    name: string
-    time: string
+    name: string,
+    time: string,
+    categoryTypes: string
 }
 export interface GymModel {
     id: number,
@@ -76,7 +78,6 @@ export interface GymModel {
     gym_reg_code: string,
     user: number
 }
-
 export interface CustomerProfileModel {
     username: string,
     email: string,
