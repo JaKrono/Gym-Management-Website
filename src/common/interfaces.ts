@@ -68,13 +68,13 @@ export interface NewClassModel {
     name: string
     time: string
 }
-export interface GymModel{
-    id:number,
-    name:string,
-    address:string,
-    phone:string,
-    gym_reg_code:string,
-    user:number
+export interface GymModel {
+    id: number,
+    name: string,
+    address: string,
+    phone: string,
+    gym_reg_code: string,
+    user: number
 }
 
 export interface CustomerProfileModel {
@@ -106,4 +106,27 @@ export interface SearchCoachModel {
         personal_id: string,
         picUrl: string
     }
+}
+
+export interface ArticleDetailModel {
+    id: string,
+    title: string,
+    description: string,
+    articleContent: string,
+    readDuration: string,
+    picUrl: string,
+    writerId: string,
+    writerName: string,
+    articleCategory: string
+}
+
+export interface ChangeArticleDetailModel {
+    title: string,
+    description: string,
+    articleContent: string,
+    readDuration: string,
+    picUrl: string,
+    writerId: string,
+    writerName: string,
+    articleCategory: string
 }
