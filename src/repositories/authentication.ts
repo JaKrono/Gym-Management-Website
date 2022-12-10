@@ -3,7 +3,7 @@ import client from "./client/axios";
 export default {
 
     login(loginModel: LoginModel) {
-        const endpoint = '/api/auth/jwt/create/'
+        const endpoint = '/auth/login'
         const response = client.post(endpoint, loginModel)
         return response;
     },

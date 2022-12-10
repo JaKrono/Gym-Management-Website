@@ -4,6 +4,7 @@ import coachProfileService from "./coach-profile-service";
 import searchCoachService from "./search-coach-service";
 import Gym from "./gym";
 import Customer from "./customer";
+import Coach from "./coach";
 
 export {
     Authentication,
@@ -11,5 +12,6 @@ export {
     coachProfileService,
     searchCoachService,
     Gym,
-    Customer
+    Customer,
+    Coach
 }
