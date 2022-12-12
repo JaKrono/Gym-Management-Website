@@ -100,6 +100,14 @@ const router = createRouter({
         default: () => import("@/views/CGymProfile.vue"),
         // RightSidebar: () => import("@/components/Sidebar.vue")
       }
+    },
+    {
+      path: '/articles',
+      name: 'Articles',
+      components: {
+        default: () => import("@/views/Articles.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
     }
     // {
     //   path: '/about',
