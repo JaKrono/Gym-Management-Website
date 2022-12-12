@@ -46,10 +46,6 @@
     font-weight: 100;
     color:$secondary;
 }
-.bold-text{
-    font-family: IranSans;
-    font-weight: 900;
-}
 
 .regular-title{
     font-family: IranSans;
@@ -78,15 +74,11 @@
     font-weight: 100;
 }
 
-.ellipsis-2{
+.ellipsis-1{ // Better than the quasar class "ellipsis"
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    white-space: break-spaces;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ellipsis-1{
     overflow: hidden;
     text-overflow: ellipsis;
 }

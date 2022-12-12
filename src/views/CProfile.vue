@@ -12,35 +12,35 @@
                   <div class="col col-12">
                      <div class="row col-12 q-col-gutter-md">
                         <div class="col-xs-12 col-md-6 col-md-4">
-                           <p class="q-ma-sm text-bold">نام کاربری</p>
+                           <p class="q-ma-sm text-weight-bold">نام کاربری</p>
                            <q-input class="" filled readonly rounded :placeholder="profileDetail.username">
                            </q-input>
                         </div>
                         <div class="col-xs-12 col-md-6 col-md-4 bordered">
-                           <p class="q-ma-sm text-bold">ایمیل</p>
+                           <p class="q-ma-sm text-weight-bold">ایمیل</p>
                            <q-input class="" filled readonly rounded :placeholder="profileDetail.email">
                            </q-input>
                         </div>
                         <div class="col-xs-12 col-md-6 col-md-4 bordered">
-                           <p class="q-ma-sm text-bold">نام</p>
+                           <p class="q-ma-sm text-weight-bold">نام</p>
                            <q-input class="" :rounded="editing" :readonly="!editing" v-model="name" outlined
                               :placeholder="profileDetail.name" color="primary">
                            </q-input>
                         </div>
                         <div class="col-xs-12 col-md-6 col-md-4 bordered">
-                           <p class="q-ma-sm text-bold">نام خانوادگی</p>
+                           <p class="q-ma-sm text-weight-bold">نام خانوادگی</p>
                            <q-input class="" :rounded="editing" :readonly="!editing" v-model="lastname" outlined
                               :placeholder="profileDetail.lastname">
                            </q-input>
                         </div>
                         <div class="col-xs-12 col-md-6 col-md-4 bordered">
-                           <p class="q-ma-sm text-bold">شماره تلفن</p>
+                           <p class="q-ma-sm text-weight-bold">شماره تلفن</p>
                            <q-input class="" :rounded="editing" :readonly="!editing" v-model="phoneNumber" outlined
                               :placeholder="profileDetail.phoneNumber">
                            </q-input>
                         </div>
                         <div class="col-xs-12 col-md-6 col-md-4 bordered">
-                           <p class="q-ma-sm text-bold">جنسیت</p>
+                           <p class="q-ma-sm text-weight-bold">جنسیت</p>
                            <q-select class="row" transition-show="jump-up" transition-hide="jump-up" behavior="menu" outlined
                               :rounded="editing" :readonly="!editing" v-model="sex" :options="sexOptions"
                               input-style="justify-content: center">
