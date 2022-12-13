@@ -1,23 +1,6 @@
 <template>
    <q-page>
       <div class="row col-12 content-center q-px-lg">
-
-         <!-- <div class="row col-12 q-pt-lg no-wrap"> 
-            Hides the extra content in case of long username or email.
-            <q-avatar size="6em" class="text-white" icon="person" color="secondary"></q-avatar>
-            <div class="column q-ml-md items-start justify-end" >
-               TODO_asghar: Fix ellipsis classes
-               <p class="q-mb-sm font-size-up-3 bold-text ellipsis-1"
-                  :style="[$q.screen.width >= 1024 ? {'max-width': 'calc(100vw - 148px - 300px)'} : {'max-width': 'calc(100vw - 148px)'}]">
-                  {{ this.name || this.username }}
-               </p>
-               <p class="q-mb-sm ellipsis-1" 
-                  :style="[$q.screen.width >= 1024 ? {'max-width': 'calc(100vw - 148px - 300px)'} : {'max-width': 'calc(100vw - 148px)'}]">
-                  {{ this.phoneNumber || this.email }}
-               </p>
-            </div>
-         </div> -->
-         
          <div class="row col-12 q-my-lg">
 
             <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
@@ -34,7 +17,7 @@
                            <q-card-section class="q-pa-none">
 
                               <q-card-section class="q-pa-none">
-                                 <q-img :src="club.img" alt="Gym Image" :ratio="$q.screen.lt.sm ? 3/1:16/9" fit="cover">
+                                 <q-img :src="club.img || '?' " alt="Gym Image" :ratio="$q.screen.lt.sm ? 3/1:16/9" fit="cover">
                                     <template v-slot:error>
                                        <q-img class="q-pa-lg" alt="Dumbell Image" src="dumbell.svg" position="50% 103%" :ratio="16/9" :img-style="{ filter: 'blur(4px)' }"></q-img>
                                        <p class="q-mt-sm text-white absolute-full flex flex-center">خطا در نمایش تصویر</p>
