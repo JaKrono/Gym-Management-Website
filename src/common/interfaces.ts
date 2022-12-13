@@ -118,7 +118,8 @@ export interface ArticleDetailModel {
     picUrl: string,
     writerId: string,
     writerName: string,
-    articleCategory: string
+    articleCategory: string,
+    createDate: Date
 }
 
 export interface ChangeArticleDetailModel {
@@ -130,4 +131,10 @@ export interface ChangeArticleDetailModel {
     writerId: string,
     writerName: string,
     articleCategory: string
+}
+
+export interface CategoryModel {
+    id: number,
+    title: string,
+    color: string
 }
