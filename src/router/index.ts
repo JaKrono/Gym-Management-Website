@@ -28,8 +28,50 @@ const router = createRouter({
       name:'dashboard',
       meta:{requireAuth:true},
       components:{
-        default: () => import("@/views/Profile.vue"),
+        default: () => {
+          if (store.state.user.role == '2') {
+            return import('@/views/CHome.vue')
+          } else if (store.state.user.role == '1') {
+            // return import ('')
+          } else if (store.state.user.role == '0') {
+            return import("@/views/Profile.vue")
+          }
+        },
         RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      meta: {requireAuth: true},
+      components: {
+        default: () => {
+          if (store.state.user.role == '2') {
+            return import ('@/views/CProfile.vue')
+          } else if (store.state.user.role == '1') {
+            return import ('@/components/CoachProfileComponent.vue')
+          } else if (store.state.user.role == '0') {
+            return import ('@/views/CGymProfile.vue')
+          }
+        },
+        RightSidebar: () => import('@/components/Sidebar.vue')
+      }
+    },
+    {
+      path: '/gyms',
+      name: 'gyms',
+      meta: {requireAuth: true},
+      components: {
+        default: () => {
+          if (store.state.user.role == '2') {
+            return import ('@/views/CGyms.vue')
+          } else if (store.state.user.role == '1') {
+            // return import()
+          } else if (store.state.user.role == '0') {
+            // return import()
+          }
+        },
+        RightSidebar: () => import('@/components/Sidebar.vue')
       }
     },
     {
@@ -70,38 +112,6 @@ const router = createRouter({
       }
     },
     {
-      path: '/chome',
-      name: 'Customer Home',
-      components: {
-        default: () => import("@/views/CHome.vue"),
-        RightSidebar: () => import("@/components/Sidebar.vue")
-      }
-    },
-    {
-      path: '/cprofile',
-      name: 'Customer Profile',
-      components: {
-        default: () => import("@/views/CProfile.vue"),
-        RightSidebar: () => import("@/components/Sidebar.vue")
-      }
-    },
-    {
-      path: '/cgyms',
-      name: 'Customer Gyms',
-      components: {
-        default: () => import("@/views/CGyms.vue"),
-        RightSidebar: () => import("@/components/Sidebar.vue")
-      }
-    },
-    {
-      path: '/cgymprofile',
-      name: 'Gym Profile',
-      components: {
-        default: () => import("@/views/CGymProfile.vue"),
-        // RightSidebar: () => import("@/components/Sidebar.vue")
-      }
-    },
-    {
       path: '/articles',
       name: 'Articles',
       components: {
@@ -109,6 +119,7 @@ const router = createRouter({
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     }
+
     // {
     //   path: '/about',
     //   name: 'about',

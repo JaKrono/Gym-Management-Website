@@ -1,7 +1,9 @@
 <template>
     <q-drawer elevated v-model="sidebarIsVisible" showIfAbove="md" side="left" bordered>
         <q-list class="q-mt-sm" padding>
-            <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-mb-lg" :disable="item.disable" :title="item.title" :path="item.path" :icon="item.icon" :id="item.id" :isSelected="isItemSelected(item.id)"></SidebarItemVue>
+            <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-mb-lg" :disable="item.disable"
+                :title="item.title" :path="item.path" :icon="item.icon" :id="item.id"
+                :isSelected="isItemSelected(item.id)"></SidebarItemVue>
         </q-list>
         <q-separator class="q-my-xl" inset />
         <div class="flex column content-center">
@@ -18,7 +20,7 @@
 <script lang="ts">
 import { roles } from '@/common/enums';
 import { defineComponent } from 'vue';
-import { mapActions, mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState, Store } from 'vuex';
 import SidebarItemVue from './SidebarItem.vue';
 export default defineComponent({
     components: { SidebarItemVue },
@@ -38,22 +40,20 @@ export default defineComponent({
 
         },
         ...mapState({
-            gym: state => state.user.gym
+            gym: state => state.user.gym,
+            role: state => state.user.role
         })
     },
     mounted() {
-        // if(this.role === roles.owner){
-        this.items = [{id:1, title:'پروفایل', icon:'dashboard', path:'/dashboard', disable:false},{id:3, title:'مربی ها', icon:'person', path:'/coaches',disable: ! this.gym.id},{id:2, title:'اعضا', icon:'groups', path:'/customers',disable:! this.gym.id},{ id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach' }]
-        
-        // }
+        this.setItems();
     },
     methods: {
         ...mapMutations({
             hideSidebar: 'global/hideSidebar',
             showSidebar: 'global/showSidebar',
         }),
-        ...mapState({
-            'userLogout': 'user/logout'
+        ...mapActions({
+            userLogout: 'user/logout'
         }),
         itemClicked(id: number) {
             this.selectedId = id;
@@ -61,10 +61,22 @@ export default defineComponent({
         isItemSelected(id: number) {
             return this.selectedId === id;
         },
-        logout(){
+        logout() {
             this.userLogout();
-            localStorage.setItem('vuex',"")
             this.$router.push('/login')
+        },
+        setItems() {
+            if (this.role === "0") {
+                this.items = [{ id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false }, { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach' }]
+            }
+            if (this.role === '2') {
+                this.items = [{ id: 1, title: 'خانه', icon: 'home', path: '/dashboard' ,disable: false}, { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false}, { id: 3, title: 'باشگاه‌ها', icon: 'fa-solid fa-dumbbell', path: '/gyms'}]
+            }
+        },
+        updateItems() {
+            if (this.role === "0") {
+                this.items = [{ id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false }, { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach' }]
+            }
         }
     },
     watch: {
@@ -75,9 +87,8 @@ export default defineComponent({
                 this.hideSidebar();
             }
         },
-        gym:function(newValue){
-            console.log(newValue);
-            
+        gym: function (newValue) {
+            this.updateItems()
         }
     }
 })

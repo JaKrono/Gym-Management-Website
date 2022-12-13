@@ -5,7 +5,7 @@
 
             <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
                <!-- Can also be favorite or recently added clubs. -->
-               <p class="col-sm-auto font-size-up-4 bold-text">باشگاه‌های ثبت نام شده</p>
+               <p class="col-sm-auto font-size-up-4 text-weight-bold">باشگاه‌های ثبت نام شده</p>
                <q-btn @click="toggleState" class="col-12 col-sm-auto q-px-sm q-mt-sm q-mt-sm-none" color="primary">عضویت
                   در باشگاه جدید</q-btn>
             </div>
@@ -30,7 +30,7 @@
                               </q-card-section>
                               <!-- HEIGHT -->
                               <q-card-section class="q-pa-sm" style="height: 60px">
-                                 <p class="font-size-up-1 bold-text ellipsis-2">{{ club.name }}</p>
+                                 <p class="font-size-up-1 text-weight-bold ellipsis-2-lines">{{ club.name }}</p>
                               </q-card-section>
 
                               <q-card-actions class="flex" align="right">
@@ -55,7 +55,7 @@
 
             <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
                <!-- Can also be favorite or recently added clubs. -->
-               <p class="col-sm-auto font-size-up-4 bold-text">جستجوی باشگاه‌ها</p>
+               <p class="col-sm-auto font-size-up-4 text-weight-bold">جستجوی باشگاه‌ها</p>
                <q-btn @click="toggleState" class="col-12 col-sm-auto q-px-xl q-mt-sm q-mt-sm-none"
                   color="primary">بازگشت</q-btn>
             </div>
@@ -95,7 +95,7 @@
                               </q-card-section>
                               <!-- HEIGHT -->
                               <q-card-section class="q-pa-sm" style="height: 60px">
-                                 <p class="font-size-up-1 bold-text ellipsis-2">{{ club.name }}</p>
+                                 <p class="font-size-up-1 text-weight-bold ellipsis-2">{{ club.name }}</p>
                               </q-card-section>
 
                               <q-card-actions class="flex" align="right">
