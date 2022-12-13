@@ -83,6 +83,17 @@
     text-overflow: ellipsis;
 }
 
+.ellipsis-1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.clickable{
+    cursor: pointer;
+    color: $primary;
+    user-select: none;
+}
+
 @mixin column-center{
     display: flex;
     flex-direction: column;
