@@ -22,21 +22,24 @@ export default {
         },
         setGym(state: any, gym: any) {
             state.gym = gym
+        },
+        setRole(state, role: number) {
+            state.role = role
         }
     },
     actions: {
-        async login({ commit, dispatch }: any, loginModel: LoginModel) {
+        async login({ state, commit, dispatch }: any, loginModel: LoginModel) {
             const response = await Authentication.login(loginModel)
             if (response.status === 200) {
                 commit('setToken', response.data.access)
                 const tokenInfo = parseJwt(response.data.access)
                 commit('setUserId', tokenInfo.user_id)
+                commit('setRole', tokenInfo.role)
                 commit('setIsSignedIn', true)
                 dispatch('notification/showNotification', { message: 'ورود موفق', type: 'positive', timeout: 2000 }, { root: true })
                 return true;
             } else {
                 dispatch('notification/showNotification', { message: response?.data.detail || "خطا در برقراری ازتباط", type: 'negative', timeout: 2000 }, { root: true })
-                console.log(response.data.detail)
                 return false;
             }
         },
@@ -59,32 +62,39 @@ export default {
             const response = await ClassListService.getClassList();
             return response.data;
         },
+
         async editClass(classId: string, classObject: ClassModel) {
             const response = await ClassListService.editClassDetail(classId, classObject);
             return response.data;
         },
+
         async addClass(classObject: NewClassModel) {
             const response = await ClassListService.addClassItem(classObject);
             return response.data;
         },
+
         async sendInvite(inviteObject: InviteCoachModel) {
             const response = await CoachProfileService.sendInviteMessage(inviteObject);
             return response.data;
         },
+
         async getCoachDetail(coachId: string) {
             const response = await CoachProfileService.getCoachProfileDetail(coachId);
             return response.data;
         },
+
         async editCoachDetail(coachId: string, coachObject: CoachProfileModel) {
             const response = await CoachProfileService.editCoachProfileDetail(coachId, coachObject);
             return response.data;
         },
+
         async getGymForOwner({ commit }, ownerId: number) {
             const response = await Gym.getGym(ownerId);
             if (response.data && response.data.length > 0) {
                 commit('setGym', response.data[0])
             }
         },
+
         async updateGym({ commit, dispatch }, gym: GymModel) {
             let response;
             if (gym.id) {
@@ -103,16 +113,19 @@ export default {
                 return false
             }
         },
+
         async logout({ dispatch }) {
             dispatch('reset')
         },
-        reset({ state }) {
-            state.token = '',
-                state.isSignedIn = false,
-                state.role = -1,
-                state.userId = null,
-                state.gym = { id: null, name: "", address: "", phone: "", gym_reg_code: "", user: null }
+
+        reset({ commit }) {
+            commit('setToken', null)
+            commit('setIsSignedIn', false)
+            commit('setUserId', -1)
+            commit('setGym', {})
+            commit('setRole', -1)
         },
+
         async searchCoach(coachName: string) {
             const response = await SearchCoachService.searchCoachList(coachName);
             return response.data;

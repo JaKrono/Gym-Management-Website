@@ -1,23 +1,33 @@
 <template>
     <q-page>
+
         <div class="row content-center q-px-lg" style="align-items:center">
 
             <h5 class="">مربی ها</h5>
             <q-space></q-space>
             <q-btn @click="navigateToCoachSearch" color="primary" icon="add" style="height:40px">افزودن مربی</q-btn>
         </div>
-        <div class="row justify-start q-pa-lg" :class="{'justify-center':$q.screen.xs}">
-            <div class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
-                <CoachComponent2 :isInAddState="false"></CoachComponent2>
+        <template v-if="(coaches.length > 0 && !loading)">
+            <div class="row justify-start q-pa-lg" :class="{ 'justify-center': $q.screen.xs }">
+                <div v-for="coach in coaches" class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
+                    <CoachComponent2 :isInAddState="false"></CoachComponent2>
+                </div>
             </div>
-            <div class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
-                <CoachComponent2 :isInAddState="false"></CoachComponent2>
+        </template>
+        <template v-else-if="(coaches.length == 0 && !loading)">
+            <div class="row q-mt-lg justify-center">
+                <div class="col-12 text-center">
+                    <img class="not-found-image" src="noItemFound.png" />
+                    <p class="font-size-up-5">مربی پیدا نشد</p>
+                    <p class="font-size-up-1 q-mt-sm"> برای اضافه کردن مربی <span @click="navigateToCoachSearch"
+                            class="clickable">کلیک</span> کنید
+                    </p>
+                </div>
             </div>
-            <div class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
-                <CoachComponent2 :isInAddState="false"></CoachComponent2>
-            </div>
-        </div>
-        
+
+        </template>
+        <q-inner-loading :showing="loading" color="primary" />
+
     </q-page>
 </template>
 
@@ -30,46 +40,68 @@ import { mapState, mapActions } from 'vuex';
 import CoachComponent from "../components/CoachComponent.vue"
 
 export default defineComponent({
-    components:{
-    CoachComponent,
-    CoachComponent1,
-    CoachComponent2,
-    SearchBarComponent
+    components: {
+        CoachComponent,
+        CoachComponent1,
+        CoachComponent2,
+        SearchBarComponent
     },
-    data:()=>({
-        leftDrawerOpen:true,
-        search:''
+    data: () => ({
+        leftDrawerOpen: true,
+        search: '',
+        loading: true
     }),
-    mounted(){
-
+    computed: {
+        ...mapState({
+            coaches: state => state.owner.coaches,
+            ownerId: state => state.user.userId
+        })
     },
-    methods:{
-        navigateToCoachSearch(){
+    async mounted() {
+        await this.getCoaches(this.ownerId)
+        this.loading = false
+    },
+    methods: {
+        navigateToCoachSearch() {
             this.$router.push('/search-coach')
-        }
+        },
+        ...mapActions({
+            getCoaches: 'owner/getCoachesData'
+        })
     }
 })
 </script>
 
 <style>
-    .dashboard-landing{
-        background-color: black;
-        height: 200px;
-    }
-    .manager-account{
-        height: 10vh;
-    }
-    .options-list{
-        height:90vh;
-        background-color: rgb(35, 34, 36);
-    }
-    .search-section{
-        padding: 50px 200px;
-    }
-    .search-bar{
-        box-shadow: 0 10px 20px 5px #8383838e;
-    }
-    .grow-flex-1{
-        flex-grow: 1;
-    }
+.dashboard-landing {
+    background-color: black;
+    height: 200px;
+}
+
+.manager-account {
+    height: 10vh;
+}
+
+.options-list {
+    height: 90vh;
+    background-color: rgb(35, 34, 36);
+}
+
+.search-section {
+    padding: 50px 200px;
+}
+
+.search-bar {
+    box-shadow: 0 10px 20px 5px #8383838e;
+}
+
+.grow-flex-1 {
+    flex-grow: 1;
+}
+
+.not-found-image {
+    min-width: 200px;
+    max-width: 100%;
+    margin: auto;
+}
 </style>
