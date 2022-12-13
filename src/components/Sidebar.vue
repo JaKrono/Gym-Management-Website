@@ -70,7 +70,7 @@ export default defineComponent({
                 this.items = [{ id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false }, { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach' }]
             }
             if (this.role === '2') {
-                this.items = [{ id: 1, title: 'خانه', icon: 'home', path: '/dashboard' ,disable: false}, { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false}, { id: 3, title: 'باشگاه‌ها', icon: 'fa-solid fa-dumbbell', path: '/gyms'}]
+                this.items = [{ id: 1, title: 'خانه', icon: 'home', path: '/dashboard' ,disable: false}, { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false}, { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms'}]
             }
         },
         updateItems() {
