@@ -65,15 +65,6 @@ export default defineComponent({
       CategoryList,
       selectedCategory: 0,
       showOnlyMyArticles: false,
-      categoryList: [
-         ['0', 'red-10', 'همه دسته‌ها'],
-         ['1', 'indigo-10', 'مکمل‌ها'],
-         ['2', 'teal-10', 'تغذیه'],
-         ['3', 'brown-10', 'تمرینات ورزشی'],
-         ['4', 'brown-4', 'اخلاق ورزشی'],
-         ['5', 'green-10', 'شنا'],
-         ['6', 'blue-5', 'تجهیزات ورزشی'],
-      ],
       categoryScrollThumbStyle: {
          height: '4px',
          bottom: '3px',
