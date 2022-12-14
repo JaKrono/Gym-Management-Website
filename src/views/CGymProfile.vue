@@ -33,7 +33,7 @@ export default defineComponent({
          
       },
       navigateToGymsPage() {
-         this.$router.push('/cgyms')
+         this.$router.push('/gyms')
       }
    }
 })

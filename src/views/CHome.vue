@@ -23,7 +23,7 @@
             <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
                <!-- Can also be favorite or recently added clubs. -->
                <p class="col-sm-auto font-size-up-4 text-weight-bold">باشگاه‌های ثبت نام شده</p>
-               <q-btn @click="navigateToCustomerGyms" class="col-12 col-sm-auto q-px-sm q-mt-sm q-mt-sm-none" color="primary">مدیریت باشگاه‌ها</q-btn>
+               <q-btn @click="navigateToGymsPage" class="col-12 col-sm-auto q-px-sm q-mt-sm q-mt-sm-none" color="primary">مدیریت باشگاه‌ها</q-btn>
             </div>
 
             <div class="row col-12">
@@ -79,8 +79,8 @@ export default defineComponent({
                {name: 'زورخانه پهلوان بیژن مرتضوی', img: 'gym5.jpg' } ]
    }),
    methods: {
-      navigateToCustomerGyms() {
-         this.$router.push('/cgyms')
+      navigateToGymsPage() {
+         this.$router.push('/gyms')
       },
       navigateToGymProfile() {
          this.$router.push('/cgymprofile')
