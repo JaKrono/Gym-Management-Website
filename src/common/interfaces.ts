@@ -7,6 +7,7 @@ export interface SignupModel {
     role: number,
     username: string,
     email: string,
+    personal_id: string,
     password: string
 }
 
@@ -16,7 +17,6 @@ export interface CoachSignupModel extends SignupModel {
 
 export interface OwnerSignupModel extends SignupModel {
     phoneNumber: string,
-    ssn: string
 }
 
 export interface Notification {
