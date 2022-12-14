@@ -2,6 +2,14 @@ import type { CustomerProfileModel } from "@/common/interfaces"
 import { Customer } from "@/repositories/index"
 export default {
    namespaced: true,
+   state:()=>({
+      clubs:[]
+   }),
+   mutations:{
+      setClubs(state, clubs){
+         state.clubs=clubs
+      }
+   },
    actions: {
       async saveCustomerProfile(customerProfile: CustomerProfileModel) {
          const response = await Customer.editCustomerProfileDetail(customerProfile)
@@ -16,8 +24,10 @@ export default {
          return response.data
       },
 
-      async getGymByName({ dispatch }: any, gymName: string) {
+      async getGymByName({ commit,dispatch }: any, gymName: string) {
          const response = await Customer.getGymDetailByName(gymName)
+         // commit('setClubs',response.data)
+         response.data
          return response.data
          // if (response.status === 200) {
          //    return response.data

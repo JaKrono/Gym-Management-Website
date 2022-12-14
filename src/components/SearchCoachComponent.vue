@@ -27,7 +27,7 @@ import { defineComponent } from 'vue';
 import CoachComponent2 from './CoachComponent2.vue';
 import type { CoachProfileModel, SearchCoachModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
-import { searchCoachService } from "@/repositories/index";
+import { SearchCoachService } from "@/repositories/index";
 
 export default defineComponent({
     components: {
@@ -46,7 +46,7 @@ export default defineComponent({
         async getCoaches() {
             try {
                 // this.coachList = await this.searchCoachAsync(this.coachName);
-                const searchCoachOutput = await searchCoachService.searchCoachList(this.coachName);
+                const searchCoachOutput = await SearchCoachService.searchCoachList(this.coachName);
                 if (searchCoachOutput.status === 200) {
                     this.searchResult = searchCoachOutput.data;
                     this.flag = true;

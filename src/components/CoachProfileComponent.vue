@@ -123,7 +123,7 @@
 import { defineComponent } from 'vue';
 import type { CoachAchievementModel, InviteCoachModel, SearchCoachModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
-import { coachProfileService } from "@/repositories/index";
+import { CoachProfileService } from "@/repositories/index";
 
 export default defineComponent({
     data: () => ({
@@ -168,7 +168,7 @@ export default defineComponent({
         async initProfile() {
             try {
                 // await this.getCoachDetailAsync(this.coachId);
-                const result = await coachProfileService.getCoachProfileDetail(this.coachId);
+                const result = await CoachProfileService.getCoachProfileDetail(this.coachId);
                 if (result.status === 200) {
                     this.profileDto = result.data;
                 }
@@ -205,7 +205,7 @@ export default defineComponent({
         async editProfile() {
             try {
                 // this.profileDto = await this.editCoachDetailAsync(this.coachId, this.tempProfileObject);
-                const result = await coachProfileService.editCoachProfileDetail(this.coachId, this.tempProfileObject);
+                const result = await CoachProfileService.editCoachProfileDetail(this.coachId, this.tempProfileObject);
                 if (result.status === 201) {
                     this.profileDto = result.data;
                 }
@@ -231,7 +231,7 @@ export default defineComponent({
         async sendInviteCoach() {
             try {
                 // await this.sendInviteAsync(this.inviteObject);
-                const result = await coachProfileService.sendInviteMessage(this.inviteObject);
+                const result = await CoachProfileService.sendInviteMessage(this.inviteObject);
                 if (result.status !== 201) {
                     alert('خطا در ارتباط');
                 }
