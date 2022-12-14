@@ -1,5 +1,5 @@
 <template>
-   <ArticleReadComponent :model="article" :commaSperatedCategories="article.categoriesId" v-if="editing === 0"></ArticleReadComponent>
+   <ArticleReadComponent @edit="changeState" :model="article" :commaSperatedCategories="article.categoriesId" v-if="state === 1"></ArticleReadComponent>
    <ArticleEditComponent v-else></ArticleEditComponent>
 </template>
 <script lang="ts">
@@ -14,7 +14,7 @@ export default defineComponent({
       ArticleEditComponent
    },
    data: () => ({
-      editing: 0,
+      state: 1,
       article: {
          id: '0',
          title: 'کراتین چیست؟',
@@ -37,8 +37,8 @@ export default defineComponent({
       navigateBackClicked() {
 
       },
-      editClicked() {
-
+      changeState(event: number) {
+         this.state = event
       }
    }
 })

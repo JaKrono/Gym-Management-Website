@@ -2,9 +2,10 @@
    <q-scroll-area :thumb-style="pageScrollThumbStyle" :bar-style="pageScrollBarStyle">
       <q-page class="row q-pa-lg">
          <div class="column col-xs-12 offset-xs-0 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
-            <div class="flex justify-between q-my-sm q-mb-lg-md">
+            <div class="row items-center justify-between q-my-sm q-mb-lg-md">
                <p class="text-weight-bold font-size-up-5">{{ model.title }}</p>
-               <q-btn color="primary">ویرایش</q-btn>
+               <q-btn @click="editClicked" class="q-my-sm" v-if="true" color="primary">ویرایش</q-btn>
+               <!-- Show only to the author -->
             </div>
             <div class="flex no-wrap items-center">
                <q-icon name="timer" size="1.3em"></q-icon>
@@ -25,7 +26,8 @@
                </div>
             </div>
             <p class="q-mb-md q-mb-md-md q-mb-lg-lg">{{ model.description }}</p>
-            <q-img :src="model.picUrl || '?'" alt="Article Image" :ratio="16 / 9" fit="cover" class="rounded-borders q-mb-md q-mb-md-md q-mb-xl-lg">
+            <q-img :src="model.picUrl || '?'" alt="Article Image" :ratio="16 / 9" fit="cover"
+               class="rounded-borders q-mb-md q-mb-md-md q-mb-xl-lg">
                <template v-slot:error>
                   <q-img class="q-pa-lg" alt="Dumbell Image" src="dumbell.svg" position="50% 103%" :ratio="16 / 9"
                      :img-style="{ filter: 'blur(4px)' }"></q-img>
@@ -33,6 +35,21 @@
                </template>
             </q-img>
             <p>{{ model.articleContent }}</p>
+
+            <!-- Show only to coach and if the article is not valid -->
+            <div v-if="true" class="row q-mt-md">
+               <q-card class="col-xs-12">
+                  <q-card-section class="row items-center justify-around q-pa-sm">
+                     <p class="">مربی عزیز، آیا صحت مقاله را تایید می‌کنید؟</p>
+                     <q-btn @click="isValidClicked" class="items-center q-ml-sm" color="primary">
+                        <q-icon class="q-mr-sm" name="done_outline" size="20px"></q-icon>
+                        <p>بله</p>
+                     </q-btn>
+                     <!-- Maybe later. Nees 3 states of validation. -->
+                     <q-btn v-if="false" color="secondary"><q-icon class="q-mr-sm" name="cancel" size="20px"></q-icon><p>خیر</p></q-btn>
+                  </q-card-section>
+               </q-card>
+            </div>
          </div>
 
       </q-page>
@@ -46,7 +63,13 @@ import { defineComponent } from 'vue';
 export default defineComponent({
    props: ['model', 'commaSperatedCategories'],
    methods: {
+      editClicked() {
+         this.$emit('edit', 2)
+      },
       viewWriterClicked() {
+
+      },
+      isValidClicked() {
 
       }
    },
