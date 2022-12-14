@@ -118,6 +118,14 @@ const router = createRouter({
         default: () => import("@/views/Articles.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
+    },
+    {
+      path: '/view_article',
+      name: 'View Article',
+      components: {
+        default: () => import("@/components/Article/ArticleViewComponent.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
     }
 
     // {
