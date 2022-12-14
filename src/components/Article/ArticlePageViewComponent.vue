@@ -18,11 +18,11 @@
             <q-scroll-area class="row" :thumb-style="categoryScrollThumbStyle" :bar-style="categoryScrollBarStyle"
                style="height: 46px; width: 100%;">
                <div class="row no-wrap" style="width: 100%">
-                  <div v-for="category in categoryList" class="col-grow">
-                     <q-btn @click="categoryClicked(Number(category[0]))" :color="getButtonColor(Number(category[0]))"
-                        :flat="getButtonFlat(Number(category[0]))" square class="ellipsis bottom-border-black-line top-border-rounded"
+                  <div v-for="c in extendedCategoryList" class="col-grow">
+                     <q-btn @click="categoryClicked(c.id)" :color="getButtonColor(c.id)"
+                        :flat="getButtonFlat(c.id)" square class="ellipsis bottom-border-black-line top-border-rounded"
                         style="width: 100%">
-                        {{ category[2] }}
+                        {{ c.title }}
                      </q-btn>
                   </div>
                </div>
@@ -32,7 +32,7 @@
             <div class="col">
                <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
                   <div v-for="article in articleList" :key="article.id" class="col-xs-12 col-md-6 col-xl-4">
-                     <ArticleCardComponent :model="article" :dense="false" :categoryList="getCategoryList(article.categoriesId)"></ArticleCardComponent>
+                     <ArticleCardComponent :model="article" :dense="false" :commaSperatedCategories="article.categoriesId"></ArticleCardComponent>
                   </div>
                </div>
             </div>
@@ -46,12 +46,23 @@ import { defineComponent } from 'vue';
 import { mapActions } from 'vuex';
 import ArticleCardComponent from '@/components/Article/ArticleCardComponent.vue';
 import { getCssVar } from 'quasar';
+import { CategoryList } from '@/common/category-list';
+import type { CategoryModel } from '@/common/interfaces';
 export default defineComponent({
    props: [ 'articleList' ],
    components: {
       ArticleCardComponent
    },
+   computed: {
+      extendedCategoryList() {
+         const result: CategoryModel[] = []
+         CategoryList.forEach(val => result.push(Object.assign({}, val)))
+         result.unshift({ id: 0, title: 'همه دسته‌ها', color: 'red-10'})
+         return result
+      } 
+   },
    data: () => ({
+      CategoryList,
       selectedCategory: 0,
       showOnlyMyArticles: false,
       categoryList: [
@@ -95,8 +106,8 @@ export default defineComponent({
          this.selectedCategory = categoryId
       },
       getButtonColor(categoryId: number) {
-         if (this.selectedCategory === categoryId)
-            return this.categoryList[categoryId][1]
+         if (this.selectedCategory === categoryId){
+            return this.extendedCategoryList[categoryId].color}
          else
             return '?' // What is the default color of a button?
       },
@@ -105,13 +116,6 @@ export default defineComponent({
             return false
          else
             return true
-      },
-      getCategoryList(commaSeperatedIds: string) {
-         let result: string[][] = []
-         for (var index of commaSeperatedIds.split(',')) {
-            result.push(this.categoryList[parseInt(index)])
-         }
-         return result
       }
    }
 })

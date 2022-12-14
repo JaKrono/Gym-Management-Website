@@ -8,10 +8,14 @@
                <p class="q-ml-xs text-secondary font-size-down-1">{{ model.date }}</p>
             </div>
             <div class="flex no-wrap items-center">
-               <q-icon v-if="model.valid === true" name="done_outline" class="font-size-up-2" color="primary" style="margin-bottom: 3px"></q-icon>
-               <q-icon v-if="model.valid === false" name="warning" class="font-size-up-3" color="secondary" style="margin-bottom: 3px"></q-icon>
-               <p class="q-ml-xs text-secondary font-size-down-1" style="word-spacing: -2px" v-if="model.valid === true">تایید شده</p>
-               <p class="q-ml-xs text-secondary font-size-down-1" style="word-spacing: -2px" v-if="model.valid === false">تایید نشده</p>
+               <q-icon v-if="model.valid === true" name="done_outline" class="font-size-up-2" color="primary"
+                  style="margin-bottom: 3px"></q-icon>
+               <q-icon v-if="model.valid === false" name="warning" class="font-size-up-3" color="secondary"
+                  style="margin-bottom: 3px"></q-icon>
+               <p class="q-ml-xs text-secondary font-size-down-1" style="word-spacing: -2px"
+                  v-if="model.valid === true">تایید شده</p>
+               <p class="q-ml-xs text-secondary font-size-down-1" style="word-spacing: -2px"
+                  v-if="model.valid === false">تایید نشده</p>
             </div>
          </div>
          <p class="lt-sm col-12 text-weight-bold q-mb-sm">{{ model.title }}</p>
@@ -19,7 +23,7 @@
          <div class="flex col-12 no-wrap items-center justify-between">
             <div class="flex no-wrap items-center">
                <div v-for="item in categoryList" class="col-xs-12 q-mr-xs">
-                  <q-badge class="q-pa-sm" rounded :label="item[2]" :color="String(item[1])"></q-badge>
+                  <q-badge class="q-pa-sm" rounded :label="item.title" :color="item.color"></q-badge>
                </div>
             </div>
          </div>
@@ -41,7 +45,7 @@
          <div class="row q-mb-md justify-between content-between items-center">
             <div class="flex col-xs-12 col-sm-auto no-wrap q-mr-xs items-center">
                <div v-for="item in categoryList" class="col-xs-12 q-mr-xs">
-                  <q-badge class="q-pa-sm" rounded :label="item[2]" :color="String(item[1])"></q-badge>
+                  <q-badge class="q-pa-sm" rounded :label="item.title" :color="item.color"></q-badge>
                </div>
             </div>
             <div class="flex col-xs-12 col-sm-auto col-md-12 col-lg-auto 
@@ -77,9 +81,13 @@
    </q-card>
 </template>
 <script lang="ts">
+import type { CategoryModel } from '@/common/interfaces';
+import { CategoryList } from '@/common/category-list';
 import { defineComponent } from 'vue';
 export default defineComponent({
-   props: ['model', 'dense', 'categoryList'],
+   data: () => ({
+   }),
+   props: ['model', 'dense', 'commaSperatedCategories'],
    methods: {
       viewArticleClicked() {
          ////////
@@ -90,6 +98,15 @@ export default defineComponent({
       },
       viewWriterClicked() {
 
+      }
+   },
+   computed: {
+      categoryList() {
+         let result: CategoryModel[] = []
+         for (var index of this.commaSperatedCategories.split(',')) {
+            result.push(CategoryList[parseInt(index) - 1])
+         }
+         return result
       }
    }
 })

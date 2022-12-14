@@ -1,11 +1,13 @@
 <template>
-   <ArticleReadComponent :model="article" :categoryList="getCategoryList(article.categoriesId)" v-if="editing === 0"></ArticleReadComponent>
+   <ArticleReadComponent :model="article" :commaSperatedCategories="article.categoriesId" v-if="editing === 0"></ArticleReadComponent>
    <ArticleEditComponent v-else></ArticleEditComponent>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ArticleReadComponent from '@/components/Article/ArticleReadComponent.vue'
 import ArticleEditComponent from '@/components/Article/ArticleEditComponent.vue'
+import type { CategoryModel } from '@/common/interfaces';
+import { CategoryList } from '@/common/category-list';
 export default defineComponent({
    components: {
       ArticleReadComponent,
@@ -23,19 +25,10 @@ export default defineComponent({
          writerId: '0',
          writerName: 'بیژن مرتضوی‌زاده اصل',
 
-         categoriesId: '3,3',
+         categoriesId: '5,3',
          valid: true,
          date: '۲۳ فروردین ۱۴۰۱' // year month day
       },
-      categoryList: [
-         ['0', 'red-10', 'همه دسته‌ها'],
-         ['1', 'indigo-10', 'مکمل‌ها'],
-         ['2', 'teal-10', 'تغذیه'],
-         ['3', 'brown-10', 'تمرینات ورزشی'],
-         ['4', 'brown-4', 'اخلاق ورزشی'],
-         ['5', 'green-10', 'شنا'],
-         ['6', 'blue-5', 'تجهیزات ورزشی'],
-      ],
    }),
    methods: {
       viewWriterClicked() {
@@ -46,13 +39,6 @@ export default defineComponent({
       },
       editClicked() {
 
-      },
-      getCategoryList(commaSeperatedIds: string) {
-         let result: string[][] = []
-         for (var index of commaSeperatedIds.split(',')) {
-            result.push(this.categoryList[parseInt(index)])
-         }
-         return result
       }
    }
 })

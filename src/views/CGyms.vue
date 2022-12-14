@@ -147,7 +147,7 @@ export default defineComponent({
       },
       async search(gymName: string) {
          const result = await this.searchGym(gymName)
-         console.log(result[0].name)
+         // console.log(result[0].name)
          
          this.searchResult = result
          

@@ -15,19 +15,20 @@
                <div class="row q-col-gutter-sm">
                   <div v-for="article in articleList" :key="article.id" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                      <ArticleCardComponent :model="article" :dense="true"
-                        :categoryList="getCategoryList(article.categoriesId)">
+                        :commaSperatedCategories="article.categoriesId">
                      </ArticleCardComponent>
                   </div>
                </div>
             </div>
             <div class="column col q-mt-md" v-if="true">
+               <q-separator class="q-mb-sm" size="2px" color="secondary"></q-separator>
                <p class="text-weight-bold">مقالات تایید نشده</p>
                <p class="q-mb-xs">لطفا مقالات زیر را خوانده و درستی آنها را تایید کنید.</p>
                <div class="row col">
                   <div class="row q-col-gutter-sm">
                      <div v-for="article in articleList" :key="article.id" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                         <ArticleCardComponent :model="article" :dense="true"
-                           :categoryList="getCategoryList(article.categoriesId)">
+                           :commaSperatedCategories="article.categoriesId">
                         </ArticleCardComponent>
                      </div>
                   </div>
@@ -49,15 +50,6 @@ export default defineComponent({
       ArticleCardComponent
    },
    data: () => ({
-      categoryList: [
-         ['0', 'red-10', 'همه دسته‌ها'],
-         ['1', 'indigo-10', 'مکمل‌ها'],
-         ['2', 'teal-10', 'تغذیه'],
-         ['3', 'brown-10', 'تمرینات ورزشی'],
-         ['4', 'brown-4', 'اخلاق ورزشی'],
-         ['5', 'green-10', 'شنا'],
-         ['6', 'blue-5', 'تجهیزات ورزشی'],
-      ],
       pageScrollThumbStyle: {
          width: '4px',
          left: '1.5px',
@@ -77,13 +69,6 @@ export default defineComponent({
       },
       writeArticleClicked() {
 
-      },
-      getCategoryList(commaSeperatedIds: string) {
-         let result: string[][] = []
-         for (var index of commaSeperatedIds.split(',')) {
-            result.push(this.categoryList[parseInt(index)])
-         }
-         return result
       }
    }
 })
