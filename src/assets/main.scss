@@ -97,6 +97,10 @@
     user-select: none;
 }
 
+.break-all {
+    word-break: break-all;
+}
+
 @mixin column-center{
     display: flex;
     flex-direction: column;

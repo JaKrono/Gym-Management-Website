@@ -1,6 +1,6 @@
 <template>
    <ArticleReadComponent @edit="changeState" :model="article" :commaSperatedCategories="article.categoriesId" v-if="state === 1"></ArticleReadComponent>
-   <ArticleEditComponent v-else></ArticleEditComponent>
+   <ArticleEditComponent @finishEdit="changeState" :model="article" :commaSperatedCategories="article.categoriesId" v-else></ArticleEditComponent>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -14,7 +14,7 @@ export default defineComponent({
       ArticleEditComponent
    },
    data: () => ({
-      state: 1,
+      state: 2,
       article: {
          id: '0',
          title: 'کراتین چیست؟',

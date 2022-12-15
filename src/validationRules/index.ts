@@ -2,6 +2,7 @@ const emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?
 const passwordRegex = new RegExp(/^(?=.*?[a-z]).{8,}$/)
 const phoneNumberRegex = new RegExp(/^09[0-9]{9}$/)
 const ssnRegex = new RegExp(/^[0-9]{10}$/) // https://academy.rayanita.com/national-code-validation-algorithm/
+const readDurationRegex = new RegExp(/^([1-9]|\d\d|[12]\d\d|300)$/)
 export default {
     required : (content:string)=>{
         if(!content){
@@ -23,4 +24,7 @@ export default {
     ssn: (ssn:string) => {
         return ssnRegex.test(ssn) || 'کد ملی وارد شده صحیح نیست.'
     },
+    readDuration: (readDuration: string) => {
+        return readDurationRegex.test(readDuration) || 'لطفا یک عدد بین ۱ و ۳۰۰ وارد کنید.'
+    }
 } 

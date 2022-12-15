@@ -3,9 +3,9 @@
       <q-page class="row q-pa-lg">
          <div class="column col-xs-12 offset-xs-0 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
             <div class="row items-center justify-between q-my-sm q-mb-lg-md">
-               <p class="text-weight-bold font-size-up-5">{{ model.title }}</p>
-               <q-btn @click="editClicked" class="q-my-sm" v-if="true" color="primary">ویرایش</q-btn>
+               <p class="text-weight-bold font-size-up-5 q-py-xs q-pr-sm">{{ model.title }}</p>
                <!-- Show only to the author -->
+               <q-btn @click="editClicked" class="q-my-sm" v-if="true" color="primary">ویرایش</q-btn>
             </div>
             <div class="flex no-wrap items-center">
                <q-icon name="timer" size="1.3em"></q-icon>
@@ -40,18 +40,17 @@
             <div v-if="true" class="row q-mt-md">
                <q-card class="col-xs-12">
                   <q-card-section class="row items-center justify-around q-pa-sm">
-                     <p class="">مربی عزیز، آیا صحت مقاله را تایید می‌کنید؟</p>
+                     <p class="q-py-xs">مربی عزیز، آیا صحت مقاله را تایید می‌کنید؟</p>
                      <q-btn @click="isValidClicked" class="items-center q-ml-sm" color="primary">
                         <q-icon class="q-mr-sm" name="done_outline" size="20px"></q-icon>
                         <p>بله</p>
                      </q-btn>
-                     <!-- Maybe later. Nees 3 states of validation. -->
+                     <!-- Maybe later. Needs 3 states of validation. -->
                      <q-btn v-if="false" color="secondary"><q-icon class="q-mr-sm" name="cancel" size="20px"></q-icon><p>خیر</p></q-btn>
                   </q-card-section>
                </q-card>
             </div>
          </div>
-
       </q-page>
    </q-scroll-area>
 </template>
