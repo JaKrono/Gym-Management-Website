@@ -6,17 +6,15 @@
             <div class="row col-xs-12 col-sm-grow justify-end">
                <q-btn @click="viewArticlesPageClicked" class="col-xs-12 col-sm-auto q-mr-xs-none q-mr-sm-sm q-my-xs-sm q-my-sm-none"
                   color="secondary">مشاهده مقالات</q-btn>
-               <q-btn @click="writeArticleClicked" class="col-xs-12 col-sm-auto" color="primary">نوشتن مقاله جدید</q-btn>
+               <q-btn @click="writeNewArticleClicked" class="col-xs-12 col-sm-auto" color="primary">نوشتن مقاله جدید</q-btn>
             </div>
          </div>
-         <div class="column items-stretch q-mt-md">
+         <div class="column q-mt-md">
             <p class="q-mb-xs text-weight-bold">مقالات من</p>
             <div class="row col q-mb-xs">
                <div class="row q-col-gutter-sm">
                   <div v-for="article in articleList" :key="article.id" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                     <ArticleCardComponent :model="article" :dense="true"
-                        :commaSperatedCategories="article.categoriesId">
-                     </ArticleCardComponent>
+                     <ArticleCardComponent :model="article" :dense="true"></ArticleCardComponent>
                   </div>
                </div>
             </div>
@@ -27,9 +25,7 @@
                <div class="row col">
                   <div class="row q-col-gutter-sm">
                      <div v-for="article in articleList" :key="article.id" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                        <ArticleCardComponent :model="article" :dense="true"
-                           :commaSperatedCategories="article.categoriesId">
-                        </ArticleCardComponent>
+                        <ArticleCardComponent :model="article" :dense="true"></ArticleCardComponent>
                      </div>
                   </div>
                </div>
@@ -65,10 +61,10 @@ export default defineComponent({
    }),
    methods: {
       viewArticlesPageClicked() {
-         this.$emit('view', 0)
+         this.$emit('view', 1)
       },
-      writeArticleClicked() {
-
+      writeNewArticleClicked() {
+         this.$emit('edit', 3)
       }
    }
 })

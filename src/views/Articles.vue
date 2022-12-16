@@ -1,20 +1,26 @@
 <template>
-   <ArticlePageViewComponent @manage="changeState" :articleList="articleList" v-if="this.state === 0"></ArticlePageViewComponent>
-   <ArticlePageManageComponent @view="changeState" :articleList="articleList" v-else></ArticlePageManageComponent>
+   <ArticlePageViewComponent @manage="changeState" :articleList="articleList" v-if="state === 1">
+   </ArticlePageViewComponent>
+   <ArticlePageManageComponent @view="changeState" @edit="changeState" :articleList="articleList"
+      v-else-if="state === 2"></ArticlePageManageComponent>
+   <ArticleEditComponent @discardEdit="changeState" @submitEdit="submitEdittedArticle"
+      :model="emptyArticleModel" v-else-if="state === 3"></ArticleEditComponent>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapActions } from 'vuex';
+import type { ArticleDetailModel, ChangeArticleDetailModel } from '@/common/interfaces';
 import ArticlePageViewComponent from '@/components/Article/ArticlePageViewComponent.vue'
 import ArticlePageManageComponent from '@/components/Article/ArticlePageManageComponent.vue'
+import ArticleEditComponent from '@/components/Article/ArticleEditComponent.vue';
 export default defineComponent({
    components: {
       ArticlePageViewComponent,
-      ArticlePageManageComponent
+      ArticlePageManageComponent,
+      ArticleEditComponent
    },
    data: () => ({
-      state: 0,
+      state: 1,   // 1 => ArticlePageViewComponent // 2 => ArticlePageManageComponent // 3 => ArticleEditComponent
       articleList: [
          {
             id: '0',
@@ -26,7 +32,7 @@ export default defineComponent({
             writerId: '0',
             writerName: 'بیژن مرتضوی‌زاده اصل',
 
-            categoriesId: '3,3',
+            articleCategory: '3,3',
             valid: true,
             date: '۲۳ فروردین ۱۴۰۱' // year month day
          },
@@ -40,7 +46,7 @@ export default defineComponent({
             writerId: '0',
             writerName: 'خر شرک',
 
-            categoriesId: '2,6',
+            articleCategory: '2,6',
             valid: false,
             date: '۲ خرداد ۱۴۰۰'
          },
@@ -54,15 +60,31 @@ export default defineComponent({
             writerId: '0',
             writerName: 'خر شرک',
 
-            categoriesId: '1,6',
+            articleCategory: '1,6',
             valid: true,
             date: '۲ خرداد ۱۴۰۰'
          }
       ],
+      emptyArticleModel: {} as ChangeArticleDetailModel
    }),
    methods: {
       changeState(event: number) {
          this.state = event
+      },
+      submitEdittedArticle() {
+
+      }
+   },
+   beforeMount() {
+      this.emptyArticleModel = {
+         title: '',
+         description: '',
+         articleContent: '',
+         readDuration: '',
+         picUrl: '',
+         writerId: '',
+         writerName: '',
+         articleCategory: ''
       }
    }
 })

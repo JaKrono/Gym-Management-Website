@@ -2,30 +2,37 @@
    <q-scroll-area :thumb-style="pageScrollThumbStyle" :bar-style="pageScrollBarStyle">
       <q-page class="row q-pa-lg">
          <div class="column col-xs-12 offset-xs-0 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
+
             <div class="row items-center justify-between q-my-sm q-mb-lg-md">
                <p class="text-weight-bold font-size-up-5 q-py-xs q-pr-sm">{{ model.title }}</p>
                <!-- Show only to the author -->
                <q-btn @click="editClicked" class="q-my-sm" v-if="true" color="primary">ویرایش</q-btn>
             </div>
-            <div class="flex no-wrap items-center">
+
+            <div class="flex no-wrap items-center q-my-xs">
                <q-icon name="timer" size="1.3em"></q-icon>
                <p class="q-ml-xs" style="margin-top: 2px">{{ model.readDuration }}
                   دقیقه</p>
             </div>
-            <div @click="viewWriterClicked()" class="flex no-wrap items-center cursor-pointer">
+            
+            <div @click="viewWriterClicked()" class="flex no-wrap items-center cursor-pointer q-my-xs">
                <q-icon name="fa-solid fa-user-pen"></q-icon>
                <p class="q-ml-sm">{{ model.writerName }}</p>
             </div>
-            <div class="flex no-wrap items-center q-pt-xs">
+
+            <div class="flex no-wrap items-center q-my-xs">
                <q-icon name="calendar_month" class="font-size-up-5" style="margin: 0px -2px 2px 0px"></q-icon>
                <p class="q-ml-xs">{{ model.date }}</p>
             </div>
+
             <div class="flex items-center q-py-xs q-mb-sm q-mb-lg-md q-mb-xl-lg">
                <div v-for="item in categoryList" class="col-xs-12 q-mr-xs">
                   <q-badge class="q-pa-sm" rounded :label="item.title" :color="item.color"></q-badge>
                </div>
             </div>
+
             <p class="q-mb-md q-mb-md-md q-mb-lg-lg">{{ model.description }}</p>
+
             <q-img :src="model.picUrl || '?'" alt="Article Image" :ratio="16 / 9" fit="cover"
                class="rounded-borders q-mb-md q-mb-md-md q-mb-xl-lg">
                <template v-slot:error>
@@ -34,6 +41,7 @@
                   <p class="q-mt-sm text-white absolute-full flex flex-center">خطا در نمایش تصویر</p>
                </template>
             </q-img>
+            
             <p>{{ model.articleContent }}</p>
 
             <!-- Show only to coach and if the article is not valid -->
@@ -46,7 +54,9 @@
                         <p>بله</p>
                      </q-btn>
                      <!-- Maybe later. Needs 3 states of validation. -->
-                     <q-btn v-if="false" color="secondary"><q-icon class="q-mr-sm" name="cancel" size="20px"></q-icon><p>خیر</p></q-btn>
+                     <q-btn v-if="false" color="secondary"><q-icon class="q-mr-sm" name="cancel" size="20px"></q-icon>
+                        <p>خیر</p>
+                     </q-btn>
                   </q-card-section>
                </q-card>
             </div>
@@ -63,7 +73,7 @@ export default defineComponent({
    props: ['model', 'commaSperatedCategories'],
    methods: {
       editClicked() {
-         this.$emit('edit', 2)
+         this.$emit('edit', 1)
       },
       viewWriterClicked() {
 
@@ -89,7 +99,7 @@ export default defineComponent({
    computed: {
       categoryList() {
          let result: CategoryModel[] = []
-         for (var index of this.commaSperatedCategories.split(',')) {
+         for (var index of this.model.articleCategory.split(',')) {
             result.push(CategoryList[parseInt(index) - 1])
          }
          return result

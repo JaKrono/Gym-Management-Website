@@ -87,12 +87,12 @@ import { defineComponent } from 'vue';
 export default defineComponent({
    data: () => ({
    }),
-   props: ['model', 'dense', 'commaSperatedCategories'],
+   props: ['model', 'dense' ],
    methods: {
       viewArticleClicked() {
          ////////
          ////////
-         this.$router.push('/view_article')
+         this.$router.push('/view-article')
          ////////
          ////////
       },
@@ -103,7 +103,7 @@ export default defineComponent({
    computed: {
       categoryList() {
          let result: CategoryModel[] = []
-         for (var index of this.commaSperatedCategories.split(',')) {
+         for (var index of this.model.articleCategory.split(',')) {
             result.push(CategoryList[parseInt(index) - 1])
          }
          return result
