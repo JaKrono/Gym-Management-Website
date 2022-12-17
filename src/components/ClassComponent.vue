@@ -41,7 +41,7 @@
 import { defineComponent } from 'vue';
 import type { ClassModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
-import { classListService } from "@/repositories/index";
+import { ClassListService } from "@/repositories/index";
 
 export default defineComponent({
     props: ['classObject'],
@@ -65,7 +65,7 @@ export default defineComponent({
         async editClass() {
             try {
                 // this.classObjectPerview = await this.editClassAsync(this.editClassObject);
-                const result = await classListService.editClassDetail(this.editClassObject.id, this.editClassObject);
+                const result = await ClassListService.editClassDetail(this.editClassObject.id, this.editClassObject);
                 if (result.status === 200) {
                     this.classObjectPerview = result.data;
                 }
