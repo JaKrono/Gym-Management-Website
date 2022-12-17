@@ -1,24 +1,30 @@
 <template>
-   <ArticlePageViewComponent @manage="changeState" :articleList="articleList" v-if="state === 0">
+   <ArticlePageViewComponent @manage="changeState" :articleList="articleList" v-if="state === 1">
    </ArticlePageViewComponent>
-   <ArticlePageManageComponent @view="changeState" :articleList="articleList" v-else></ArticlePageManageComponent>
+   <ArticlePageManageComponent @view="changeState" @edit="changeState" :articleList="articleList"
+      v-else-if="state === 2">
+   </ArticlePageManageComponent>
+   <ArticleEditComponent @discardEdit="changeState" @submitEdit="submitEdittedArticle" :model="emptyArticleModel"
+      v-else-if="state === 3">
+      </ArticleEditComponent>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapActions } from 'vuex';
+import type { ArticleDetailModel, ChangeArticleDetailModel } from '@/common/interfaces';
 import ArticlePageViewComponent from '@/components/Article/ArticlePageViewComponent.vue'
 import ArticlePageManageComponent from '@/components/Article/ArticlePageManageComponent.vue';
 import { ArticleService } from "@/repositories/index";
-import type { ArticleDetailModel } from '@/common/interfaces';
+import ArticleEditComponent from '@/components/Article/ArticleEditComponent.vue';
 
 export default defineComponent({
    components: {
       ArticlePageViewComponent,
-      ArticlePageManageComponent
+      ArticlePageManageComponent,
+      ArticleEditComponent
    },
    data: () => ({
-      state: 0,
+      // state: 0,
       articleList: [] as ArticleDetailModel[],
       // articleList: [
       //    {
@@ -64,9 +70,23 @@ export default defineComponent({
       //       date: '۲ خرداد ۱۴۰۰'
       //    }
       // ],
+      state: 1,   // 1 => ArticlePageViewComponent // 2 => ArticlePageManageComponent // 3 => ArticleEditComponent
+      emptyArticleModel: {} as ChangeArticleDetailModel
    }),
    async mounted() {
       await this.getArticleList();
+   },
+   beforeMount() {
+      this.emptyArticleModel = {
+         title: '',
+         description: '',
+         articleContent: '',
+         readDuration: '',
+         picUrl: '',
+         writerId: '',
+         writerName: '',
+         articleCategory: ''
+      }
    },
    methods: {
       changeState(event: number) {
@@ -83,6 +103,10 @@ export default defineComponent({
             }
          }
          catch (err) { }
+
+      },
+      submitEdittedArticle() {
+
       }
    }
 })

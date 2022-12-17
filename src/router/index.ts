@@ -120,7 +120,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/view_article',
+      path: '/view-article',
       name: 'View Article',
       components: {
         default: () => import("@/components/Article/ArticleViewComponent.vue"),

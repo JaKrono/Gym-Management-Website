@@ -91,7 +91,7 @@ export default defineComponent({
    }),
    methods: {
       manageArticlesPageClicked() {
-         this.$emit('manage', 1)
+         this.$emit('manage', 2)
       },
       categoryClicked(categoryId: number) {
          this.selectedCategory = categoryId

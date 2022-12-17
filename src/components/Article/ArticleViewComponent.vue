@@ -1,6 +1,6 @@
 <template>
-   <ArticleReadComponent @edit="changeState" :model="article" :commaSperatedCategories="article.categoriesId" v-if="state === 1"></ArticleReadComponent>
-   <ArticleEditComponent v-else></ArticleEditComponent>
+   <ArticleReadComponent @edit="changeState" :model="article" v-if="state === 2"></ArticleReadComponent>
+   <ArticleEditComponent @discardEdit="changeState" @saveEdit="submitEdittedArticle" :model="article" v-else-if="state === 1"></ArticleEditComponent>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -14,7 +14,7 @@ export default defineComponent({
       ArticleEditComponent
    },
    data: () => ({
-      state: 1,
+      state: 2,
       article: {
          id: '0',
          title: 'کراتین چیست؟',
@@ -25,7 +25,7 @@ export default defineComponent({
          writerId: '0',
          writerName: 'بیژن مرتضوی‌زاده اصل',
 
-         categoriesId: '5,3',
+         articleCategory: '1,6',
          valid: true,
          date: '۲۳ فروردین ۱۴۰۱' // year month day
       },
@@ -34,7 +34,7 @@ export default defineComponent({
       viewWriterClicked() {
 
       },
-      navigateBackClicked() {
+      submitEdittedArticle() {
 
       },
       changeState(event: number) {
