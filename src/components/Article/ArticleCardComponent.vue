@@ -87,17 +87,23 @@ import { defineComponent } from 'vue';
 export default defineComponent({
    data: () => ({
    }),
-   props: ['model', 'dense' ],
+   props: ['model', 'dense'],
    methods: {
       viewArticleClicked() {
-         ////////
-         ////////
-         this.$router.push('/view-article')
-         ////////
-         ////////
+         let params = {
+            articleId: this.model.id
+         };
+
+         this.$router.push({ path: '/view-article', query: params });
       },
       viewWriterClicked() {
+         let params = {
+            coachId: this.model.writerId,
+            gymId: '1', //temp gymId
+            isCoach: 'false'
+         };
 
+         this.$router.push({ path: '/coach-profile', query: params })
       }
    },
    computed: {
