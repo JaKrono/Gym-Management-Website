@@ -12,27 +12,27 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      meta:{},
+      meta: {},
       component: LoginView
     },
     {
-      path:'/coach-search',
-      name:'coach-search',
-      components:{
+      path: '/coach-search',
+      name: 'coach-search',
+      components: {
         default: () => import("@/views/CoachSearch.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
     {
-      path:'/dashboard',
-      name:'dashboard',
-      meta:{requireAuth:true},
-      components:{
+      path: '/dashboard',
+      name: 'dashboard',
+      meta: { requireAuth: true },
+      components: {
         default: () => {
           if (store.state.user.role == '2') {
             return import('@/views/CHome.vue')
           } else if (store.state.user.role == '1') {
-            // return import ('')
+            return import('@/views/Coach/CoachHomeComponent.vue')
           } else if (store.state.user.role == '0') {
             return import("@/views/Profile.vue")
           }
@@ -43,15 +43,15 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      meta: {requireAuth: true},
+      meta: { requireAuth: true },
       components: {
         default: () => {
           if (store.state.user.role == '2') {
-            return import ('@/views/CProfile.vue')
+            return import('@/views/CProfile.vue')
           } else if (store.state.user.role == '1') {
-            return import ('@/components/CoachProfileComponent.vue')
+            return import('@/views/Coach/CoachProfileComponent.vue')
           } else if (store.state.user.role == '0') {
-            return import ('@/views/CGymProfile.vue')
+            return import('@/views/CGymProfile.vue')
           }
         },
         RightSidebar: () => import('@/components/Sidebar.vue')
@@ -60,13 +60,13 @@ const router = createRouter({
     {
       path: '/gyms',
       name: 'gyms',
-      meta: {requireAuth: true},
+      meta: { requireAuth: true },
       components: {
         default: () => {
           if (store.state.user.role == '2') {
-            return import ('@/views/CGyms.vue')
+            return import('@/views/CGyms.vue')
           } else if (store.state.user.role == '1') {
-            // return import()
+            return import('@/views/Coach/CoachGymsComponent.vue')
           } else if (store.state.user.role == '0') {
             // return import()
           }
@@ -75,9 +75,9 @@ const router = createRouter({
       }
     },
     {
-      path:'/coaches',
-      name:'coaches',
-      components:{
+      path: '/coaches',
+      name: 'coaches',
+      components: {
         default: () => import("@/views/Coaches.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
@@ -90,16 +90,46 @@ const router = createRouter({
     {
       path: '/search-coach',
       name: 'Search Coach',
-      components:{
+      components: {
         default: () => import("@/components/SearchCoachComponent.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
     {
-      path:'/customers',
-      name:'customers',
-      components:{
-        default: () => import("@/views/Customers.vue"),
+      path: '/classes',
+      name: 'classes',
+      meta: { requireAuth: true },
+      components: {
+        default: () => {
+          if (store.state.user.role == '2') {
+            // customer classes
+          }
+          if (store.state.user.role == '1') {
+            return import('@/views/Coach/CoachClassesComponent.vue')
+          }
+          if (store.state.user.role == '0') {
+            // import("@/views/Customers.vue")
+          }
+        },
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path: '/customers',
+      name: 'customers',
+      meta: { requireAuth: true },
+      components: {
+        default: () => {
+          if (store.state.user.role == '2') {
+            // 
+          }
+          if (store.state.user.role == '1') {
+            return import('@/views/Coach/CoachCustomersComponent.vue')
+          }
+          if (store.state.user.role == '0') {
+            return import("@/views/Customers.vue")
+          }
+        },
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
@@ -123,10 +153,10 @@ const router = createRouter({
   ]
 })
 router.beforeEach((to, from, next) => {
-  if(to.meta['requireAuth'] && !store.state.user.isSignedIn ){
+  if (to.meta['requireAuth'] && !store.state.user.isSignedIn) {
     next('/login')
   }
-  else{
+  else {
     next()
   }
 })
