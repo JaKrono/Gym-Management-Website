@@ -54,7 +54,6 @@ import { CategoryList } from '@/common/category-list';
 import type { CategoryModel } from '@/common/interfaces';
 import type { ArticleDetailModel } from '@/common/interfaces';
 import store from '@/store';
-import user from '@/store/modules/user';
 
 export default defineComponent({
    props: ['articleList'],
