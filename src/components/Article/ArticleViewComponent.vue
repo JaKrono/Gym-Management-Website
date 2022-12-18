@@ -1,6 +1,7 @@
 <template>
    <ArticleReadComponent @edit="changeState" :model="article" v-if="state === 2"></ArticleReadComponent>
-   <ArticleEditComponent @discardEdit="changeState" @saveEdit="submitEdittedArticle" :model="article" v-else-if="state === 1"></ArticleEditComponent>
+   <ArticleEditComponent @discardEdit="changeState" @saveEdit="submitEdittedArticle" :model="article"
+      v-else-if="state === 1"></ArticleEditComponent>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -8,14 +9,23 @@ import ArticleReadComponent from '@/components/Article/ArticleReadComponent.vue'
 import ArticleEditComponent from '@/components/Article/ArticleEditComponent.vue'
 import type { CategoryModel } from '@/common/interfaces';
 import { CategoryList } from '@/common/category-list';
+import type { ArticleDetailModel } from '@/common/interfaces';
+import { ArticleService } from "@/repositories/index";
+
 export default defineComponent({
    components: {
       ArticleReadComponent,
       ArticleEditComponent
    },
-   data: () => ({
-      state: 2,
-      article: {
+   async beforeMount() {
+      if (!this.$route.query.articleId) {
+         return;
+      }
+
+      this.articleId = (this.$route.query.articleId)?.toString();
+
+      // await this.getArticleList();
+      this.article = {
          id: '0',
          title: 'کراتین چیست؟',
          description: 'کراتین ترکیبی است که به‌صورت طبیعی در بافت عضلات یافت می‌شود. این ترکیب به عضله کمک می‌کند تا برای بلند کردن وزنه‌ها، نیرو تولید کند. استفاده از این مکمل برای افزایش اندازه‌ی عضله، قدرت و عملکرد ورزشی در میان ورزشکاران و بدنسازها بسیار متداول است.',
@@ -24,22 +34,53 @@ export default defineComponent({
          picUrl: 'creatine.jpg',
          writerId: '0',
          writerName: 'بیژن مرتضوی‌زاده اصل',
-
          articleCategory: '1,6',
-         valid: true,
-         date: '۲۳ فروردین ۱۴۰۱' // year month day
-      },
+         isValid: true,
+         createDate: '۲۳ فروردین ۱۴۰۱' // year month day
+      }
+   },
+   data: () => ({
+      state: 2,
+      articleId: '',
+      article: {} as ArticleDetailModel
    }),
    methods: {
       viewWriterClicked() {
+         let params = {
+            coachId: this.article.writerId,
+            gymId: '1', //temp gymId
+            isCoach: 'false'
+         };
 
+         this.$router.push({ path: '/coach-profile', query: params })
       },
       submitEdittedArticle() {
 
       },
       changeState(event: number) {
          this.state = event
-      }
+      },
+      async getArticleList() {
+         let articleList: ArticleDetailModel[] = [];
+
+         try {
+            const result = await ArticleService.getArticleList();
+            if (result.status === 200) {
+               articleList = result.data;
+            }
+            else {
+               articleList = [];
+            }
+         }
+         catch (err) { }
+
+         articleList.forEach(item => {
+            if (item.id === this.articleId) {
+               this.article = item;
+               return;
+            }
+         });
+      },
    }
 })
 </script>
