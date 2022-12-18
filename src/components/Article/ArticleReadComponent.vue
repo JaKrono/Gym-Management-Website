@@ -45,7 +45,7 @@
             <p>{{ model.articleContent }}</p>
 
             <!-- Show only to coach and if the article is not valid -->
-            <div v-if="true" class="row q-mt-md">
+            <div v-if="isCoach" class="row q-mt-md">
                <q-card class="col-xs-12">
                   <q-card-section class="row items-center justify-around q-pa-sm">
                      <p class="q-py-xs">مربی عزیز، آیا صحت مقاله را تایید می‌کنید؟</p>
@@ -69,8 +69,15 @@ import { CategoryList } from '@/common/category-list';
 import type { CategoryModel } from '@/common/interfaces';
 import { getCssVar } from 'quasar';
 import { defineComponent } from 'vue';
+import store from '@/store';
+
 export default defineComponent({
    props: ['model', 'commaSperatedCategories'],
+   mounted(){
+      this.isCoach = (store.state.role === 1);
+      this.isCoach = true; //temp value
+   },
+
    methods: {
       editClicked() {
          this.$emit('edit', 1)
@@ -83,6 +90,7 @@ export default defineComponent({
       }
    },
    data: () => ({
+      isCoach: false,
       pageScrollThumbStyle: {
          width: '4px',
          left: '1.5px',
