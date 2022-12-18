@@ -14,7 +14,7 @@
                   <!-- <q-avatar size="16em" class="text-white" icon="person" color="secondary"></q-avatar> -->
                </div>
                <!-- TODO_asghar: Change placeholder color of q-inputs -->
-               <q-form greedy class="col-12" @reset="onReset" @submit.prevent="submitEdit" ref="profileForm">
+               <q-form greedy class="col-12" @submit.prevent="submitEdit" ref="profileForm">
                   <div class="row col-12 q-mt-lg">
                      <div class="col col-12">
                         <div class="row col-12 q-col-gutter-md">
@@ -170,6 +170,6 @@ export default defineComponent({
    border-radius: 500px;
    border-style: solid;
    border-color: $primary;
-   border-width: 5px;
+   border-width: 2px;
 }
 </style>
