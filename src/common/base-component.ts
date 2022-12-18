@@ -11,4 +11,19 @@ export class BaseComponent {
         5: CategoryList[4],
         6: CategoryList[5],
     }
+
+    getBase64(file: File) {
+        if (!file) {
+            return new Promise((resolve, reject) => {
+                resolve('');
+            });
+        }
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                resolve(reader.result);
+            };
+        });
+    }
 }
