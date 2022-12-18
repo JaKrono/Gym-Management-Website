@@ -15,7 +15,7 @@ export default defineComponent({
   },
   mounted(){
     if(this.token)
-    setToken(this.token)
+      setToken(this.token)
   },
 
   watch: {
@@ -28,23 +28,31 @@ export default defineComponent({
 </script>
 
 <template>
-    <q-layout>
-      <q-header class="header-height bg-white">
-        <ToolbarComponent></ToolbarComponent>
-      </q-header>
-      <q-page-container class="page-container row">
-        <router-view name="RightSidebar" />
-        <router-view class="item-fill" />
-      </q-page-container>
-    </q-layout>
-    <!-- <RouterView style="height:100%;" /> -->
+  <q-layout>
+    <q-header class="header-height bg-white">
+      <ToolbarComponent></ToolbarComponent>
+    </q-header>
+    <q-page-container class="page-container row">
+      <router-view name="RightSidebar" />
+      <router-view class="item-fill" />
+    </q-page-container>
+  </q-layout>
+  <!-- <RouterView style="height:100%;" /> -->
 </template>
 
-<style scoped>
-  .header-height{
-    height: 50px;
-  }
-  .page-container{
-    min-height: calc(100vh);
-  }
+<style lang="scss" scoped>
+.header-height {
+  height: 50px;
+}
+
+.page-container {
+  min-height: calc(100vh);
+}
+
+.q-scrollarea :deep(.q-scrollarea__thumb) {
+  width: 4px;
+  margin-right: 2px;
+  background-color: $primary;
+  opacity: 1;
+}
 </style>
