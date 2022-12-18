@@ -79,14 +79,22 @@ export interface GymModel {
     user: number
 }
 export interface CustomerProfileModel {
-    username: string,
-    email: string,
-    name: string,
-    lastname: string,
-    phoneNumber: string,
-    sex: string
+    phone: string,
+    description: string,
+    user: {
+        username: string,
+        email: string,
+        presonal_id: string,
+        gender: string,
+        picUrl: string,
+        first_name: string,
+        last_name: string
+    }
 }
-
+export interface UpdateCustomerProfileModel {
+    user_id: string,
+    customerProfileModel: CustomerProfileModel
+}
 export interface GymModel {
     name: string,
     adress: string,
