@@ -10,11 +10,11 @@ export default defineComponent({
     ...mapState({
       hasNotification: (state: any) => state.notification.hasNotification,
       notification: (state: any) => state.notification.notification,
-      token: state => state.user.token
+      token: (state: any) => state.user.token
     })
   },
-  mounted(){
-    if(this.token)
+  mounted() {
+    if (this.token)
       setToken(this.token)
   },
 
@@ -51,7 +51,8 @@ export default defineComponent({
 
 .q-scrollarea :deep(.q-scrollarea__thumb) {
   width: 4px;
-  margin-right: 2px;
+  height: 4px;
+  margin: 2px;
   background-color: $primary;
   opacity: 1;
 }
