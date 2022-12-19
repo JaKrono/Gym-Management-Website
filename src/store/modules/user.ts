@@ -1,5 +1,9 @@
 import type { ClassModel, LoginModel, SignupModel, NewClassModel, InviteCoachModel, CoachProfileModel, GymModel } from "@/common/interfaces";
 import { Authentication, ClassListService, CoachProfileService, Gym, SearchCoachService } from "@/repositories/index"
+import { mapActions } from "vuex";
+import customer from "./customer";
+import coach from "./coach";
+import owner from "./owner";
 
 export default {
     namespaced: true,
@@ -36,6 +40,15 @@ export default {
                 commit('setUserId', tokenInfo.user_id)
                 commit('setRole', tokenInfo.role)
                 commit('setIsSignedIn', true)
+
+                if (state.role == 2) { // customer
+                    dispatch('customer/getCustomerId', null, {root: true})
+                } else if (state.role == 1) { // coach
+                    dispatch('customer/getCustomerId', null, {root: true})
+                } else if (state.role == 0) { // owner
+                    dispatch('customer/getCustomerId', null, {root: true})
+                }
+
                 dispatch('notification/showNotification', { message: 'ورود موفق', type: 'positive', timeout: 2000 }, { root: true })
                 return true;
             } else {
@@ -131,7 +144,7 @@ export default {
             const response = await SearchCoachService.searchCoachList(coachName);
             return response.data;
         }
-    }
+    },
 }
 function parseJwt(token: string) {
     var base64Url = token.split('.')[1];
