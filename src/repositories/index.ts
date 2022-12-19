@@ -6,6 +6,7 @@ import Gym from "./gym";
 import Customer from "./customer";
 import ArticleService from "./article-service";
 import Coach from "./coach";
+import Owner from "./owner";
 
 export {
     Authentication,
@@ -15,5 +16,6 @@ export {
     Gym,
     Customer,
     ArticleService,
-    Coach
+    Coach,
+    Owner
 }

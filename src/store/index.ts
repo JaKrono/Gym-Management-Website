@@ -13,7 +13,7 @@ const store = createStore({
         global:globalModule,
         customer:customerModule,
         owner:ownerModule,
-        coach: coachModule
+        coach:coachModule
     },
     plugins:[new VuexPersistence({modules:['user']}).plugin]
 

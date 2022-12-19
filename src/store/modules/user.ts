@@ -1,5 +1,9 @@
 import type { ClassModel, LoginModel, SignupModel, NewClassModel, InviteCoachModel, CoachProfileModel, GymModel } from "@/common/interfaces";
 import { Authentication, ClassListService, CoachProfileService, Gym, SearchCoachService } from "@/repositories/index"
+import { mapActions } from "vuex";
+import customer from "./customer";
+import coach from "./coach";
+import owner from "./owner";
 
 export default {
     namespaced: true,
@@ -8,7 +12,8 @@ export default {
         isSignedIn: false,
         role: -1,
         userId:null,
-        gym:{id:null,name:"",adress:"",phone:"",gym_reg_code:"",user:null, picture:null}
+        gym:{id:null,name:"",adress:"",phone:"",gym_reg_code:"",user:null, picture:null},
+        customers:[]
     }),
     mutations: {
         setToken(state: any, token: string) {
@@ -25,6 +30,9 @@ export default {
         },
         setRole(state, role: number) {
             state.role = role
+        },
+        setCustomers(state, customers:Array<any>){
+            state.customers = customers
         }
     },
     actions: {
@@ -36,6 +44,15 @@ export default {
                 commit('setUserId', tokenInfo.user_id)
                 commit('setRole', tokenInfo.role)
                 commit('setIsSignedIn', true)
+
+                if (state.role == 2) { // customer
+                    dispatch('customer/getCustomerId', null, {root: true})
+                } else if (state.role == 1) { // coach
+                    dispatch('customer/getCustomerId', null, {root: true})
+                } else if (state.role == 0) { // owner
+                    dispatch('customer/getCustomerId', null, {root: true})
+                }
+
                 dispatch('notification/showNotification', { message: 'ورود موفق', type: 'positive', timeout: 2000 }, { root: true })
                 return true;
             } else {
@@ -130,8 +147,19 @@ export default {
         async searchCoach(coachName: string) {
             const response = await SearchCoachService.searchCoachList(coachName);
             return response.data;
+        },
+
+        async getCustomers({state, commit, dispatch}){
+            const response = await Gym.getCustomers(state.gym.id);
+            commit('setCustomers', response.data)
+        },
+
+        async removeCustomer({state, commit, dispatch}, customerId:number){
+            const response = await Gym.removeCustomer(state.gym.id, customerId);
+            if(response.status == 200)
+            commit('setCustomers',response.data)
         }
-    }
+    },
 }
 function parseJwt(token: string) {
     var base64Url = token.split('.')[1];
