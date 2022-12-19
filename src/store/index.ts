@@ -15,7 +15,7 @@ const store = createStore({
         owner:ownerModule,
         coach:coachModule
     },
-    plugins:[new VuexPersistence({modules:['user']}).plugin]
+    plugins:[new VuexPersistence({modules:['user', 'customer', 'coach', 'owner']}).plugin]
 
 })
 
