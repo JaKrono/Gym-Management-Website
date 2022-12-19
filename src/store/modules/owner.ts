@@ -1,4 +1,4 @@
-import { Coach } from "@/repositories";
+import { Coach, Gym } from "@/repositories";
 export default{
     namespaced:true,
     state:()=>({
@@ -11,7 +11,7 @@ export default{
     },
     actions:{
         async getCoachesData({commit},gymId:number){
-            const response = await Coach.getCoaches(gymId)
+            const response = await Gym.getCoaches(gymId)
             if(response.status === 200){
                 commit('setCoaches', response.data)
                 return true

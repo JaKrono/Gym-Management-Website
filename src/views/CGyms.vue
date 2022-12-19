@@ -1,151 +1,95 @@
 <template>
-   <q-page class="col-12" v-if="!searchState">
-      <div class="row col-12 content-center q-px-lg">
-         <!-- <div class="row col-12 q-pt-lg no-wrap"> 
-            Hides the extra content in case of long username or email.
-            <q-avatar size="6em" class="text-white" icon="person" color="secondary"></q-avatar>
-            <div class="column q-ml-md items-start justify-end" >
-               TODO_asghar: Fix ellipsis classes
-               <p class="q-mb-sm font-size-up-3 bold-text ellipsis-1"
-                  :style="[$q.screen.width >= 1024 ? {'max-width': 'calc(100vw - 148px - 300px)'} : {'max-width': 'calc(100vw - 148px)'}]">
-                  {{ this.name || this.username }}
-               </p>
-               <p class="q-mb-sm ellipsis-1" 
-                  :style="[$q.screen.width >= 1024 ? {'max-width': 'calc(100vw - 148px - 300px)'} : {'max-width': 'calc(100vw - 148px)'}]">
-                  {{ this.phoneNumber || this.email }}
-               </p>
-            </div>
-         </div> -->
+   <q-scroll-area>
+      <q-page class="col-12" v-if="!searchState">
+         
+         <div class="row col-12 content-center q-px-lg">
+            <div class="row col-12 q-my-lg">
 
-         <div class="row col-12 q-my-lg">
+               <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
+                  <!-- Can also be favorite or recently added clubs. -->
+                  <p class="col-sm-auto font-size-up-4 text-weight-bold">باشگاه‌های ثبت نام شده</p>
+                  <q-btn @click="toggleState" class="col-12 col-sm-auto q-px-sm q-mt-sm q-mt-sm-none"
+                     color="primary">عضویت
+                     در باشگاه جدید</q-btn>
+               </div>
 
-            <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
-               <!-- Can also be favorite or recently added clubs. -->
-               <p class="col-sm-auto font-size-up-4 text-weight-bold">باشگاه‌های ثبت نام شده</p>
-               <q-btn @click="toggleState" class="col-12 col-sm-auto q-px-sm q-mt-sm q-mt-sm-none" color="primary">عضویت
-                  در باشگاه جدید</q-btn>
-            </div>
-
-            <div class="row col-12">
-               <div class="col">
-                  <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-                     <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3" v-for="club in clubs">
-                        <q-card bordered>
-                           <q-card-section class="q-pa-none">
-
-                              <q-card-section class="q-pa-none">
-                                 <q-img :src="club.img" alt="Gym Image" :ratio="$q.screen.lt.sm ? 3 / 1 : 16 / 9"
-                                    fit="cover">
-                                    <template v-slot:error>
-                                       <q-img class="q-pa-lg" alt="Dumbell Image" src="dumbell.svg" position="50% 103%"
-                                          :ratio="16 / 9" :img-style="{ filter: 'blur(4px)' }"></q-img>
-                                       <p class="q-mt-sm text-white absolute-full flex flex-center">خطا در نمایش تصویر
-                                       </p>
-                                    </template>
-                                 </q-img>
-                              </q-card-section>
-                              <!-- HEIGHT -->
-                              <q-card-section class="q-pa-sm" style="height: 60px">
-                                 <p class="font-size-up-1 text-weight-bold ellipsis-2-lines">{{ club.name }}</p>
-                              </q-card-section>
-
-                              <q-card-actions class="flex" align="right">
-                                 <q-btn @click="navigateToGymProfile" color="secondary">
-                                    <p class="font-size-down-1">مشاهده اطلاعات</p>
-                                 </q-btn>
-                              </q-card-actions>
-
-                           </q-card-section>
-                        </q-card>
+               <div class="row col-12">
+                  <div class="col">
+                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
+                        <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3" v-for="club in clubs">
+                           <GymCardComponent :model="club" address phoneNumber></GymCardComponent>
+                        </div>
                      </div>
                   </div>
                </div>
-            </div>
 
+            </div>
          </div>
-      </div>
-   </q-page>
-   <q-page class="col-12" v-if="searchState">
-      <div class="row col-12 content-center q-px-lg">
-         <div class="row col-12 q-my-lg">
+      </q-page>
 
-            <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
-               <!-- Can also be favorite or recently added clubs. -->
-               <p class="col-sm-auto font-size-up-4 text-weight-bold">جستجوی باشگاه‌ها</p>
-               <q-btn @click="toggleState" class="col-12 col-sm-auto q-px-xl q-mt-sm q-mt-sm-none"
-                  color="primary">بازگشت</q-btn>
-            </div>
+      <q-page class="col-12" v-if="searchState">
+         <div class="row col-12 content-center q-px-lg">
+            <div class="row col-12 q-my-lg">
 
-            <div class="row q-my-lg col-12 justify-between">
-               <div class="col-12 col-sm-8">
-                  <q-input class="col-12" rounded dense clearable outlined v-model="searchText"
-                     placeholder="نام باشگاه را وارد کنید">
-                     <template v-slot:prepend>
-                        <q-icon name="search" />
-                     </template>
-                  </q-input>
+               <div class="row col-12 justify-xs-center justify-sm-between items-center q-mb-md">
+                  <!-- Can also be favorite or recently added clubs. -->
+                  <p class="col-sm-auto font-size-up-4 text-weight-bold">جستجوی باشگاه‌ها</p>
+                  <q-btn @click="toggleState" class="col-12 col-sm-auto q-px-xl q-mt-sm q-mt-sm-none"
+                     color="secondary">بازگشت</q-btn>
                </div>
-               <div class="col-12 col-sm-auto">
-                  <q-btn @click="searchClicked" class="col-12 q-px-xl q-mt-xs-md q-mt-sm-none" style="width: 100%"
-                     rounded color="secondary">جستجو</q-btn>
-               </div>
-            </div>
 
-            <div class="row col-12">
-               <div class="col">
-                  <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-                     <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3" v-for="club in searchResult">
-                        <q-card bordered>
-                           <q-card-section class="q-pa-none">
-
-                              <q-card-section class="q-pa-none">
-                                 <q-img :src="club.img | ERROR" alt="Gym Image" :ratio="$q.screen.lt.sm ? 3 / 1 : 16 / 9"
-                                    fit="cover">
-                                    <template v-slot:error>
-                                       <q-img class="q-pa-lg" alt="Dumbell Image" src="dumbell.svg" position="50% 103%"
-                                          :ratio="16 / 9" :img-style="{ filter: 'blur(4px)' }"></q-img>
-                                       <p class="q-mt-sm text-white absolute-full flex flex-center">خطا در نمایش تصویر
-                                       </p>
-                                    </template>
-                                 </q-img>
-                              </q-card-section>
-                              <!-- HEIGHT -->
-                              <q-card-section class="q-pa-sm" style="height: 60px">
-                                 <p class="font-size-up-1 text-weight-bold ellipsis-2">{{ club.name }}</p>
-                              </q-card-section>
-
-                              <q-card-actions class="flex" align="right">
-                                 <q-btn @click="navigateToGymProfile" color="secondary">
-                                    <p class="font-size-down-1">مشاهده اطلاعات و ثبت‌نام</p>
-                                 </q-btn>
-                              </q-card-actions>
-
-                           </q-card-section>
-                        </q-card>
-                     </div>
-                     <p v-if="searchResult.length === 0">موردی یافت نشد</p>
+               <div class="row q-my-lg col-12 justify-between">
+                  <div class="col-12 col-sm-8">
+                     <q-input class="col-12" dense clearable outlined v-model="searchText"
+                        placeholder="نام باشگاه را وارد کنید">
+                        <template v-slot:prepend>
+                           <q-icon name="search" />
+                        </template>
+                     </q-input>
+                  </div>
+                  <div class="col-12 col-sm-auto">
+                     <q-btn @click="searchClicked" class="col-12 q-px-xl q-mt-xs-md q-mt-sm-none" style="width: 100%"
+                        color="primary">جستجو</q-btn>
                   </div>
                </div>
-            </div>
 
+               <div class="row col-12">
+                  <div class="col">
+                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
+                        <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3" v-for="club in searchResult">
+                           <GymCardComponent :model="club"></GymCardComponent>
+                        </div>
+                        <p v-if="searchResult.length === 0">موردی یافت نشد</p>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
          </div>
-      </div>
-   </q-page>
+      </q-page>
+   </q-scroll-area>
+
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import GymCardComponent from '@/components/Gym/GymCardComponent.vue';
 import { mapActions } from 'vuex';
+import { getCssVar } from 'quasar';
 export default defineComponent({
+   components: {
+      GymCardComponent
+   },
    data: () => ({
       searchText: '',
       searchState: false,
       searchResult: [],
-      clubs: [{ name: 'باشگاه دانشگاه علم و صنعت ایران شعبه آقایان علی‌الخصوص بیژن مرتضوی', img: 'gym1.jpg' },
-      { name: 'زورخانه پهلوان بیژن مرتضوی', img: 'gym5.jpg' },
-      { name: 'زورخانه قهرمان بیژن مرتضوی', img: 'gym2.jpg' },
-      { name: 'زورخانه پهلوان بیژن مرتضوی', img: 'gym3.jpg' },
-      { name: 'زورخانه پهلوان بیژن مرتضوی', img: 'gym4.jpg' },
-      { name: 'زورخانه پهلوان بیژن مرتضوی', img: 'gym5.jpg' }],
+      clubs: [
+         { name: 'زورخانه پهلوان بیژن مرتضوی علی‌الخصوص بیژن مرتضوی بددت شستی هتشسی  شس یشس یشس یشس یشس یث شی   ', picUrl: 'gym1.jpg', phone: '۰۲۵۱۶۶۶۶۶۶۶', address: 'تهران پارس فلکه سوم تهرانپارس ضلع جنوب بیمارستان کوچه قمصری پلاک ۷ طبقه دوم جنوبی' },
+         { name: 'زورخانه پهلوان بیژن مرتضوی', picUrl: 'gym2.jpg', phone: '', address: 'تهران پارس فلکه سوم تهرانپارس ضلع جنه قمصری پلاک ۷ طبقه دوم جنوبی' },
+         { name: 'زورخانه پهلوان بیژن مرتضوی', picUrl: 'gym3.jpg', phone: '۰۲۵۱۶۶۶۶۶۶۶', address: '' },
+         { name: 'زورخانه پهلوان بیژن مرتضوی', picUrl: 'gym4.jpg', phone: '۰۲۵۱۶۶۶۶۶۶۶', address: 'تهران پارس فلکه سوم تهرانپارس ضلع جنوب بیمارستان کوی پلاک ۷ طبقه دوم جنوبی' },
+         { name: 'زورخانه پهلوان بیژن مرتضوی', picUrl: 'gym5.jpg', phone: '۰۲۵۱۶۶۶۶۶۶۶', address: 'تهران پارس فلکه سوم تهرانپارس ضلع جنوب ی' },
+      ],
    }),
    methods: {
       ...mapActions({
@@ -164,13 +108,12 @@ export default defineComponent({
       async search(gymName: string) {
          const result = await this.searchGym(gymName)
          console.log(result[0].name)
-         
+
          this.searchResult = result
-         
+
       }
    }
 })
 </script>
-<style>
-
+<style lang="scss">
 </style>
