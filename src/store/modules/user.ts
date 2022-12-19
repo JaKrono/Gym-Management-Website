@@ -14,12 +14,12 @@ export default {
         role: -1,
         userId:null,
         gym:{id:null,name:"",adress:"",phone:"",gym_reg_code:"",user:null, picture:null},
-        
         customers:[],
         user:{
             picUrl:'',
             email:'',
-            username:''
+            username:'',
+            role_id:-1
         }
     }),
     mutations: {
@@ -64,10 +64,10 @@ export default {
                 }
 
                 dispatch('notification/showNotification', { message: 'ورود موفق', type: 'positive', timeout: 2000 }, { root: true })
-                return true;
+                return Promise.resolve(true);
             } else {
                 dispatch('notification/showNotification', { message: response?.data.detail || "خطا در برقراری ازتباط", type: 'negative', timeout: 2000 }, { root: true })
-                return false;
+                return Promise.resolve(false);
             }
         },
         async signup({ commit, dispatch }: any, signup: SignupModel) {
@@ -144,6 +144,11 @@ export default {
 
         async logout({ dispatch }) {
             dispatch('reset')
+            localStorage.setItem('vuex',"")
+            setTimeout(()=>{
+
+                window.location.reload();
+            },1000)
         },
 
         reset({ commit }) {

@@ -1,9 +1,10 @@
 <template>
     <q-drawer elevated v-model="sidebarIsVisible" showIfAbove="md" side="left" bordered>
         <div class="flex column q-mt-lg content-center">
-            <q-avatar :src="user.picUrl" size="9em" color="primary">
+            <q-avatar v-if="!user.picUrl" size="9em" color="primary">
                 <q-icon class="text-white" name="person"></q-icon>
             </q-avatar>
+            <img v-else style="height:9em; width:9em; border-radius:50%;object-fit:cover;" :src="user.picUrl" />
             <p class="q-mt-lg font-size-up-2 text-center">{{ user.username }}</p>
             <p class=" text-center">{{ user.email }}</p>
             <!-- <q-btn outline color="primary">مشاهده پروفایل</q-btn> -->
@@ -84,7 +85,7 @@ export default defineComponent({
                     { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false },
                     { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id },
                     { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id },
-                    { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach' }
+                    { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id }
                 ]
             }
             if (this.role === '1') {
@@ -106,7 +107,7 @@ export default defineComponent({
         },
         updateItems() {
             if (this.role === "0") {
-                this.items = [{ id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false }, { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach' }]
+                this.items = [{ id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false }, { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id }]
             }
         }
     },

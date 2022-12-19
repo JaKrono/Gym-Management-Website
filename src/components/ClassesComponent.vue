@@ -43,7 +43,8 @@ import { defineComponent } from 'vue';
 import ClassComponent from './ClassComponent.vue';
 import type { ClassModel, NewClassModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
-import { classListService } from "@/repositories/index";
+import { ClassListService } from "@/repositories/index";
+import { BaseComponent } from '@/common/base-compponent';
 
 export default defineComponent({
     components: {
@@ -53,7 +54,8 @@ export default defineComponent({
         gymId: '1',//temp
         addClassModalShow: false,
         classList: [] as ClassModel[],
-        newClassObject: {} as NewClassModel
+        newClassObject: {} as NewClassModel,
+        baseComponent: new BaseComponent()
     }),
     async mounted() {
         await this.getClassList();
@@ -66,7 +68,7 @@ export default defineComponent({
         async getClassList() {
             try {
                 // this.classList = await this.getClassListAsync();
-                const result = await classListService.getClassList();
+                const result = await ClassListService.getClassList();
                 if (result.status === 200) {
                     this.classList = result.data;
                 }
@@ -82,13 +84,14 @@ export default defineComponent({
             this.newClassObject = {
                 gym: this.gymId,
                 name: '',
-                time: ''
+                time: '',
+                categoryTypes: ''
             }
         },
         async addClass() {
             try {
                 // await this.addClassAsync(this.newClassObject);
-                const result = await classListService.addClassItem(this.newClassObject);
+                const result = await ClassListService.addClassItem(this.newClassObject);
                 if (result.status === 201) {
                     this.classList.push(result.data);
                 }

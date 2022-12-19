@@ -19,7 +19,8 @@ export default defineComponent({
     })
   },
   mounted() {
-    this.getUser();
+    if (this.$store.state.user.isSignedIn)
+      this.getUser();
 
     if (this.token)
       setToken(this.token)

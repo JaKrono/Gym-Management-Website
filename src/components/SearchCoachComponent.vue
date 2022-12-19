@@ -16,7 +16,9 @@
                 </template> -->
                 <div v-if="(!flag)" class="empty-field ">موردی یافت نشد !</div>
                 <template v-if="(flag)">
-                    <CoachComponent2 class="coach-item" :coachObject="searchResult"></CoachComponent2>
+
+                    <CoachComponent2 v-for="coach in searchResult" class="coach-item" :coachObject="coach">
+                    </CoachComponent2>
                 </template>
             </div>
         </div>

@@ -35,7 +35,6 @@ export default defineComponent({
     props: ['model'],
     methods: {
         removeCustomer() {
-            debugger;
             this.$emit('removeCustomer', this.model.customer_id)
         }
     }

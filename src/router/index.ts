@@ -32,7 +32,8 @@ const router = createRouter({
           if (store.state.user.role == '2') {
             return import('@/views/CHome.vue')
           } else if (store.state.user.role == '1') {
-            return import('@/views/Coach/CoachHomeComponent.vue')
+            return import ('@/views/Coach/CoachProfile.vue')
+            
           } else if (store.state.user.role == '0') {
             return import("@/views/Profile.vue")
           }
@@ -49,7 +50,7 @@ const router = createRouter({
           if (store.state.user.role == '2') {
             return import('@/views/CProfile.vue')
           } else if (store.state.user.role == '1') {
-            return import('@/views/Coach/CoachProfileComponent.vue')
+            return import ('@/views/Coach/CoachProfile.vue')
           } else if (store.state.user.role == '0') {
             return import('@/views/CGymProfile.vue')
           }

@@ -89,6 +89,10 @@
                         <textarea class="modal-text-field" v-model="tempProfileObject.description"></textarea>
                     </div>
                     <div class="modal-item">
+                        <div class="item-title">عکس پروفایل :</div>
+                        <input type="file" accept="image/*" (change)="getPhoto($event)">
+                    </div>
+                    <div class="modal-item">
                         <div class="item-title">مشخصات :</div>
                         <div class="edit-detail">
                             <div v-for="detailItem in tempProfileObject.detail_set" class="edit-detail">
@@ -129,6 +133,7 @@ export default defineComponent({
     data: () => ({
         coachId: '',
         gymId: '',
+        imageBase64: '',
         inviteModalShow: false,
         editModalShow: false,
         isChangablePage: false,
@@ -203,6 +208,7 @@ export default defineComponent({
             }
         },
         async editProfile() {
+            this.tempProfileObject.user.picUrl = this.imageBase64;
             try {
                 // this.profileDto = await this.editCoachDetailAsync(this.coachId, this.tempProfileObject);
                 const result = await CoachProfileService.editCoachProfileDetail(this.coachId, this.tempProfileObject);
@@ -251,6 +257,14 @@ export default defineComponent({
             }
 
             return true;
+        },
+        getPhoto(event: any) {
+            let reader = new FileReader();
+            reader.readAsDataURL(event);
+
+            reader.onload = (_event) => {
+                this.imageBase64 = reader.result.toString();
+            }
         }
     }
 })
