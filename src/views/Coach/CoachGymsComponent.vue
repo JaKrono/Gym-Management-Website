@@ -55,19 +55,23 @@ export default defineComponent({
    },
    data: () => ({
       searchResult: [],
-      joinedGyms: [
+      acceptedGyms: [
          { name: 'باشگاه دانشگاه علم و صنعت ایران شعبه آقایان علی‌الخصوص بیژن مرتضوی', img: 'gym1.jpg' },
          { name: 'زورخانه پهلوان بیژن مرتضوی', img: 'gym5.jpg' },
       ],
-      invitedGyms: [
+      pendingGyms: [
          { name: 'باشگاه دعوت کننده اول', address: '', phone: '', string: '' },
          { name: 'باشگاه دعوت کننده اول', address: '', phone: '', string: '' },
       ]
    }),
    methods: {
       ...mapActions({
-         searchGym: 'customer/getGymByName'
+         getAcceptedGyms: 'coach/getAcceptedGyms',
+         getPendingGyms: 'coach/getPendingGyms'       
       }),
+   },
+   async mounted() {
+      await this.getAcceptedGyms
    }
 })
 </script>

@@ -21,6 +21,9 @@ export default defineComponent({
       ...mapActions({
          searchGym: 'customer/getGymByName'
       }),
+   },
+   async mounted() {
+      
    }
 })
 </script>

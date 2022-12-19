@@ -5,13 +5,15 @@ import globalModule from './modules/global'
 import VuexPersistence from 'vuex-persist'
 import customerModule from './modules/customer'
 import ownerModule from './modules/owner'
+import coachModule from './modules/coach'
 const store = createStore({
     modules:{
         user:userModule,
         notification:notificationModule,
         global:globalModule,
         customer:customerModule,
-        owner:ownerModule
+        owner:ownerModule,
+        coach: coachModule
     },
     plugins:[new VuexPersistence({modules:['user']}).plugin]
 
