@@ -48,9 +48,9 @@ export default {
                 if (state.role == 2) { // customer
                     dispatch('customer/getCustomerId', null, {root: true})
                 } else if (state.role == 1) { // coach
-                    dispatch('customer/getCustomerId', null, {root: true})
+                    dispatch('coach/getCoachId', null, {root: true})
                 } else if (state.role == 0) { // owner
-                    dispatch('customer/getCustomerId', null, {root: true})
+                    dispatch('owner/getOwnerId', null, {root: true})
                 }
 
                 dispatch('notification/showNotification', { message: 'ورود موفق', type: 'positive', timeout: 2000 }, { root: true })
