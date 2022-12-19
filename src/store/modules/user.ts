@@ -1,4 +1,5 @@
 import type { ClassModel, LoginModel, SignupModel, NewClassModel, InviteCoachModel, CoachProfileModel, GymModel } from "@/common/interfaces";
+import authentication from "@/repositories/authentication";
 import { Authentication, ClassListService, CoachProfileService, Gym, SearchCoachService } from "@/repositories/index"
 import { mapActions } from "vuex";
 import customer from "./customer";
@@ -13,7 +14,13 @@ export default {
         role: -1,
         userId:null,
         gym:{id:null,name:"",adress:"",phone:"",gym_reg_code:"",user:null, picture:null},
-        customers:[]
+        
+        customers:[],
+        user:{
+            picUrl:'',
+            email:'',
+            username:''
+        }
     }),
     mutations: {
         setToken(state: any, token: string) {
@@ -33,6 +40,9 @@ export default {
         },
         setCustomers(state, customers:Array<any>){
             state.customers = customers
+        },
+        setUser(state, userModel){
+            state.user = userModel
         }
     },
     actions: {
@@ -142,6 +152,8 @@ export default {
             commit('setUserId', -1)
             commit('setGym', {})
             commit('setRole', -1)
+            commit('setCustomers',[])
+            commit('setUser',{})
         },
 
         async searchCoach(coachName: string) {
@@ -158,6 +170,13 @@ export default {
             const response = await Gym.removeCustomer(state.gym.id, customerId);
             if(response.status == 200)
             commit('setCustomers',response.data)
+        },
+
+        async getUser({state, commit}, userId:number){
+            const response = await authentication.getUser(state.userId);
+            if(response.status === 200){
+                commit('setUser', response.data)
+            }
         }
     },
 }

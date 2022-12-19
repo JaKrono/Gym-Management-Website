@@ -12,5 +12,11 @@ export default {
         const endpoint = '/api/user/signup/'
         const response = client.post(endpoint, signupModel)
         return response;
+    },
+
+    getUser(userId:number){
+        const endpoint = `/api/get-user/${userId}/`
+        const response = client.get(endpoint)
+        return response;
     }
 }

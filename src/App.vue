@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue';
 import ToolbarComponent from './components/ToolbarComponent.vue';
 import { Notify } from 'quasar';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import { setToken } from './repositories/client/axios';
 export default defineComponent({
   components: { ToolbarComponent },
@@ -13,7 +13,14 @@ export default defineComponent({
       token: (state: any) => state.user.token
     })
   },
+  methods: {
+    ...mapActions({
+      getUser: 'user/getUser'
+    })
+  },
   mounted() {
+    this.getUser();
+
     if (this.token)
       setToken(this.token)
   },
