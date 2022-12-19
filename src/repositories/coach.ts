@@ -21,4 +21,16 @@ export default {
         return response
     },
 
+
+   getCoachDetail(coachId:number){
+      const endpoint = `api/coach/get-coach/${coachId}/`
+      const response = client.get(endpoint)
+      return response
+   },
+
+   saveCoach(coachId:number,coachModel){
+      const endpoint = `api/coach/update-coach/${coachId}/`
+      const response = client.put(endpoint, coachModel)
+      return response
+   }
 }
