@@ -9,6 +9,11 @@
             <div class="class-detail-item secondary-font">مربی: {{ classObjectPerview.coachname }}</div>
             <div class="class-detail-item secondary-font">ساعت: {{ classObjectPerview.time }}</div>
             <div class="class-detail-item secondary-font">اعضا: {{ classObjectPerview.memebercount }}</div>
+            <div class="category-list">
+                <div v-for="cat in categoryList" class="category-lable" :style="{ backgroundColor: cat.color }">
+                    {{ cat.title }}
+                </div>
+            </div>
         </div>
     </div>
     <div v-if="editModalShow" class="modal-shadow">
@@ -31,6 +36,13 @@
                         <input v-model="editClassObject.time" class="form-input" type="text">
                         <label class="main-font">:ساعت کلاس</label>
                     </div>
+                    <div class="category-list">
+                        <div v-for="cat in categoryListModel" class="category-lable"
+                            :style="{ backgroundColor: cat.color }"
+                            :class="{ 'active-category': selectedCategory.id == cat.id }" @click="selectCategory(cat)">
+                            {{ cat.title }}
+                        </div>
+                    </div>
                     <q-btn @click="editClass()" color="primary">ویرایش</q-btn>
                 </div>
             </div>
@@ -39,19 +51,26 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { ClassModel } from '@/common/interfaces';
+import type { CategoryModel, ClassModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
-import { classListService } from "@/repositories/index";
+import { ClassListService } from "@/repositories/index";
+import { BaseComponent } from '@/common/base-compponent';
+import { CategoryList } from '@/common/category-list';
 
 export default defineComponent({
     props: ['classObject'],
     data: () => ({
         editModalShow: false,
         classObjectPerview: {} as ClassModel,
-        editClassObject: {} as ClassModel
+        editClassObject: {} as ClassModel,
+        categoryList: [] as CategoryModel[],
+        baseComponent: new BaseComponent(),
+        categoryListModel: CategoryList,
+        selectedCategory: {} as CategoryModel
     }),
     mounted() {
         this.classObjectPerview = this.classObject;
+        this.getClassCategory();
     },
     methods: {
         ...mapActions({
@@ -63,9 +82,11 @@ export default defineComponent({
             this.editModalShow = true;
         },
         async editClass() {
+            this.editClassObject.categoryTypes = String(this.selectedCategory.id);
+
             try {
                 // this.classObjectPerview = await this.editClassAsync(this.editClassObject);
-                const result = await classListService.editClassDetail(this.editClassObject.id, this.editClassObject);
+                const result = await ClassListService.editClassDetail(this.editClassObject.id, this.editClassObject);
                 if (result.status === 200) {
                     this.classObjectPerview = result.data;
                 }
@@ -76,6 +97,15 @@ export default defineComponent({
             catch (err) { }
 
             this.editModalShow = false;
+        },
+        getClassCategory() {
+            let categories = this.classObjectPerview.categoryTypes.split(',');
+            categories.forEach(item => {
+                this.categoryList.push(this.baseComponent.categoryValue[Number(item)]);
+            })
+        },
+        selectCategory(selectedCategory: CategoryModel) {
+            this.selectedCategory = selectedCategory;
         }
     }
 })
@@ -281,6 +311,23 @@ export default defineComponent({
     label {
         min-width: 100px;
         text-align: left;
+    }
+}
+
+.category-list {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+
+    .category-lable {
+        width: 120px;
+        height: 40px;
+        border-radius: 10px;
+        padding: 5px 15px;
+    }
+
+    .active-category {
+        background-color: darken(#000000, 30%);
     }
 }
 </style>
