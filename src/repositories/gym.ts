@@ -23,5 +23,17 @@ export default{
         const endpoint = `gym/coaches/${gymId}/`
         const response = client.get(endpoint)
         return response
+    },
+
+    getCustomers(gymId:number){
+        const endpoint = `gym/customers/${gymId}`
+        const response = client.get(endpoint)
+        return response
+    },
+
+    removeCustomer(gymId:number, customerId:number){
+        const endpoint = `gym/${gymId}/customer/${customerId}`
+        const response = client.delete(endpoint)
+        return response
     }
 }

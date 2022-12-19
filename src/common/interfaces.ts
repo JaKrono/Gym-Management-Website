@@ -148,3 +148,9 @@ export interface CategoryModel {
     title: string,
     color: string
 }
+
+export interface GymCustomer{
+    customer_id:number,
+    username:string,
+    email:string
+}
