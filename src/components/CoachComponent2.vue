@@ -5,7 +5,7 @@
                 <q-btn v-if="isInAddState" icon="add" flat color="white" rounded fab></q-btn>
             </div>
             <div class="image-cn">
-                <img v-bind:src="(coachObject.picUrl) ? coachObject.picUrl : 'player.jpg'" class="user-image" />
+                <img :src="(coachObject.user.picUrl) ? coachObject.user.picUrl : 'player.jpg'" class="user-image" />
             </div>
         </div>
         <div class="col-lg-7 q-pa-md second-section row column ">
@@ -21,8 +21,6 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: ['isInAddState', 'coachObject'],
-    mounted() {
-    },
     methods: {
         showCoachClicked() {
             let params = {
