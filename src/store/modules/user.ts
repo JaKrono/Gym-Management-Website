@@ -12,7 +12,8 @@ export default {
         isSignedIn: false,
         role: -1,
         userId:null,
-        gym:{id:null,name:"",adress:"",phone:"",gym_reg_code:"",user:null, picture:null}
+        gym:{id:null,name:"",adress:"",phone:"",gym_reg_code:"",user:null, picture:null},
+        customers:[]
     }),
     mutations: {
         setToken(state: any, token: string) {
@@ -29,6 +30,9 @@ export default {
         },
         setRole(state, role: number) {
             state.role = role
+        },
+        setCustomers(state, customers:Array<any>){
+            state.customers = customers
         }
     },
     actions: {
@@ -143,6 +147,17 @@ export default {
         async searchCoach(coachName: string) {
             const response = await SearchCoachService.searchCoachList(coachName);
             return response.data;
+        },
+
+        async getCustomers({state, commit, dispatch}){
+            const response = await Gym.getCustomers(state.gym.id);
+            commit('setCustomers', response.data)
+        },
+
+        async removeCustomer({state, commit, dispatch}, customerId:number){
+            const response = await Gym.removeCustomer(state.gym.id, customerId);
+            if(response.status == 200)
+            commit('setCustomers',response.data)
         }
     },
 }
