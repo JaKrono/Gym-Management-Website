@@ -10,7 +10,7 @@
         <template v-if="(coaches.length > 0 && !loading)">
             <div class="row justify-start q-pa-lg" :class="{ 'justify-center': $q.screen.xs }">
                 <div v-for="coach in coaches" class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
-                    <CoachComponent2 :isInAddState="false"></CoachComponent2>
+                    <CoachComponent2 :coachObject="coach" :isInAddState="false"></CoachComponent2>
                 </div>
             </div>
         </template>
@@ -54,11 +54,12 @@ export default defineComponent({
     computed: {
         ...mapState({
             coaches: state => state.owner.coaches,
-            ownerId: state => state.user.userId
+            ownerId: state => state.user.userId,
+            gym: state => state.user.gym
         })
     },
     async mounted() {
-        await this.getCoaches(this.ownerId)
+        await this.getCoaches(this.gym.id)
         this.loading = false
     },
     methods: {
