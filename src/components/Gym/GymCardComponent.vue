@@ -18,7 +18,7 @@
                <p class="col-12 font-size-up-1 text-weight-bold ellipsis-2-lines" style="height: 42px">{{ model.name }}</p>
                <div class="flex no-wrap col-12 q-pt-sm" v-if="address">
                   <q-icon name="place" class="font-size-up-4" style="margin: 0px -4px 0px 4px"></q-icon>
-                  <p class="ellipsis-2-lines" style="height: 42px">{{ model.address }}</p>
+                  <p class="ellipsis-2-lines" style="height: 42px">{{ model.adress }}</p>
                </div>
                <div class="flex no-wrap col-12 q-pt-sm" v-if="phoneNumber">
                   <q-icon name="call" class="font-size-up-3" style="margin: 0px -2px 0px 4px"></q-icon>
@@ -50,7 +50,7 @@ export default defineComponent({
    },
    methods: {
       viewGymDetailClicked() {
-         // this.$emit('viewGymProfile', )
+         this.$emit('viewGym', this.model?.id)
       }
    },
    computed: {
