@@ -17,6 +17,7 @@ export interface CoachSignupModel extends SignupModel {
 
 export interface OwnerSignupModel extends SignupModel {
     phoneNumber: string,
+    personal_id: string
 }
 
 export interface Notification {
@@ -73,10 +74,11 @@ export interface NewClassModel {
 export interface GymModel {
     id: number,
     name: string,
-    address: string,
+    adress: string,
     phone: string,
     gym_reg_code: string,
-    user: number
+    user: number,
+    picture:string
 }
 export interface CustomerProfileModel {
     username: string,

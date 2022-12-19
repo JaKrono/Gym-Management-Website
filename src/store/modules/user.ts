@@ -7,8 +7,8 @@ export default {
         token: '',
         isSignedIn: false,
         role: -1,
-        userId: null,
-        gym: { id: null, name: "", address: "", phone: "", gym_reg_code: "", user: null }
+        userId:null,
+        gym:{id:null,name:"",adress:"",phone:"",gym_reg_code:"",user:null, picture:null}
     }),
     mutations: {
         setToken(state: any, token: string) {
@@ -90,9 +90,10 @@ export default {
 
         async getGymForOwner({ commit }, ownerId: number) {
             const response = await Gym.getGym(ownerId);
-            if (response.data && response.data.length > 0) {
-                commit('setGym', response.data[0])
+            if(response.status == 404){
+                return;
             }
+            commit('setGym', response.data)
         },
 
         async updateGym({ commit, dispatch }, gym: GymModel) {
@@ -103,8 +104,8 @@ export default {
             else {
                 response = await Gym.addGym(gym)
             }
-            if (response.status === 200 || response.status === 201) {
-                commit('setGym', response.data)
+            if(response.status === 200 || response.status === 201){
+                commit('setGym',response.data)
                 dispatch('notification/showNotification', { message: response?.data.detail || "تغییرات با موفقیت ذخیره شد.", type: 'positive', timeout: 2000 }, { root: true })
                 return true
             }

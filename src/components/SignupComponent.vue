@@ -18,26 +18,27 @@
             <q-card-section>
               <span class="bold-title">
                 <span class="bold-title" v-if="showElementForRole([roles.coach])">
-                  مربی عزیز، 
+                  مربی عزیز،
                 </span>
                 <span class="bold-title" v-if="showElementForRole([roles.owner])">
-                  باشگاه‌دار عزیز، 
+                  باشگاه‌دار عزیز،
                 </span>
                 خوش آمدید
               </span>
 
               <q-input class="q-my-sm text-center" v-model="username" label="نام کاربری" lazy-rules
                 :rules="[rules.required]"></q-input>
-              
+
               <q-input class="q-my-sm text-center" v-model="email" label="ایمیل" lazy-rules
                 :rules="[rules.required, rules.email]"></q-input>
-              
+
               <q-input class="q-my-sm text-center" v-model="phoneNumber" label="شماره تماس"
-                v-if="showElementForRole([roles.coach, roles.owner])" lazy-rules :rules="[rules.required, rules.phoneNumber]"></q-input>
-              
-              <q-input class="q-my-sm text-center" v-model="ssn" label="کد ملی"
-                v-if="showElementForRole([roles.owner])" lazy-rules :rules="[rules.required, rules.ssn]"></q-input>
-              
+                v-if="showElementForRole([roles.coach, roles.owner])" lazy-rules
+                :rules="[rules.required, rules.phoneNumber]"></q-input>
+
+              <q-input class="q-my-sm text-center" v-model="ssn" label="کد ملی" v-if="showElementForRole([roles.owner])"
+                lazy-rules :rules="[rules.required, rules.ssn]"></q-input>
+
               <q-input class="q-my-sm text-center" v-model="password" type="password" label="رمز عبور" lazy-rules
                 :rules="[rules.required, rules.password]"></q-input>
 
@@ -78,7 +79,7 @@ export default defineComponent({
         const model: CoachSignupModel = { role: 1, email: this.email, username: this.username, password: this.password, phoneNumber: this.phoneNumber, personal_id: this.ssn }
         this.$emit('submitForm', model)
       } else if (this.$route.query.role == roles.owner) {
-        const model: OwnerSignupModel = { role: 0 , email: this.email, username: this.username, password: this.password, phoneNumber: this.phoneNumber, personal_id:this.ssn }
+        const model: OwnerSignupModel = { role: 0, email: this.email, username: this.username, password: this.password, phoneNumber: this.phoneNumber, personal_id: this.ssn }
         this.$emit('submitForm', model)
       } else {
         const model: SignupModel = { role: 2, email: this.email, username: this.username, password: this.password, personal_id: this.ssn }
@@ -86,7 +87,7 @@ export default defineComponent({
       }
     },
     showElementForRole(roleList: string[]): boolean {
-      let result:boolean = false
+      let result: boolean = false
       for (var item in roleList) {
         result = (this.$route.query.role === roleList[item])
         if (result) {
