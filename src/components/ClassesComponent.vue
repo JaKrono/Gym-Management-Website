@@ -51,7 +51,7 @@ import ClassComponent from './ClassComponent.vue';
 import type { CategoryModel, ClassModel, NewClassModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
 import { ClassListService } from "@/repositories/index";
-import { BaseComponent } from '@/common/base-compponent';
+import { BaseComponent } from '@/common/base-component';
 import { CategoryList } from '@/common/category-list';
 
 export default defineComponent({
