@@ -38,14 +38,13 @@ export default {
          async getCoachId({ state, commit, dispatch }: any) {
             const response = await Coach.getCoachId(store.state.user.userId)
             if (response.status === 200) {
-               commit('setCoachId', response.data.role_id)
-
-           } else {
-               dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات مربی", type: 'negative', timeout: 2000 }, { root: true })
-           }
-            state.coachId = coachId
-            console.log(store.state.user.userId, state.coachId)
-         },
+                commit('setCoachId', response.data.role_id)
+                return true
+            } else {
+                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات مربی", type: 'negative', timeout: 2000 }, { root: true })
+                return false
+            }
+        },
         async getGymInformation({ dispatch }: any, gymId: number) {
             const response = await Coach.getGymInformation(gymId)
             if (response.status === 200) {
