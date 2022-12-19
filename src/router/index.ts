@@ -141,6 +141,22 @@ const router = createRouter({
         default: () => import("@/components/ClassesComponent.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
+    },
+    {
+      path: '/articles',
+      name: 'Articles',
+      components: {
+        default: () => import("@/views/Articles.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path: '/view-article',
+      name: 'View Article',
+      components: {
+        default: () => import("@/components/Article/ArticleViewComponent.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
     }
 
     // {

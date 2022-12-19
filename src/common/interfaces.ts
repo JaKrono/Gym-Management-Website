@@ -129,7 +129,8 @@ export interface ArticleDetailModel {
     writerId: string,
     writerName: string,
     articleCategory: string,
-    createDate: Date
+    createDate: string,
+    isValid: boolean
 }
 
 export interface ChangeArticleDetailModel {
@@ -140,7 +141,8 @@ export interface ChangeArticleDetailModel {
     picUrl: string,
     writerId: string,
     writerName: string,
-    articleCategory: string
+    articleCategory: string,
+    isValid: boolean
 }
 
 export interface CategoryModel {

@@ -30,6 +30,13 @@
                         <label class="main-font">ساعت کلاس:</label>
                         <input v-model="newClassObject.time" class="form-input" type="text">
                     </div>
+                    <div class="form-item">
+                        <div v-for="cat in categoryListModel" class="category-lable"
+                            :style="{ backgroundColor: cat.color }"
+                            :class="{ 'active-category': selectedCategory.id == cat.id }" @click="selectCategory(cat)">
+                            {{ cat.title }}
+                        </div>
+                    </div>
                     <div class="form-button-field">
                         <q-btn @click="addClass()" color="primary">افزودن کلاس</q-btn>
                     </div>
@@ -41,10 +48,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ClassComponent from './ClassComponent.vue';
-import type { ClassModel, NewClassModel } from '@/common/interfaces';
+import type { CategoryModel, ClassModel, NewClassModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
 import { ClassListService } from "@/repositories/index";
-import { BaseComponent } from '@/common/base-compponent';
+import { BaseComponent } from '@/common/base-component';
+import { CategoryList } from '@/common/category-list';
 
 export default defineComponent({
     components: {
@@ -55,7 +63,9 @@ export default defineComponent({
         addClassModalShow: false,
         classList: [] as ClassModel[],
         newClassObject: {} as NewClassModel,
-        baseComponent: new BaseComponent()
+        baseComponent: new BaseComponent(),
+        categoryListModel: CategoryList,
+        selectedCategory: {} as CategoryModel
     }),
     async mounted() {
         await this.getClassList();
@@ -89,6 +99,8 @@ export default defineComponent({
             }
         },
         async addClass() {
+            this.newClassObject.categoryTypes = String(this.selectedCategory.id);
+
             try {
                 // await this.addClassAsync(this.newClassObject);
                 const result = await ClassListService.addClassItem(this.newClassObject);
@@ -99,6 +111,9 @@ export default defineComponent({
             catch (err) { }
 
             this.addClassModalShow = false;
+        },
+        selectCategory(selectedCategory: CategoryModel) {
+            this.selectedCategory = selectedCategory;
         }
     }
 })
@@ -263,6 +278,17 @@ export default defineComponent({
         justify-content: right;
         align-items: center;
     }
+}
+
+.category-lable {
+    width: 120px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 5px 15px;
+}
+
+.active-category {
+    background-color: darken(#000000, 30%);
 }
 
 @media all and (max-width: 599.99px) {

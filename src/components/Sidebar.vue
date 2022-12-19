@@ -112,13 +112,13 @@ export default defineComponent({
         }
     },
     watch: {
-        // '$q.screen.width': function (newValue) {
-        //     if (newValue > 1080)
-        //         this.showSidebar();
-        //     else {
-        //         this.hideSidebar();
-        //     }
-        // },
+        '$q.screen.width': function (newValue) {
+            if (newValue > 1024)
+                this.showSidebar();
+            else {
+                this.hideSidebar();
+            }
+        },
         gym: function (newValue) {
             this.updateItems()
         }
