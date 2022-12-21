@@ -57,7 +57,6 @@ export default {
 
         async getCoachDetail({ commit, dispatch }:any) {
             const response = await Coach.getCoachDetail(store.state.user.user.role_id)
-            debugger;
             if (response.status === 200) {
                commit('setCoachDetail', response.data)
                return true

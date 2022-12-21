@@ -1,30 +1,34 @@
 <template>
-    <q-item :disable="disable" :to="path" @click="clicked" :active="isSelected" class="font-size-up-2" clickable>
-              
-        <q-item-section avatar>
-                <q-icon :name="icon" />
-              </q-item-section>
+    <q-item :disable="disable" :to="path" @click="clicked" :active="isSelected" class="font-size-up-2 q-pl-sm" clickable>
 
-              <q-item-section class="unselectable">
-                {{title}}
-              </q-item-section>
-            </q-item>
+        <q-item-section class="q-pa-none" style="color: inherit !important" avatar>
+            <q-icon :name="icon" />
+        </q-item-section>
+
+        <q-item-section class="q-pa-none" avatar>
+            <p class="unselectable">{{ title }}</p>
+        </q-item-section>
+
+    </q-item>
 </template>
 <script lang="ts">
-    import { defineComponent } from 'vue';
-    export default defineComponent({
-        props:['title','id','icon','isSelected','path','disable'],
-        methods:{
-            clicked:function(){
-                this.$emit("itemClicked", this.id);
-            }
+import { defineComponent } from 'vue';
+export default defineComponent({
+    props: ['title', 'id', 'icon', 'isSelected', 'path', 'disable'],
+    methods: {
+        clicked: function () {
+            this.$emit("itemClicked", this.id);
         }
-    })
+    }
+})
 </script>
 <style scoped lang="scss">
+.selected-item {
+    background-color: $primary;
+    color: white;
+}
 
-    .selected-item{
-        background-color: $primary;
-        color: white;
-    }
+.q-item :deep(.q-item__section--avatar) {
+    min-width: 40px;
+}
 </style>
