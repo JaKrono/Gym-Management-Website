@@ -5,20 +5,44 @@
          <div class="col-12 content-center col-12 q-px-lg" v-if="hasLoaded">
             <div class="col-12 q-py-lg">
                <div class="flex col-12 justify-center"
-                  :style="[$q.screen.lt.sm ? { 'justify-content': 'center' } : { 'justify-content': 'initial' }]">
-                  <q-img :src="copiedProfileDetail.user.picUrl" spinner-color="white" class="image" :ratio="1 / 1"
-                     fit="cover">
+                  :style="[$q.screen.lt.md ? { 'justify-content': 'center' } : { 'justify-content': 'initial' }]">
+                  <q-img v-if="hasImage" :src="copiedProfileDetail?.user.picUrl" spinner-color="white"
+                     class="profile-image" :ratio="1 / 1" fit="cover">
                      <template v-slot:default>
-                        <div v-if="editing" class="felex absolute-center justify-center items-center"
-                           style="height: 200px; width: 200px">
-                           <q-file v-model="image" @update:model-value="handleImageUpload()"></q-file>
+                        <div v-if="editing" class="absolute-bottom center q-mb-lg"
+                           style="padding: 0px; height: 30px; background-color: unset;">
+                           <div class="flex q-gutter-x-xs justify-center q-mb-sm items-center">
+                              <div>
+                                 <q-btn @click="deleteImage" class="profile-image-button" flat icon="delete"></q-btn>
+                              </div>
+                              <div>
+                                 <q-btn @click="uploadImage" class="profile-image-button" flat>
+                                    <q-icon name="upload" size="1.9em"></q-icon>
+                                 </q-btn>
+                              </div>
+                           </div>
                         </div>
                      </template>
-                     <template v-slot:error>
-                        <q-avatar size="16em"></q-avatar>
+                  </q-img>
+                  <q-img v-else spinner-color="white" class="profile-image" :ratio="1 / 1" fit="cover">
+                     <template v-slot:default>
+                        <div class="flex flex-center full-width full-height" style="background-color: unset">
+                           <q-icon name="person" size="9em"></q-icon>
+                           <div v-if="editing" class="absolute-bottom center q-mb-lg"
+                              style="padding: 0px; height: 30px; background-color: unset;">
+                              <div class="flex q-gutter-x-xs justify-center q-mb-sm items-center">
+                                 <div>
+                                    <q-btn @click="uploadImage" class="profile-image-button" flat>
+                                       <q-icon name="upload" size="1.9em"></q-icon>
+                                    </q-btn>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
                      </template>
                   </q-img>
                </div>
+               {{ hasImage }}
                <!-- TODO_asghar: Change placeholder color of q-inputs -->
                <q-form greedy class="col-12" @submit.prevent="submitEdit" ref="profileForm">
                   <div class="row col-12 q-mt-lg">
@@ -97,7 +121,7 @@ import type { CustomerProfileModel, UpdateCustomerProfileModel } from '@/common/
 import { mapActions, mapState } from 'vuex'
 export default defineComponent({
    data: () => ({
-      image: null,
+      image: '',
       hasLoaded: false,
       editing: false,
       profileDetail: {} as CustomerProfileModel,
@@ -126,12 +150,20 @@ export default defineComponent({
          submitProfileAM: 'customer/updateCustomerProfile',
          getProfileAM: 'customer/getCustomerProfile'
       }),
-      handleImageUpload() {
+      deleteImage() {
+         this.copiedProfileDetail.user.picUrl = ''
+      },
+      uploadImage() {
          console.log("ASDASD")
-         if (this.image) {
+         const element = document.createElement("input")
+         element.type = 'file'
+         element.accept = 'image/*'
+         element.click()
+         element.onchange = async (event) => {
+            this.image = ((event.target) as any).files[0] as any
             const reader = new FileReader()
-            reader.readAsDataURL(this.image)
-            reader.onload = () => (this.copiedProfileDetail.user.picUrl = reader.result)
+            reader.readAsDataURL(this.image as unknown as Blob)
+            reader.onload = () => (this.copiedProfileDetail.user.picUrl = reader.result as string)
          }
       },
       // TODO_asghar: set delay for editClicked and descardEdit
@@ -148,7 +180,7 @@ export default defineComponent({
       },
       discardEdit() {
          this.copiedProfileDetail = JSON.parse(JSON.stringify(this.profileDetail))
-         this.$refs.profileForm.resetValidation()
+         ;(this.$refs['profileForm'] as any).resetValidation()
          this.editing = !this.editing
       },
       async submitProfile(model: UpdateCustomerProfileModel) {
@@ -172,7 +204,10 @@ export default defineComponent({
       ...mapState({
          userId: (state: any) => state.user.userId,
          user: (state: any) => state.user
-      })
+      }),
+      hasImage() {
+         return this.copiedProfileDetail.user.picUrl.length !== 0
+      }
    }
 })
 </script>
@@ -181,12 +216,19 @@ export default defineComponent({
    justify-content: center;
 }
 
-.image {
-   border-radius: 100px;
+.profile-image {
+   border-radius: 50px;
    border-style: solid;
    border-color: $primary;
-   border-width: 5px;
+   background-color: $primary;
+   border-radius: 50%;
    width: 200px;
    height: 200px;
+}
+
+.profile-image-button {
+   height: 40px;
+   width: 40px;
+   background-color: rgba(0, 0, 0, 0.4);
 }
 </style>
