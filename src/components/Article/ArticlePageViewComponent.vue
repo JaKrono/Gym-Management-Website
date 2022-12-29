@@ -1,6 +1,6 @@
 <template>
    <q-scroll-area :thumb-style="pageScrollThumbStyle" :bar-style="pageScrollBarStyle">
-      <q-page class="q-pa-lg">
+      <q-page class="q-pa-sm q-pa-sm-md q-pa-md-lg">
          <div class="row justify-between items-center col-12 q-mb-md">
             <p class="col-xs-12 col-sm-auto text-weight-bold font-size-up-4">مقالات</p>
             <div class="row col-xs-12 col-sm-grow justify-end">

@@ -1,5 +1,5 @@
 <template>
-   <q-page class="q-pa-lg">
+   <q-page class="q-pa-sm q-pa-sm-md q-pa-md-lg">
       <q-inner-loading :showing="!hasLoaded" color="primary" />
       <div v-if="hasLoaded" class="col-12 q-mb-md q-py-sm q-px-sm rounded-borders bordered">
          <q-img class="rounded-borders" rounded style="max-height: 250px" :src="gymInformation.picture" alt="Gym Image"
