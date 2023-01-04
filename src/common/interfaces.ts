@@ -78,7 +78,7 @@ export interface GymModel {
     phone: string,
     gym_reg_code: string,
     user: number,
-    picture:string
+    picture: string
 }
 export interface CustomerProfileModel {
     phone: string,
@@ -151,8 +151,41 @@ export interface CategoryModel {
     color: string
 }
 
-export interface GymCustomer{
-    customer_id:number,
-    username:string,
-    email:string
+export interface GymCustomer {
+    customer_id: number,
+    username: string,
+    email: string
+}
+
+export interface PostModel {
+    Id: string,
+    title: string,
+    content: string,
+    picUrl: string,
+    likedUserIds: string[],
+    comments: PostCommentModel[],
+    date: string,
+    coachName: string,
+    coachId: string,
+    postCategoriesId: string
+}
+
+export interface NewPostModel {
+    title: string,
+    content: string,
+    picUrl: string,
+    coachId: string,
+    postCategoriesId: string
+}
+
+export interface PostCommentModel {
+    postId: string,
+    comment: string,
+    writerName: string
+}
+
+export interface PostLikeModel {
+    postId: string,
+    userId: string,
+    isLiked: boolean
 }
