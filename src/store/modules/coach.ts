@@ -1,4 +1,5 @@
 import { Coach } from "@/repositories";
+import gym from "@/repositories/gym";
 import store from "..";
 export default {
     namespaced: true,
@@ -24,7 +25,7 @@ export default {
             state.coachId = coachId
             console.log(store.state.user.userId, state.coachId)
         },
-        setClubs(state, clubs) {
+        setClubs(state: any, clubs: any) {
             state.clubs = clubs
         },
         setCoachDetail(state:any, coachModel){
@@ -37,52 +38,79 @@ export default {
          async getCoachId({ state, commit, dispatch }: any) {
             const response = await Coach.getCoachId(store.state.user.userId)
             if (response.status === 200) {
-               commit('setCoachId', response.data.role_id)
+                commit('setCoachId', response.data.role_id)
+                return true
+            } else {
+                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات مربی", type: 'negative', timeout: 2000 }, { root: true })
+                return false
+            }
+        },
+        async getGymInformation({ dispatch }: any, gymId: number) {
+            const response = await Coach.getGymInformation(gymId)
+            if (response.status === 200) {
+                return response.data
+            } else {
+                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات باشگاه", type: 'negative', timeout: 2000 }, { root: true })
+                return false
+            }
+        },
 
-           } else {
-               dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات مربی", type: 'negative', timeout: 2000 }, { root: true })
-           }
-            state.coachId = coachId
-            console.log(store.state.user.userId, state.coachId)
-         },
-        async getAcceptedGyms({ commit, dispatch }: any, coachId: number) {
-            const response = await Coach.getAcceptedGyms(coachId)
-            if (response.status === 200) {
-                return response.data
-            } else {
-                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در برقراری ازتباط", type: 'negative', timeout: 2000 }, { root: true })
-                return false;
-            }
-        },
-        async getPendingGyms({ commit, dispatch }: any, coachId: number) {
-            const response = await Coach.getPendingGyms(coachId)
-            if (response.status === 200) {
-                return response.data
-            } else {
-                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در برقراری ازتباط", type: 'negative', timeout: 2000 }, { root: true })
-                return false;
-            }
-        },
         async getCoachDetail({ commit, dispatch }:any) {
-         const response = await Coach.getCoachDetail(store.state.user.user.role_id)
-         debugger;
-         if (response.status === 200) {
-            commit('setCoachDetail', response.data)
-            return true
-         } else {
-            dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات مربی", type: 'negative', timeout: 2000 }, { root: true })
-            return false
+            const response = await Coach.getCoachDetail(store.state.user.user.role_id)
+            if (response.status === 200) {
+               commit('setCoachDetail', response.data)
+               return true
+            } else {
+               dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات مربی", type: 'negative', timeout: 2000 }, { root: true })
+               return false
+            }
+         },
+         
+        async getGymCardInformation({ dispatch }: any, obj: { coachId: number, gymId: number }) {
+            const response = await Coach.getGymCardInformation(obj.coachId, obj.gymId)
+            if (response.status === 200) {
+                return response.data
+            } else {
+                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات کارت مربی و باشگاه", type: 'negative', timeout: 2000 }, { root: true })
+                return false;
+            }
+        },
+        async updateGymCardInformation({ dispatch }: any, obj: {}) {
+            const response = await Coach.updateGymCardInformation(obj.id, obj)
+            if (response.status === 200) {
+                dispatch('notification/showNotification', { message: response?.data.detail || "تغییرات با موفقت ذخیره شد.", type: 'positive', timeout: 2000 }, { root: true })
+                return true
+            } else {
+                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات کارت مربی و باشگاه", type: 'negative', timeout: 2000 }, { root: true })
+                return false;
+            }
+        },
+        async getAcceptedGyms({ state, dispatch }: any) {
+            const response = await Coach.getAcceptedGyms(state.coachId)
+            if (response.status === 200) {
+                return response.data
+            } else {
+                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در برقراری ازتباط", type: 'negative', timeout: 2000 }, { root: true })
+                return false;
+            }
+        },
+        async getPendingGyms({ state, dispatch }: any) {
+            const response = await Coach.getPendingGyms(state.coachId)
+            if (response.status === 200) {
+                return response.data
+            } else {
+                dispatch('notification/showNotification', { message: response?.data.detail || "خطا در برقراری ازتباط", type: 'negative', timeout: 2000 }, { root: true })
+                return false;
+            }
+        },
+        async saveCoach({state, commit, dispatch}:any,coachModel){
+            const response = await Coach.saveCoach(store.state.user.user.role_id, coachModel)
+            dispatch("user/getUser",null,{root:true})
+            if(response.status === 200){
+               dispatch('notification/showNotification', { message: response?.data.detail || "اطلاعات با موفقیت ذخیره شد.", type: 'positive', timeout: 2000 }, { root: true })
+               return false
+            }
          }
-      },
-
-      async saveCoach({state, commit, dispatch}:any,coachModel){
-         const response = await Coach.saveCoach(store.state.user.user.role_id, coachModel)
-         dispatch("user/getUser",null,{root:true})
-         if(response.status === 200){
-            dispatch('notification/showNotification', { message: response?.data.detail || "اطلاعات با موفقیت ذخیره شد.", type: 'positive', timeout: 2000 }, { root: true })
-            return false
-         }
-      }
     },
 
 }

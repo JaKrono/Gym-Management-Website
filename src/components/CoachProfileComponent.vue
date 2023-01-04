@@ -16,6 +16,7 @@
                     alt="edit-icon" @click="openEditModal()">
             </div>
             <div class="avatar-detail-field">
+                <RankingCoachComponent style="margin-left: 15px;" :rankNumber="profileDto.rank_number"></RankingCoachComponent>
                 <div class="avatar-detail">
                     <div class="font-size-up-5 avatar-name">
                         {{ profileDto.user.first_name + ' ' + profileDto.user.last_name }}
@@ -125,11 +126,15 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import RankingCoachComponent from './rankingCoachComponent.vue';
 import type { CoachAchievementModel, InviteCoachModel, SearchCoachModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
 import { CoachProfileService } from "@/repositories/index";
 
 export default defineComponent({
+    components: {
+        RankingCoachComponent
+    },
     data: () => ({
         coachId: '',
         gymId: '',
@@ -263,7 +268,12 @@ export default defineComponent({
             reader.readAsDataURL(event);
 
             reader.onload = (_event) => {
-                this.imageBase64 = reader.result.toString();
+                if (reader.result) {
+                    this.imageBase64 = reader.result.toString();
+                }
+                else {
+                    this.imageBase64 = "";
+                }
             }
         }
     }

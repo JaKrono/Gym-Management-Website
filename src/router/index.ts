@@ -30,9 +30,9 @@ const router = createRouter({
       components: {
         default: () => {
           if (store.state.user.role == '2') {
-            return import('@/views/CHome.vue')
+            return import('@/views/Customer/CustomerHome.vue')
           } else if (store.state.user.role == '1') {
-            return import ('@/views/Coach/CoachProfile.vue')
+            return import ('@/views/Coach/CoachHome.vue')
             
           } else if (store.state.user.role == '0') {
             return import("@/views/Profile.vue")
@@ -48,7 +48,7 @@ const router = createRouter({
       components: {
         default: () => {
           if (store.state.user.role == '2') {
-            return import('@/views/CProfile.vue')
+            return import('@/views/Customer/CustomerProfile.vue')
           } else if (store.state.user.role == '1') {
             return import ('@/views/Coach/CoachProfile.vue')
           } else if (store.state.user.role == '0') {
@@ -65,9 +65,9 @@ const router = createRouter({
       components: {
         default: () => {
           if (store.state.user.role == '2') {
-            return import('@/views/CGyms.vue')
+            return import('@/views/Customer/CustomerGyms.vue')
           } else if (store.state.user.role == '1') {
-            return import('@/views/Coach/CoachGymsComponent.vue')
+            return import('@/views/Coach/CoachGyms.vue')
           } else if (store.state.user.role == '0') {
             // return import()
           }
@@ -106,7 +106,7 @@ const router = createRouter({
             // customer classes
           }
           if (store.state.user.role == '1') {
-            return import('@/views/Coach/CoachClassesComponent.vue')
+            return import('@/views/Coach/CoachClasses.vue')
           }
           if (store.state.user.role == '0') {
             // import("@/views/Customers.vue")
@@ -125,7 +125,7 @@ const router = createRouter({
             // 
           }
           if (store.state.user.role == '1') {
-            return import('@/views/Coach/CoachCustomersComponent.vue')
+            return import('@/views/Coach/CoachCustomers.vue')
           }
           if (store.state.user.role == '0') {
             return import("@/views/Customers.vue")
@@ -145,6 +145,7 @@ const router = createRouter({
     {
       path: '/articles',
       name: 'Articles',
+      meta: { requireAuth: true },
       components: {
         default: () => import("@/views/Articles.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
@@ -153,6 +154,7 @@ const router = createRouter({
     {
       path: '/view-article',
       name: 'View Article',
+      meta: { requireAuth: true },
       components: {
         default: () => import("@/components/Article/ArticleViewComponent.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
