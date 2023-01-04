@@ -106,6 +106,7 @@ export interface GymModel {
 
 export interface SearchCoachModel {
     user_id: string,
+    rank_number: number,
     achievement_set: CoachAchievementModel[],
     description: string,
     detail_set: CoachDetailModel[],
