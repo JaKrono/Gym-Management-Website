@@ -5,7 +5,7 @@
                 <img class="back-button" src="src/assets/images/back-icon.png" alt="back-icon">
             </div>
         </div>
-        <div class="container">
+        <div v-if="profileDto && profileDto.user" class="container">
             <div class="avatar-field">
                 <img class="avatar-icon"
                     v-bind:src="(profileDto.user.picUrl) ? profileDto.user.picUrl : 'src/assets/images/avtar-icon.png'"
