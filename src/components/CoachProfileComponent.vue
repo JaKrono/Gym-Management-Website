@@ -126,7 +126,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import RankingCoachComponent from './rankingCoachComponent.vue';
+import RankingCoachComponent from './RankingCoachComponent.vue';
 import type { CoachAchievementModel, InviteCoachModel, SearchCoachModel } from '@/common/interfaces';
 import { mapActions } from 'vuex';
 import { CoachProfileService } from "@/repositories/index";
