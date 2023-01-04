@@ -1,5 +1,6 @@
 <template>
-   <q-scroll-area :thumb-style="pageScrollThumbStyle" :bar-style="pageScrollBarStyle">
+   <!-- <q-scroll-area :thumb-style="pageScrollThumbStyle" :bar-style="pageScrollBarStyle"> -->
+   <q-scroll-area>
       <q-page class="row q-pa-lg overflow-hidden">
          <q-form greedy @submit.prevent="submitEdit" class="row">
             <div class="row col-xs-12 offset-xs-0 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
@@ -179,18 +180,18 @@ export default defineComponent({
       CategoryList,
       selectedCategoriesList: [] as CategoryModel[],
       articleCopied: {} as ChangeArticleDetailModel,
-      pageScrollThumbStyle: {
-         width: '4px',
-         left: '1.5px',
-         borderRadius: '5px',
-         backgroundColor: getCssVar('primary'),
-         opacity: 1
-      },
-      pageScrollBarStyle: {
-         width: '7px',
-         backgroundColor: getCssVar('primary'),
-         opacity: 0.4,
-      }
+      // pageScrollThumbStyle: {
+      //    width: '4px',
+      //    left: '1.5px',
+      //    borderRadius: '5px',
+      //    backgroundColor: getCssVar('primary'),
+      //    opacity: 1
+      // },
+      // pageScrollBarStyle: {
+      //    width: '7px',
+      //    backgroundColor: getCssVar('primary'),
+      //    opacity: 0.4,
+      // }
    }),
    beforeMount() {
       console.log(this.model)

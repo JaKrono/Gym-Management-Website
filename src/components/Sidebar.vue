@@ -1,25 +1,39 @@
 <template>
-    <q-drawer elevated v-model="sidebarIsVisible" showIfAbove="md" side="left" bordered>
-        <div class="flex column q-mt-lg content-center">
-            <q-avatar v-if="!user.picUrl" size="9em" color="primary">
-                <q-icon class="text-white" name="person"></q-icon>
-            </q-avatar>
-            <img v-else style="height:9em; width:9em; border-radius:50%;object-fit:cover;" :src="user.picUrl" />
-            <p class="q-mt-lg font-size-up-2 text-center">{{ user.username }}</p>
-            <p class=" text-center">{{ user.email }}</p>
-            <!-- <q-btn outline color="primary">مشاهده پروفایل</q-btn> -->
-        </div>
-        <q-separator class="q-my-xl" inset />
-        <q-list class="q-mt-sm" padding>
-            <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-mb-lg" :disable="item.disable"
-                :title="item.title" :path="item.path" :icon="item.icon" :id="item.id"
-                :isSelected="isItemSelected(item.id)"></SidebarItemVue>
-        </q-list>
-        <q-separator class="q-my-xl" inset />
-        <div class="row">
+    <!-- <q-drawer elevated v-model="sidebarIsVisible" showIfAbove="md" side="left" bordered> -->
+    <q-drawer :width="250" elevated v-model="sidebarIsVisible" side="left">
+        <q-scroll-area class="full-height">
+            <div class="q-mx-sm">
+                <div class="flex row q-mt-md">
+                    <div class="row col-12">
+                        <div class="flex col-12 justify-center">
+                            <q-avatar v-if="!user.picUrl" size="9em" color="primary">
+                                <q-icon class="text-white" name="person"></q-icon>
+                            </q-avatar>
+                            <img v-else style="height:9em; width:9em; border-radius:50%;object-fit:cover;"
+                                :src="user.picUrl" />
+                        </div>
+                        <p class="col-12 q-mt-md font-size-up-2 text-center">{{ user.username }}</p>
+                        <p class="col-12 text-center">{{ user.email }}</p>
+                        <!-- <q-btn outline color="primary">مشاهده پروفایل</q-btn> -->
+                    </div>
+                </div>
 
-            <q-btn class="q-mx-auto logout-button" @click="logout" color="secondary">خروج</q-btn>
-        </div>
+                <q-separator class="q-mt-md" inset />
+
+                <q-list class="">
+                    <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-py-md"
+                        :disable="item.disable" :title="item.title" :path="item.path" :icon="item.icon" :id="item.id"
+                        :isSelected="isItemSelected(item.id)"></SidebarItemVue>
+                </q-list>
+
+                <q-separator class="" inset />
+                <br /> <!-- Do not allow margin collapse -->
+
+                <div class="row">
+                    <q-btn class="q-mx-auto logout-button" @click="logout" color="secondary">خروج</q-btn>
+                </div>
+            </div>
+        </q-scroll-area>
 
     </q-drawer>
 </template>
@@ -46,9 +60,9 @@ export default defineComponent({
 
         },
         ...mapState({
-            gym: state => state.user.gym,
-            role: state => state.user.role,
-            user: state => state.user.user
+            gym: (state: any) => state.user.gym,
+            role: (state: any) => state.user.role,
+            user: (state: any) => state.user.user
         })
     },
     mounted() {
@@ -65,7 +79,7 @@ export default defineComponent({
         }),
         selectItemFromRoute() {
             const path = this.$route.path
-            const item = this.items.find(item => item.path === path);
+            const item = this.items.find((item: any) => item.path === path);
             this.selectedId = item.id
 
         },
@@ -128,5 +142,13 @@ export default defineComponent({
 <style scoped lang="scss">
 .logout-button {
     width: 100px;
+}
+
+.q-scrollarea :deep(.q-scrollarea__thumb) {
+    width: 4px;
+    height: 4px;
+    margin: 2px;
+    background-color: $primary;
+    opacity: 1;
 }
 </style>
