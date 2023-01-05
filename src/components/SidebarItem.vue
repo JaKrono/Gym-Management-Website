@@ -1,7 +1,7 @@
 <template>
-    <q-item :disable="disable" :to="path" @click="clicked" :active="isSelected" class="font-size-up-2 q-pl-sm" clickable>
+    <q-item :disable="disable" :to="path" @click="clicked" :active="isSelected" class="font-size-up-2" style="padding: 12px 8px !important" clickable>
 
-        <q-item-section class="q-pa-none" style="color: inherit !important" avatar>
+        <q-item-section class="q-pa-none q-mb-xs" style="color: inherit !important; margin-bottom: ;" avatar>
             <q-icon :name="icon" />
         </q-item-section>
 

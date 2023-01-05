@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <q-separator class="q-mt-md" inset />
+                <q-separator class="q-mt-md" style="height: 1px"/>
 
                 <q-list class="">
                     <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-py-md"
@@ -26,7 +26,7 @@
                         :isSelected="isItemSelected(item.id)"></SidebarItemVue>
                 </q-list>
 
-                <q-separator class="" inset />
+                <q-separator class="q-mt-xs" style="height: 2px"/>
                 <br /> <!-- Do not allow margin collapse -->
 
                 <div class="row">
@@ -65,7 +65,7 @@ export default defineComponent({
             user: (state: any) => state.user.user
         })
     },
-    mounted() {
+    beforeMount() {
         this.setItems();
         this.selectItemFromRoute();
     },
@@ -79,9 +79,24 @@ export default defineComponent({
         }),
         selectItemFromRoute() {
             const path = this.$route.path
-            const item = this.items.find((item: any) => item.path === path);
-            this.selectedId = item.id
 
+            // Add support for regex
+            // Makes dynamic route matching with params possible
+            // e.g. .../questions/82/
+            let item: { id: number } = { id: 0 }
+            for (var i of this.items) {
+                if (i.path === path) {
+                    item = i
+                } else {
+                    const matchResult = path.match(i.regex)
+                    if (matchResult && matchResult[0] === path) {
+                        item = i
+                    }
+                }
+            }
+
+            // const item = this.items.find((item: any) => (item.path === path));
+            this.selectedId = item.id
         },
         itemClicked(id: number) {
             this.selectedId = id;
@@ -99,7 +114,8 @@ export default defineComponent({
                     { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false },
                     { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id },
                     { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id },
-                    { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id }
+                    { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id },
+                    { id: 5, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
                 ]
             }
             if (this.role === '1') {
@@ -108,14 +124,16 @@ export default defineComponent({
                     { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false },
                     { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms', disable: false },
                     { id: 4, title: 'کلاس‌ها', icon: 'signpost', path: '/classes', disable: false },
-                    { id: 5, title: 'ورزشکارها', icon: 'people', path: '/customers', disable: false }
+                    { id: 5, title: 'ورزشکارها', icon: 'people', path: '/customers', disable: false },
+                    { id: 6, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
                 ]
             }
             if (this.role === '2') {
                 this.items = [
                     { id: 1, title: 'خانه', icon: 'home', path: '/dashboard', disable: false },
                     { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false },
-                    { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms' }
+                    { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms', disable: false },
+                    { id: 4, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
                 ]
             }
         },

@@ -42,7 +42,6 @@
                      </template>
                   </q-img>
                </div>
-               {{ hasImage }}
                <!-- TODO_asghar: Change placeholder color of q-inputs -->
                <q-form greedy class="col-12" @submit.prevent="submitEdit" ref="profileForm">
                   <div class="row col-12 q-mt-lg">

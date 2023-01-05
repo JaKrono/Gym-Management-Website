@@ -159,6 +159,24 @@ const router = createRouter({
         default: () => import("@/components/Article/ArticleViewComponent.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
+    },
+    {
+      path: '/questions',
+      name: 'Q&A',
+      meta: { requireAuth: true },
+      components: {
+        default: () => import("@/views/Q&A/Questions.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path: '/questions/:id(\\d+)',
+      name: 'View Question',
+      meta: { requireAuth: true },
+      components: {
+        default: () => import("@/components/Q&A/ViewQuestionComponent.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
     }
 
     // {
