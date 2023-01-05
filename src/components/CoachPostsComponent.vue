@@ -64,7 +64,7 @@ export default defineComponent({
     data: () => ({
         myPosts: [] as PostModel[],
         newPost: {} as NewPostModel,
-        createModalShow: true,
+        createModalShow: false,
         categoryList: CategoryList,
         selectedCatgories: [] as CategoryModel[],
         base64: '',
