@@ -1,6 +1,6 @@
 <template>
    <q-scroll-area :thumb-style="pageScrollThumbStyle" :bar-style="pageScrollBarStyle">
-      <q-page class="row q-pa-lg">
+      <q-page class="row q-pa-md q-pa-md-lg">
          <div class="column col-xs-12 offset-xs-0 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
 
             <div class="row items-center justify-between q-my-sm q-mb-lg-md">

@@ -44,5 +44,13 @@ export default {
             return 'نام وارد شده معتبر نیست.'
         }
         // }
+    },
+    // Q&A
+    qaContent: (content: string) => {
+        if (!content || content.length < 20) {
+            return 'لطفا حداقل ۳۰ کاراکتر بنویسید. '
+        } else {
+            return true
+        }
     }
 } 

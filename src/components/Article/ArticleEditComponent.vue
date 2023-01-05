@@ -1,7 +1,7 @@
 <template>
    <!-- <q-scroll-area :thumb-style="pageScrollThumbStyle" :bar-style="pageScrollBarStyle"> -->
    <q-scroll-area>
-      <q-page class="row q-pa-lg overflow-hidden">
+      <q-page class="row q-pa-md q-pa-md-lg overflow-hidden">
          <q-form greedy @submit.prevent="submitEdit" class="row">
             <div class="row col-xs-12 offset-xs-0 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
 

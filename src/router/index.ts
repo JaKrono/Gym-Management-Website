@@ -32,8 +32,8 @@ const router = createRouter({
           if (store.state.user.role == '2') {
             return import('@/views/Customer/CustomerHome.vue')
           } else if (store.state.user.role == '1') {
-            return import ('@/views/Coach/CoachHome.vue')
-            
+            return import('@/views/Coach/CoachHome.vue')
+
           } else if (store.state.user.role == '0') {
             return import("@/views/Profile.vue")
           }
@@ -50,7 +50,7 @@ const router = createRouter({
           if (store.state.user.role == '2') {
             return import('@/views/Customer/CustomerProfile.vue')
           } else if (store.state.user.role == '1') {
-            return import ('@/views/Coach/CoachProfile.vue')
+            return import('@/views/Coach/CoachProfile.vue')
           } else if (store.state.user.role == '0') {
             return import('@/views/CGymProfile.vue')
           }
@@ -169,10 +169,28 @@ const router = createRouter({
       }
     },
     {
+      path: '/questions',
+      name: 'Q&A',
+      meta: { requireAuth: true },
+      components: {
+        default: () => import("@/views/Q&A/Questions.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
       path: '/coach-posts',
       name: 'Coach Posts',
       components: {
         default: () => import("@/components/CoachPostsComponent.vue"),
+        RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+    {
+      path: '/questions/:id(\\d+)',
+      name: 'View Question',
+      meta: { requireAuth: true },
+      components: {
+        default: () => import("@/components/Q&A/ViewQuestionComponent.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     }
