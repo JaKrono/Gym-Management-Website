@@ -55,7 +55,6 @@ import type { PostModel, PostCommentModel, NewPostModel, CategoryModel } from '@
 import { PostsExploreService } from "@/repositories/index";
 import store from '@/store';
 import { CategoryList } from '@/common/category-list';
-import { BaseComponent } from '@/common/base-component';
 
 export default defineComponent({
     components: {
@@ -123,15 +122,15 @@ export default defineComponent({
             catch (err) { }
         },
         openCreateModal() {
-            // let userId = store.state.user.userId;
+            let userId = store.state.user.userId;
 
-            // this.newPost = {
-            //     title: '',
-            //     content: '',
-            //     picUrl: '',
-            //     coachId: userId,
-            //     postCategoriesId: ''
-            // }
+            this.newPost = {
+                title: '',
+                content: '',
+                picUrl: '',
+                coachId: userId,
+                postCategoriesId: ''
+            }
 
             this.selectedCatgories = [];
 
@@ -148,7 +147,7 @@ export default defineComponent({
         clearCategoryList() {
             this.selectedCatgories = [];
         },
-        post() {
+        async post() {
             let categoris: string = "";
             this.selectedCatgories.forEach(item => {
                 categoris += item.id + ',';
@@ -157,7 +156,7 @@ export default defineComponent({
             this.newPost.postCategoriesId = categoris;
             this.newPost.picUrl = this.base64;
 
-
+            await this.sendPost();
         },
         async imagePicker(image: any) {
             this.base64 = String(await this.getBase64(image));
