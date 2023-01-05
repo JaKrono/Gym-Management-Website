@@ -159,7 +159,7 @@ export interface GymCustomer {
 }
 
 export interface PostModel {
-    Id: string,
+    id: string,
     title: string,
     content: string,
     picUrl: string,

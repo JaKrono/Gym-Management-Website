@@ -7,6 +7,7 @@ import Customer from "./customer";
 import ArticleService from "./article-service";
 import Coach from "./coach";
 import Owner from "./owner";
+import PostsExploreService from './posts-explore-service';
 
 export {
     Authentication,
@@ -17,5 +18,6 @@ export {
     Customer,
     ArticleService,
     Coach,
-    Owner
+    Owner,
+    PostsExploreService
 }

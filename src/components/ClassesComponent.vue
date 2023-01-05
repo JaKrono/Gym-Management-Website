@@ -134,6 +134,26 @@ export default defineComponent({
     background-color: $background;
 }
 
+@keyframes fadeIn {
+    0% {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        background: rgba(0, 0, 0, 0.6);
+    }
+}
+
+@keyframes blowUpModal {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 .modal-shadow {
     width: 100vw;
     height: 100%;
