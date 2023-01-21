@@ -190,3 +190,12 @@ export interface PostLikeModel {
     userId: string,
     isLiked: boolean
 }
+
+export interface QuestionModel {
+    title: string,
+    content: string,
+    date: string,
+    category: string,
+    writerId: string,
+    acceptedAnswerId: string,
+}
