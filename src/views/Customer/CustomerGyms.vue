@@ -1,7 +1,7 @@
 <template>
    <q-scroll-area>
       <q-page class="col-12" v-if="!searchState">
-         
+
          <div class="row col-12 content-center q-px-lg">
             <div class="row col-12 q-my-lg">
 
@@ -14,11 +14,15 @@
                </div>
 
                <div class="row col-12">
-                  <div class="col">
-                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-                        <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3" v-for="club in clubs">
-                           <GymCardComponent :model="club" address phoneNumber></GymCardComponent>
+                  <q-inner-loading :showing="!hasLoaded" color="primary" />
+                  <div class="col" v-if="hasLoaded">
+                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md" v-if="gymsOfCustomer.length > 0">
+                        <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3" v-for="gym in gymsOfCustomer">
+                           <GymCardComponent :model="gym" address phoneNumber></GymCardComponent>
                         </div>
+                     </div>
+                     <div v-else>
+                        <p>شما تاکنون در باشگاهی ثبت‌نام نکرده‌اید.</p>
                      </div>
                   </div>
                </div>
@@ -73,8 +77,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import GymCardComponent from '@/components/Gym/GymCardComponent.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import { getCssVar } from 'quasar';
+import CoachCustomers from '../Coach/CoachCustomers.vue';
 export default defineComponent({
    components: {
       GymCardComponent
@@ -83,6 +88,8 @@ export default defineComponent({
       searchText: '',
       searchState: false,
       searchResult: [],
+      gymsOfCustomer: [],
+      hasLoaded: false,
       clubs: [
          { name: 'زورخانه پهلوان بیژن مرتضوی علی‌الخصوص بیژن مرتضوی بددت شستی هتشسی  شس یشس یشس یشس یشس یث شی   ', picUrl: 'gym1.jpg', phone: '۰۲۵۱۶۶۶۶۶۶۶', address: 'تهران پارس فلکه سوم تهرانپارس ضلع جنوب بیمارستان کوچه قمصری پلاک ۷ طبقه دوم جنوبی' },
          { name: 'زورخانه پهلوان بیژن مرتضوی', picUrl: 'gym2.jpg', phone: '', address: 'تهران پارس فلکه سوم تهرانپارس ضلع جنه قمصری پلاک ۷ طبقه دوم جنوبی' },
@@ -93,7 +100,8 @@ export default defineComponent({
    }),
    methods: {
       ...mapActions({
-         searchGym: 'customer/getGymByName'
+         searchGymAM: 'customer/getGymByName',
+         getGymsOfCustomerAM: 'customer/getGymsOfCustomer',
       }),
       toggleState() {
          this.searchState = !this.searchState
@@ -106,14 +114,28 @@ export default defineComponent({
          this.search(this.searchText)
       },
       async search(gymName: string) {
-         const result = await this.searchGym(gymName)
+         const result = await this.searchGymAM(gymName)
          console.log(result[0].name)
 
          this.searchResult = result
 
       }
+   },
+   async mounted() {
+      console.log(this.userId, this.customerId)
+      this.gymsOfCustomer = await this.getGymsOfCustomerAM(this.customerId)
+      this.hasLoaded = true
+   },
+   computed: {
+      ...mapState({
+         userId: (state: any) => state.user.userId,
+         customerId: (state: any) => state.customer.customerId,
+      }),
    }
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.q-inner-loading {
+   background-color: rgba(0, 0, 0, 0);
+}
 </style>
