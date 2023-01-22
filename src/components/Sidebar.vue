@@ -115,7 +115,8 @@ export default defineComponent({
                     { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id },
                     { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id },
                     { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id },
-                    { id: 5, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
+                    { id: 5, title: 'مقالات', icon: 'article', path: '/articles', disable: false },
+                    { id: 6, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
                 ]
             }
             if (this.role === '1') {
@@ -125,7 +126,8 @@ export default defineComponent({
                     { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms', disable: false },
                     { id: 4, title: 'کلاس‌ها', icon: 'signpost', path: '/classes', disable: false },
                     { id: 5, title: 'ورزشکارها', icon: 'people', path: '/customers', disable: false },
-                    { id: 6, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
+                    { id: 6, title: 'مقالات', icon: 'article', path: '/articles', disable: false },
+                    { id: 7, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
                 ]
             }
             if (this.role === '2') {
@@ -133,7 +135,8 @@ export default defineComponent({
                     { id: 1, title: 'خانه', icon: 'home', path: '/dashboard', disable: false },
                     { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false },
                     { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms', disable: false },
-                    { id: 4, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
+                    { id: 4, title: 'مقالات', icon: 'article', path: '/articles', disable: false },
+                    { id: 5, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
                 ]
             }
         },
