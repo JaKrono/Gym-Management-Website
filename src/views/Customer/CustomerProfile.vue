@@ -49,18 +49,20 @@
                         <div class="row col-12 q-col-gutter-md">
                            <div class="col-xs-12 col-md-6">
                               <p class="q-ma-sm text-weight-bold">نام کاربری</p>
-                              <q-input class="" filled readonly rounded v-model="copiedProfileDetail.user.username">
+                              <q-input class="" lazy-rules filled readonly rounded
+                                 v-model="copiedProfileDetail.user.username">
                               </q-input>
                            </div>
                            <div class="col-xs-12 col-md-6">
                               <p class="q-ma-sm text-weight-bold">ایمیل</p>
-                              <q-input class="" filled readonly rounded v-model="copiedProfileDetail.user.email">
+                              <q-input class="" lazy-rules filled readonly rounded
+                                 v-model="copiedProfileDetail.user.email">
                               </q-input>
                            </div>
                            <div class=" col-xs-12 col-md-6">
                               <p class="q-ma-sm text-weight-bold">نام</p>
                               <q-input :readonly="!editing" v-model="copiedProfileDetail.user.first_name" outlined
-                                 color="primary" :rules="[rules.name]">
+                                 color="primary" lazy-rules :rules="[rules.name]">
                               </q-input>
                            </div>
                            <div class="col-xs-12 col-md-6">
@@ -71,8 +73,8 @@
                            </div>
                            <div class="col-xs-12 col-md-6">
                               <p class="q-ma-sm text-weight-bold">شماره تلفن</p>
-                              <q-input class="" :readonly="!editing" v-model="copiedProfileDetail.phone" outlined
-                                 :rules="[rules.emptyPhoneNumber]">
+                              <q-input class="" :readonly="!editing" lazy-rules v-model="copiedProfileDetail.phone"
+                                 outlined :rules="[rules.emptyPhoneNumber]">
                               </q-input>
                            </div>
                            <div class="col-xs-12 col-md-6">
@@ -153,7 +155,6 @@ export default defineComponent({
          this.copiedProfileDetail.user.picUrl = ''
       },
       uploadImage() {
-         console.log("ASDASD")
          const element = document.createElement("input")
          element.type = 'file'
          element.accept = 'image/*'
@@ -179,7 +180,7 @@ export default defineComponent({
       },
       discardEdit() {
          this.copiedProfileDetail = JSON.parse(JSON.stringify(this.profileDetail))
-         ;(this.$refs['profileForm'] as any).resetValidation()
+            ; (this.$refs['profileForm'] as any).resetValidation()
          this.editing = !this.editing
       },
       async submitProfile(model: UpdateCustomerProfileModel) {
@@ -191,7 +192,6 @@ export default defineComponent({
             this.editing = !this.editing
             this.hasLoaded = true
          }
-         this.discardEdit()
       }
    },
    async mounted() {
