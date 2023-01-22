@@ -61,14 +61,17 @@ export default defineComponent({
     computed: {
         ...mapState({
             userId: state => state.user.userId,
-            coach: state => state.coach.coach
+            coach: state => state.coach.coach,
+            coachId: state => state.user.role_id
         }),
         hasPhoto: function () {
             return this.model.user.picUrl != null
         }
     },
     async mounted() {
-        await this.getCoach()
+        console.log(this.$store.state.user);
+
+        await this.getCoach(this.coach_id)
         this.model = this.coach
         this.loading = false
     },
@@ -89,6 +92,7 @@ export default defineComponent({
                 this.imageFile = ((event.target) as any).files[0] as any
                 this.localUrl = URL.createObjectURL(this.imageFile)
                 this.model.user.picUrl = await this.getBase64(this.imageFile) as string;
+                // this.$store.state.picUrl = await this.getBase64(this.imageFile) as string;
             }
 
         },
@@ -109,6 +113,7 @@ export default defineComponent({
 }
 
 .image-container {
+    object-fit: cover;
     background-color: $secondary;
     height: 300px;
     width: 300px;

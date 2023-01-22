@@ -56,7 +56,7 @@ export default {
         },
 
         async getCoachDetail({ commit, dispatch }:any) {
-            const response = await Coach.getCoachDetail(store.state.user.user.role_id)
+            const response = await Coach.getCoachDetail(store.state.user.role_id)
             if (response.status === 200) {
                commit('setCoachDetail', response.data)
                return true
@@ -104,7 +104,7 @@ export default {
             }
         },
         async saveCoach({state, commit, dispatch}:any,coachModel){
-            const response = await Coach.saveCoach(store.state.user.user.role_id, coachModel)
+            const response = await Coach.saveCoach(store.state.user.role_id, coachModel)
             dispatch("user/getUser",null,{root:true})
             if(response.status === 200){
                dispatch('notification/showNotification', { message: response?.data.detail || "اطلاعات با موفقیت ذخیره شد.", type: 'positive', timeout: 2000 }, { root: true })

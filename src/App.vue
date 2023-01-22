@@ -42,7 +42,10 @@ export default defineComponent({
     </q-header>
     <q-page-container class="page-container row">
       <router-view name="RightSidebar" />
-      <router-view class="item-fill" />
+      <transition :duration="{ enter: 1000, leave: 500 }" appear enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut">
+        <router-view class="item-fill" />
+      </transition>
     </q-page-container>
   </q-layout>
   <!-- <RouterView style="height:100%;" /> -->

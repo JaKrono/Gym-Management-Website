@@ -106,6 +106,7 @@ export default defineComponent({
 }
 
 .image {
+    object-fit: cover;
     width: 100%;
     height: 100%;
 }
