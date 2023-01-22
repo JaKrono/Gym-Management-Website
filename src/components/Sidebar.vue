@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <q-separator class="q-mt-md" style="height: 1px"/>
+                <q-separator class="q-mt-md" style="height: 1px" />
 
                 <q-list class="">
                     <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-py-md"
@@ -26,7 +26,7 @@
                         :isSelected="isItemSelected(item.id)"></SidebarItemVue>
                 </q-list>
 
-                <q-separator class="q-mt-xs" style="height: 2px"/>
+                <q-separator class="q-mt-xs" style="height: 2px" />
                 <br /> <!-- Do not allow margin collapse -->
 
                 <div class="row">
@@ -142,7 +142,14 @@ export default defineComponent({
         },
         updateItems() {
             if (this.role === "0") {
-                this.items = [{ id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false }, { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id }]
+                this.items = [
+                    { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false },
+                    { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, 
+                    { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, 
+                    { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id },
+                    { id: 5, title: 'مقالات', icon: 'article', path: '/articles', disable: false },
+                    { id: 6, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
+                ]
             }
         }
     },

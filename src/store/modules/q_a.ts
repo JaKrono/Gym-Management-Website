@@ -7,7 +7,7 @@ export default {
          const response = await Q_A.postQuestion(question)
          if (response && response.status === 201) {
             dispatch('notification/showNotification', { message: response?.data.detail || "پرسش با موفقیت ایجاد شد", type: 'positive', timeout: 2000 }, { root: true })
-            return true
+            return response.data
          } else {
             dispatch('notification/showNotification', { message: response?.data.detail || "خطا در ایجاد پرسش", type: 'negative', timeout: 2000 }, { root: true })
             return false
@@ -24,6 +24,46 @@ export default {
             return false
          }
       },
+
+      async getSingleQuestionDetail({ dispatch }: any, ids: { userId: String, questionId: String }) {
+         const response = await Q_A.getSingleQuestionDetail(ids)
+         if (response && response.status === 200) {
+            return response.data
+         } else {
+            dispatch('notification/showNotification', { message: response?.data.detail || 'خطا در گرفتن اطلاعات سوال', type: 'negative' ,timeout: 2000}, { root: true })
+            return false
+         }
+      },
+
+      async getWriterDetail({ dispatch }: any, userId: string) {
+         const response = await Q_A.getWriterDetail(userId)
+         if (response && response.status === 200) {
+            return response.data
+         } else {
+            dispatch('notification/showNotification', { message: response?.data.detail || 'خطا در گرفتن اطلاعات نویسنده', type: 'negative' ,timeout: 2000}, { root: true })
+            return false
+         }
+      },
+
+      async updateQuestionScore({ dispatch }: any, obj: { score: number, userId: number, questionId: number }) {
+         const response = await Q_A.postQuestionScore(obj)
+         if (response && (response.status === 200 || response.status === 201)) {
+            return response.data
+         } else {
+            dispatch('notification/showNotification', { message: response?.data.detail || 'خطا در ایجاد نظر برای پرسش', type: 'negative' ,timeout: 2000}, { root: true })
+            return false
+         }
+      },
+
+      async updateAnswerScore({ dispatch }: any, obj: { score: number, userId: number, answerId: number }) {
+         const response = await Q_A.postAnswerScore(obj)
+         if (response && (response.status === 200 || response.status === 201)) {
+            return response.data
+         } else {
+            dispatch('notification/showNotification', { message: response?.data.detail || 'خطا در ایجاد نظر برای جواب', type: 'negative' ,timeout: 2000}, { root: true })
+            return false
+         }
+      }
 
       // async getCustomerId({ commit, dispatch }:any) {
       //    const response = await Customer.getCustomerId(store.state.user.userId) // TODO_asghar: How do I access user.state.userId from here? So I don't have to manually pass the userId?
