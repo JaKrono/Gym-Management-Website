@@ -4,29 +4,14 @@ import store from ".."
 export default {
    namespaced: true,
    state: () => ({
-      customerId: -1,
       clubs: [],
    }),
    mutations: {
       setClubs(state: any, clubs: any) {
          state.clubs = clubs
       },
-      setCustomerId(state: any, customerId: number) {
-         state.customerId = customerId
-         console.log(store.state.user.userId, state.customerId)
-      }
    },
    actions: {
-      async getCustomerId({ commit, dispatch }:any) {
-         const response = await Customer.getCustomerId(store.state.user.userId) // TODO_asghar: How do I access user.state.userId from here? So I don't have to manually pass the userId?
-         if (response.status === 200) {
-            commit('setCustomerId', response.data.role_id)
-            return true
-         } else {
-            dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن اطلاعات مشتری", type: 'negative', timeout: 2000 }, { root: true })
-            return false
-         }
-      },
 
       async updateCustomerProfile({ dispatch }: any, customerProfileUpdate: UpdateCustomerProfileModel) {
          const response = await Customer.editCustomerProfileDetail(customerProfileUpdate.user_id, customerProfileUpdate.customerProfileModel)

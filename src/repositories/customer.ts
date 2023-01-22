@@ -1,11 +1,12 @@
 import type { CustomerProfileModel } from "@/common/interfaces"
 import client from "./client/axios"
 export default {
-   getCustomerId(userId: number) {
-      const endpoint = `api/get-user/${userId}/`
-      const response = client.get(endpoint)
-      return response
-   },
+   
+   // getCustomerId(userId: number) {
+   //    const endpoint = `api/get-user/${userId}/`
+   //    const response = client.get(endpoint)
+   //    return response
+   // },
 
    editCustomerProfileDetail(userId: string, customerProfile: CustomerProfileModel) {
       const endpoint = '/api/customer/update-customer/'.concat(userId, '/')

@@ -129,7 +129,7 @@ export default defineComponent({
    computed: {
       ...mapState({
          userId: (state: any) => state.user.userId,
-         customerId: (state: any) => state.customer.customerId,
+         customerId: (state: any) => state.user.role_id,
       }),
    }
 })
