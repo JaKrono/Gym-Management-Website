@@ -76,9 +76,7 @@ export default defineComponent({
    props: ['model', 'commaSperatedCategories'],
    mounted() {
       this.isCoach = (this.$store.state.user.role === 1);
-      this.isCoach = true; //temp value
    },
-
    methods: {
       editClicked() {
          this.$emit('edit', 1)
