@@ -3,8 +3,12 @@
         <q-btn @click="showSidebar" v-if="sidebarIsHidden" color="white" flat icon="menu" />
         <q-space></q-space>
         <q-btn v-if="isSignedIn" flat color="secondary" round class="text-white">
-            <!-- <q-avatar color="red"></q-avatar> -->
-            <img style="height:3em; width:3em; border-radius:50%;object-fit:cover;" :src="user.picUrl">
+            <img v-if="user.picUrl" style="height:3em; width:3em; border-radius:50%;object-fit:cover;"
+                :src="user.picUrl">
+            <q-avatar v-else>
+                <q-icon size="1.5em" name="person"></q-icon>
+            </q-avatar>
+
         </q-btn>
         <!-- <q-toolbar-title>باشگاه ورزشی</q-toolbar-title> -->
     </q-toolbar>
@@ -18,14 +22,17 @@ export default defineComponent({
     computed: {
         ...mapState({
             sidebarIsHidden: (state: any) => !state.global.sidebarIsVisible,
-            user: state => state.user.user,
+            user: state => state.user,
             isSignedIn: state => state.user.isSignedIn
-        })
+        }),
+
     },
     methods: {
         ...mapMutations({
             showSidebar: 'global/showSidebar'
         })
+    },
+    mounted() {
     }
 })
 </script>

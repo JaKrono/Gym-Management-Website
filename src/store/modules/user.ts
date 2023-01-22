@@ -15,12 +15,12 @@ export default {
         userId:null,
         gym:{id:null,name:"",adress:"",phone:"",gym_reg_code:"",user:null, picture:null},
         customers:[],
-        user:{
-            picUrl:'',
-            email:'',
-            username:'',
-            role_id:-1
-        }
+        // user:{
+        picUrl:'',
+        email:'',
+        username:'',
+        role_id:-1
+        // }
     }),
     mutations: {
         setToken(state: any, token: string) {
@@ -42,7 +42,10 @@ export default {
             state.customers = customers
         },
         setUser(state, userModel){
-            state.user = userModel
+            state.picUrl = userModel.picUrl;
+            state.email = userModel.email;
+            state.username = userModel.username;
+            state.role_id = userModel.role_id;
         }
     },
     actions: {
@@ -51,14 +54,15 @@ export default {
             if (response.status === 200) {
                 commit('setToken', response.data.access)
                 const tokenInfo = parseJwt(response.data.access)
+                
                 commit('setUserId', tokenInfo.user_id)
                 commit('setRole', tokenInfo.role)
                 commit('setIsSignedIn', true)
 
                 if (state.role == 2) { // customer
-                    dispatch('customer/getCustomerId', null, {root: true})
+                    dispatch('getUser')
                 } else if (state.role == 1) { // coach
-                    dispatch('coach/getCoachId', null, {root: true})
+                    dispatch('getUser')
                 } else if (state.role == 0) { // owner
                     dispatch('owner/getOwnerId', null, {root: true})
                 }
@@ -144,11 +148,11 @@ export default {
 
         async logout({ dispatch }) {
             dispatch('reset')
-            localStorage.setItem('vuex',"")
-            setTimeout(()=>{
+            // localStorage.setItem('vuex',"")
+            // setTimeout(()=>{
 
-                window.location.reload();
-            },1000)
+            //     window.location.reload();
+            // },1000)
         },
 
         reset({ commit }) {
@@ -161,7 +165,7 @@ export default {
             commit('setUser',{})
         },
 
-        async searchCoach(coachName: string) {
+        async searchCoach({},coachName: string) {
             const response = await SearchCoachService.searchCoachList(coachName);
             return response.data;
         },

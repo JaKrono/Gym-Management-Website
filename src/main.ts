@@ -6,6 +6,8 @@ import rules from './validationRules'
 import { Quasar,Notify, type QuasarPluginOptions } from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
 import '@quasar/extras/material-icons-outlined/material-icons-outlined.css'
+import '@quasar/extras/animate/fadeIn.css'
+import '@quasar/extras/animate/fadeOut.css'
 import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
 
 import 'quasar/src/css/index.sass'
@@ -17,6 +19,6 @@ app.config.globalProperties.rules = rules
 
 app.use(router)
 app.use(store as any)
-app.use(Quasar,{lang:faIr,plugins:{Notify}} as QuasarPluginOptions)
+app.use(Quasar,{lang:faIr,config:{animations: 'all'},plugins:{Notify}} as QuasarPluginOptions)
 
 app.mount('#app')

@@ -60,6 +60,7 @@
 
 .item-fill {
     flex-grow: 1;
+    overflow: hidden;
 }
 
 .content {
@@ -97,6 +98,12 @@
     cursor: pointer;
     color: $primary;
     user-select: none;
+}
+
+.not-found-image {
+    min-width: 200px;
+    max-width: 100%;
+    margin: auto;
 }
 
 @mixin column-center {
