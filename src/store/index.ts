@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore, Store } from 'vuex'
 import userModule from './modules/user'
 import notificationModule from './modules/notification'
 import globalModule from './modules/global'
@@ -7,7 +7,13 @@ import customerModule from './modules/customer'
 import ownerModule from './modules/owner'
 import coachModule from './modules/coach'
 import q_aModule from './modules/q_a'
-const store = createStore({
+
+const vuexPersist = new VuexPersistence<any>({
+    storage: localStorage,
+    modules:['user']
+})
+
+const store = createStore<any>({
     modules:{
         user:userModule,
         notification:notificationModule,
@@ -17,7 +23,9 @@ const store = createStore({
         coach:coachModule,
         q_a:q_aModule,
     },
-    plugins:[new VuexPersistence({modules:['user', 'customer', 'coach', 'owner']}).plugin]
+    mutations: {
+    },
+    plugins:[vuexPersist.plugin]
 
 })
 

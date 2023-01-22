@@ -53,7 +53,6 @@ import { getCssVar } from 'quasar';
 import { CategoryList } from '@/common/category-list';
 import type { CategoryModel } from '@/common/interfaces';
 import type { ArticleDetailModel } from '@/common/interfaces';
-import store from '@/store';
 
 export default defineComponent({
    props: ['articleList'],
@@ -114,7 +113,7 @@ export default defineComponent({
          this.shownArticleList = this.articleList;
 
          if (this.showOnlyMyArticles) {
-            let userId = store.state.userId;
+            let userId = this.$store.state.user.userId;
 
             this.shownArticleList = this.shownArticleList.filter(item => item.writerId === userId);
          }

@@ -3,7 +3,7 @@
     <q-drawer :width="250" elevated v-model="sidebarIsVisible" side="left">
         <q-scroll-area class="full-height">
             <div class="q-mx-sm">
-                <div class="flex row q-mt-md">
+                <!-- <div class="flex row q-mt-md">
                     <div class="row col-12">
                         <div class="flex col-12 justify-center">
                             <q-avatar v-if="!user.picUrl" size="9em" color="primary">
@@ -14,14 +14,14 @@
                         </div>
                         <p class="col-12 q-mt-md font-size-up-2 text-center">{{ user.username }}</p>
                         <p class="col-12 text-center">{{ user.email }}</p>
-                        <!-- <q-btn outline color="primary">مشاهده پروفایل</q-btn> -->
+                        <q-btn outline color="primary">مشاهده پروفایل</q-btn>
                     </div>
-                </div>
+                </div> -->
 
-                <q-separator class="q-mt-md" style="height: 1px" />
+                <!-- <q-separator class="q-mt-md" style="height: 1px" /> -->
 
                 <q-list class="">
-                    <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-py-md"
+                    <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-pa-md"
                         :disable="item.disable" :title="item.title" :path="item.path" :icon="item.icon" :id="item.id"
                         :isSelected="isItemSelected(item.id)"></SidebarItemVue>
                 </q-list>
@@ -111,7 +111,7 @@ export default defineComponent({
         setItems() {
             if (this.role === "0") {
                 this.items = [
-                    { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false },
+                    { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/owner/dashboard', disable: false },
                     { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id },
                     { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id },
                     { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id },
@@ -121,7 +121,7 @@ export default defineComponent({
             }
             if (this.role === '1') {
                 this.items = [
-                    { id: 1, title: 'خانه', icon: 'dashboard', path: '/dashboard', disable: false },
+                    { id: 1, title: 'خانه', icon: 'dashboard', path: '/coach/dashboard', disable: false },
                     { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false },
                     { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms', disable: false },
                     { id: 4, title: 'کلاس‌ها', icon: 'signpost', path: '/classes', disable: false },
@@ -132,7 +132,7 @@ export default defineComponent({
             }
             if (this.role === '2') {
                 this.items = [
-                    { id: 1, title: 'خانه', icon: 'home', path: '/dashboard', disable: false },
+                    { id: 1, title: 'خانه', icon: 'home', path: '/customer/dashboard', disable: false },
                     { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false },
                     { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms', disable: false },
                     { id: 4, title: 'مقالات', icon: 'article', path: '/articles', disable: false },

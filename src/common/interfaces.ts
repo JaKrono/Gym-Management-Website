@@ -143,7 +143,8 @@ export interface ChangeArticleDetailModel {
     writerId: string,
     writerName: string,
     articleCategory: string,
-    isValid: boolean
+    isValid: boolean,
+    articleDescription: string
 }
 
 export interface CategoryModel {

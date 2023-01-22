@@ -6,6 +6,7 @@ import CoachProfileComponentVue from '@/components/CoachProfileComponent.vue';
 import SearchCoachComponentVue from '@/components/SearchCoachComponent.vue';
 import store from '@/store';
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,24 +24,54 @@ const router = createRouter({
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
+    // {
+    //   path: '/dashboard',
+    //   name: 'dashboard',
+    //   meta: { requireAuth: true },
+    //   components: {
+    //     default: () => {          
+    //       if (store.state.user.role == '2') {
+    //         return import('@/views/Customer/CustomerHome.vue')
+    //       } else if (store.state.user.role == '1') {
+    //         return import('@/views/Coach/CoachHome.vue')
+    //       } else if (store.state.user.role == '0') {
+    //         return import("@/views/Profile.vue")
+    //       }
+    //     },
+    //     RightSidebar: () => import("@/components/Sidebar.vue")
+    //   }
+    // },
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      meta: { requireAuth: true },
+      path:'/owner/dashboard',
+      name:'OwnerDashboard',
+      meta:{requireAuth:true},
       components: {
-        default: () => {
-          if (store.state.user.role == '2') {
-            return import('@/views/Customer/CustomerHome.vue')
-          } else if (store.state.user.role == '1') {
-            return import('@/views/Coach/CoachHome.vue')
-
-          } else if (store.state.user.role == '0') {
-            return import("@/views/Profile.vue")
+            default: () => import("@/views/Profile.vue"),
+            RightSidebar: () => import("@/components/Sidebar.vue")
           }
-        },
-        RightSidebar: () => import("@/components/Sidebar.vue")
-      }
     },
+
+    {
+      path:'/customer/dashboard',
+      name:'CustomerDashboard',
+      meta:{requireAuth:true},
+      components: {
+            default: () => import('@/views/Customer/CustomerHome.vue'),
+            RightSidebar: () => import("@/components/Sidebar.vue")
+          }
+    },
+
+    {
+      path:'/coach/dashboard',
+      name:'CoachDashboard',
+      meta:{requireAuth:true},
+      components: {
+            default: () => import('@/views/Coach/CoachHome.vue'),
+            RightSidebar: () => import("@/components/Sidebar.vue")
+          }
+    },
+
+
     {
       path: '/profile',
       name: 'profile',
@@ -58,6 +89,7 @@ const router = createRouter({
         RightSidebar: () => import('@/components/Sidebar.vue')
       }
     },
+
     {
       path: '/gyms',
       name: 'gyms',
@@ -75,6 +107,7 @@ const router = createRouter({
         RightSidebar: () => import('@/components/Sidebar.vue')
       }
     },
+    
     {
       path: '/coaches',
       name: 'coaches',
@@ -92,7 +125,7 @@ const router = createRouter({
       path: '/search-coach',
       name: 'Search Coach',
       components: {
-        default: () => import("@/components/SearchCoachComponent.vue"),
+        default: () => import("@/views/CoachSearch.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
@@ -206,6 +239,19 @@ const router = createRouter({
   ]
 })
 router.beforeEach((to, from, next) => {
+  if(to.path == '/' && store.state.user.isSignedIn){
+    const role = store.state.user.role;
+    if (role === '0') {
+      next('/owner/dashboard')
+    }
+    if (role === '1') {
+        next('/coach/dashboard')
+    }
+    if (role === '2') {
+        next('/customer/dashboard')
+    }
+
+  }
   if (to.meta['requireAuth'] && !store.state.user.isSignedIn) {
     next('/login')
   }

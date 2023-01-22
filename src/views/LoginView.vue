@@ -21,7 +21,8 @@ export default defineComponent({
     },
     computed: {
         ...mapState({
-            token: state => state.user.token
+            token: state => state.user.token,
+            role: state => state.user.role
         }),
         // token:()=>{
         //     return this.$store.state.user.token
@@ -36,7 +37,15 @@ export default defineComponent({
             const result = await this.login(model)
             if (result) {
                 setToken(this.token)
-                this.$router.push('/dashboard')
+                if (this.role === '0') {
+                    this.$router.push('/owner/dashboard')
+                }
+                if (this.role === '1') {
+                    this.$router.push('/coach/dashboard')
+                }
+                if (this.role === '2') {
+                    this.$router.push('/customer/dashboard')
+                }
             }
         },
         async submitSignupForm(model: SignupModel) {

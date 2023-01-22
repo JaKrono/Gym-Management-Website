@@ -1,6 +1,6 @@
 <template>
    <ArticleReadComponent @edit="changeState" :model="article" v-if="state === 2"></ArticleReadComponent>
-   <ArticleEditComponent @discardEdit="changeState" @saveEdit="submitEdittedArticle" :model="article"
+   <ArticleEditComponent @discardEdit="changeState" @saveEdit="submitEdittedArticle" :model="article" :isNewArticle="false"
       v-else-if="state === 1"></ArticleEditComponent>
 </template>
 <script lang="ts">
