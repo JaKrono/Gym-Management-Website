@@ -43,7 +43,6 @@ import { mapActions } from 'vuex';
 import ArticleCardComponent from '@/components/Article/ArticleCardComponent.vue';
 import { getCssVar } from 'quasar';
 import type { ArticleDetailModel } from '@/common/interfaces';
-import store from '@/store';
 
 export default defineComponent({
    props: ['articleList'],
@@ -53,7 +52,7 @@ export default defineComponent({
    mounted() {
       setTimeout(() => {
          let tempList: ArticleDetailModel[] = this.articleList;
-         let userId = store.state.userId;
+         let userId = this.$store.state.user.userId;
 
          this.myArticleList = tempList.filter(item => item.writerId === userId);
          this.unValidArticleList = tempList.filter(item => !item.isValid);

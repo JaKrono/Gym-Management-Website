@@ -45,7 +45,7 @@
             <p>{{ model.articleContent }}</p>
 
             <!-- Show only to coach and if the article is not valid -->
-            <div v-if="isCoach && !model.isValid" class="row q-mt-md">
+            <div v-if="(isCoach && !model.isValid)" class="row q-mt-md">
                <q-card class="col-xs-12">
                   <q-card-section class="row items-center justify-around q-pa-sm">
                      <p class="q-py-xs">مربی عزیز، آیا صحت مقاله را تایید می‌کنید؟</p>

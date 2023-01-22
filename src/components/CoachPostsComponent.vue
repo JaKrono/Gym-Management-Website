@@ -53,7 +53,6 @@ import { defineComponent } from 'vue';
 import PostComponent from './PostComponent.vue';
 import type { PostModel, PostCommentModel, NewPostModel, CategoryModel } from '@/common/interfaces';
 import { PostsExploreService } from "@/repositories/index";
-import store from '@/store';
 import { CategoryList } from '@/common/category-list';
 
 export default defineComponent({
@@ -99,7 +98,7 @@ export default defineComponent({
                 if (result.status === 200) {
                     this.myPosts = result.data;
 
-                    let userId = store.state.user.userId;
+                    let userId = this.$store.state.user.userId;
                     this.myPosts = this.myPosts.filter(item => item.coachId === userId);
                 }
                 else {
@@ -122,7 +121,7 @@ export default defineComponent({
             catch (err) { }
         },
         openCreateModal() {
-            let userId = store.state.user.userId;
+            let userId = this.$store.state.user.userId;
 
             this.newPost = {
                 title: '',
