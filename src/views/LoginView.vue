@@ -51,7 +51,16 @@ export default defineComponent({
         async submitSignupForm(model: SignupModel) {
             const result = await this.signup(model)
             if (result) {
-                this.$router.push('/dashboard')
+                setToken(this.token)
+                if (this.role === '0') {
+                    this.$router.push('/owner/dashboard')
+                }
+                if (this.role === '1') {
+                    this.$router.push('/coach/dashboard')
+                }
+                if (this.role === '2') {
+                    this.$router.push('/customer/dashboard')
+                }
             }
         },
         changeState(event: number) {
