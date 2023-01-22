@@ -192,10 +192,54 @@ export interface PostLikeModel {
 }
 
 export interface QuestionModel {
+    questionId: string,
     title: string,
     content: string,
     date: string,
     category: string,
     writerId: string,
     acceptedAnswerId: string,
+    score: number,
+    userScore: number,
+}
+
+export interface NewQuestionModel {
+    title: string,
+    content: string,
+    category: string,
+    writerId: string,
+}
+
+export interface AnswerModel {
+    answerId: string,
+    questionId: string,
+    content: string,
+    date: string,
+    writerId: string,
+    score: number,
+    userScore: number,
+}
+
+export interface NewAnswerModel {
+    content: string,
+    writerId: string,
+    questionId: string,
+}
+
+export interface AcceptAnswerModel {
+    answerId: number,
+    questionId: number,
+    // status: string, 'ACCEPT', 'REMOVE'
+}
+
+export interface QuestionScoreModel {
+    questionId: string,
+    userId: string,
+    score: number
+}
+
+export interface AnswerScoreModel {
+    answerId: string,
+    userId: string,
+    score: number,
 }

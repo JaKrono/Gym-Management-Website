@@ -3,10 +3,11 @@
    <q-scroll-area>
       <q-page>
          <div class="q-pa-md q-pa-md-lg">
-            <q-form greedy @submit.prevent="submitQuestion" class="row">
+            <q-form greedy @submit.prevent="submitQuestion" @validation-error="validateCategory" class="row">
                <div class="row col-12">
                   <p class="text-weight-bold col-12 q-mt-sm" v-if="isDense">عنوان پرسش</p>
-                  <q-input class="col-12" type="text" v-model="question.title" autogrow :dense="isDense" :rules="[]">
+                  <q-input class="col-12" type="text" lazy-rules v-model="question.title" autogrow :dense="isDense"
+                     :rules="[rules.qaTitle]">
                      <template v-slot:before v-if="!isDense">
                         <p>عنوان پرسش</p>
                      </template>
@@ -19,7 +20,8 @@
                      <q-expansion-item class="col-grow" header-class="row" dense>
                         <template v-slot:header>
                            <div class="items-center self-start">
-                              <div class="q-mr-xs" v-if="question.category.length > 0 && question.category !== 'NOTDEFINED'">
+                              <div class="q-mr-xs"
+                                 v-if="question.category.length > 0 && question.category !== 'NOTDEFINED'">
                                  <q-badge @click.stop="clearCategorySelection()" lazy-load
                                     class="q-pa-sm cursor-pointer" rounded :color="selectedCategory.color">
                                     <template v-slot:default>
@@ -31,9 +33,9 @@
                                     </template>
                                  </q-badge>
                               </div>
-                              <div class="flex items-cnter text-error q-pt-xs" v-if="question.category === ''">
+                              <div class="flex items-cnter text-error q-pt-xs" v-if="showCategoryError">
                                  <q-icon name="error" size="1.5rem"></q-icon>
-                                 <p class="q-mt-xs q-ml-xs">حداقل یک موضوع برای مقاله انتخاب کنید.</p>
+                                 <p class="q-mt-xs q-ml-xs">لطفا یک موضوع برای پرسش انتخاب کنید.</p>
                               </div>
                            </div>
                         </template>
@@ -48,13 +50,21 @@
                   </div>
                </div>
                <div class="row col-12 q-mt-xs-md">
-                  <p class="text-weight-bold col-12 q-mt-sm" v-if="isDense">متن مقاله</p>
-                  <q-input type="textarea" class="col-12" autogrow v-model="question.content" :dense="isDense"
-                     :rules="[]">
+                  <p class="text-weight-bold col-12 q-mt-sm" v-if="isDense">متن پرسش</p>
+                  <q-input type="textarea" class="col-12" lazy-rules autogrow v-model="question.content" :dense="isDense"
+                     :rules="[rules.qaContent]">
                      <template v-slot:before v-if="!isDense">
                         <p>متن پرسش</p>
                      </template>
                   </q-input>
+               </div>
+               <div class="row col-12 q-mt-md">
+                  <div class="row col-xs-12 justify-end no-wrap">
+                     <q-btn @click="discardClicked" class="q-px-sm-xl col-xs-grow q-mr-xs-sm col-sm-auto"
+                        color="secondary">لغو</q-btn>
+                     <q-btn type="submit" class="q-px-sm-xl col-xs-grow q-ml-xs-sm col-sm-auto"
+                        color="primary">ذخیره</q-btn>
+                  </div>
                </div>
             </q-form>
          </div>
@@ -63,15 +73,25 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { QuestionModel, CategoryModel } from '@/common/interfaces'
+import type { CategoryModel, NewQuestionModel } from '@/common/interfaces'
 import { CategoryList } from '@/common/category-list';
+import { mapActions, mapState } from 'vuex';
+import user from '@/store/modules/user';
 export default defineComponent({
    data: () => ({
       CategoryList,
-      question: {} as QuestionModel,
+      question: {} as NewQuestionModel,
       selectedCategory: {} as CategoryModel,
    }),
    methods: {
+      ...mapActions({
+         submitQuestionAM: 'q_a/submitQuestion',
+      }),
+      validateCategory() {
+         if (this.question.category === "NOTDEFINED") {
+            this.question.category = ''
+         }
+      },
       clearCategorySelection() {
          this.selectedCategory = {} as CategoryModel
          this.question.category = ''
@@ -80,15 +100,28 @@ export default defineComponent({
          this.selectedCategory = c
          this.question.category = String(c.id)
       },
-      submitQuestion() {
+      async submitQuestion() {
          if (this.question.category && this.question.category.length !== 0 && this.question.category !== 'NOTDEFINED') {
-            console.log('pass')
+            this.question.writerId = this.userId
+            const response = await this.submitQuestionAM(this.question)
+            if (response) {
+               this.$emit('endWriting', 2)
+            }
          }
+      },
+      discardClicked() {
+         this.$emit('endWriting', 2)
       }
    },
    computed: {
+      ...mapState({
+         userId: (state: any) => state.user.userId,
+      }),
       isDense() {
          return this.$q.screen.lt.sm ? true : false
+      },
+      showCategoryError() {
+         return this.question.category === ''
       }
    },
    beforeMount() {
