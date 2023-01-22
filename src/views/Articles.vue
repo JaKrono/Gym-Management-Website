@@ -72,7 +72,7 @@ export default defineComponent({
          //       writerId: '0',
          //       writerName: 'بیژن مرتضوی‌زاده اصل',
          //       articleCategory: '3,3',
-         //       isValid: true,
+         //       isValid: false,
          //       createDate: '۲۳ فروردین ۱۴۰۱' // year month day
          //    },
          //    {
@@ -98,7 +98,7 @@ export default defineComponent({
          //       writerId: '0',
          //       writerName: 'خر شرک',
          //       articleCategory: '1,6',
-         //       isValid: true,
+         //       isValid: false,
          //       createDate: '۲ خرداد ۱۴۰۰'
          //    }
          // ]

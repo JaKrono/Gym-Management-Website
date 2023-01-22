@@ -70,7 +70,6 @@ import type { CategoryModel, ChangeArticleDetailModel } from '@/common/interface
 import { getCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 import { ArticleService } from "@/repositories/index";
-import articleService from '@/repositories/article-service';
 
 export default defineComponent({
    props: ['model', 'commaSperatedCategories'],
@@ -99,7 +98,7 @@ export default defineComponent({
          }
 
          try {
-            const result = await articleService.editArticle(changeArticleObject.writerId, changeArticleObject);
+            const result = await ArticleService.editArticle(changeArticleObject.writerId, changeArticleObject);
 
             if (result.status === 200 || result.status === 201) {
                this.model.isValid = true;
