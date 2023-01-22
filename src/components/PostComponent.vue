@@ -46,8 +46,8 @@ export default defineComponent({
         goToCoachProfile() {
             let params = {
                 coachId: this.postObject.coachId,
-                gymId: '1', //temp gymId
-                isCoach: 'false'
+                gymId: String(this.$store.state.user.gym.id),
+                isCoach: String((this.$store.state.user.role === 1))
             };
 
             this.$router.push({ path: '/coach-profile', query: params })
