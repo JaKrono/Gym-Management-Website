@@ -76,7 +76,6 @@ import { defineComponent } from 'vue';
 import type { CategoryModel, NewQuestionModel } from '@/common/interfaces'
 import { CategoryList } from '@/common/category-list';
 import { mapActions, mapState } from 'vuex';
-import user from '@/store/modules/user';
 export default defineComponent({
    data: () => ({
       CategoryList,
@@ -105,7 +104,8 @@ export default defineComponent({
             this.question.writerId = this.userId
             const response = await this.submitQuestionAM(this.question)
             if (response) {
-               this.$emit('endWriting', 2)
+               // console.log(response)
+               this.$router.push(`/questions/${response.id}`)
             }
          }
       },

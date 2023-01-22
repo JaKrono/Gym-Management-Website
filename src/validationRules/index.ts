@@ -47,15 +47,15 @@ export default {
     },
     ////////// Q&A //////////
     qaTitle: (content: string) => {
-        if (!content || content.length < 20) {
-            return 'لطفا حداقل ٢۰ کاراکتر بنویسید. '
+        if (!content || content.length < 10) {
+            return 'لطفا حداقل ۱۰ کاراکتر بنویسید. '
         } else {
             return true
         }
     },
     qaContent: (content: string) => {
-        if (!content || content.length < 30) {
-            return 'لطفا حداقل ۳۰ کاراکتر بنویسید. '
+        if (!content || content.length < 10) {
+            return 'لطفا حداقل ۱۰ کاراکتر بنویسید. '
         } else {
             return true
         }

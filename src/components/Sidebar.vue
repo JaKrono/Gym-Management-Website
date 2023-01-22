@@ -142,7 +142,14 @@ export default defineComponent({
         },
         updateItems() {
             if (this.role === "0") {
-                this.items = [{ id: 1, title: 'پروفایل', icon: 'dashboard', path: '/owner/dashboard', disable: false }, { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id }]
+                this.items = [
+                    { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false },
+                    { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, 
+                    { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, 
+                    { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id },
+                    { id: 5, title: 'مقالات', icon: 'article', path: '/articles', disable: false },
+                    { id: 6, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
+                ]
             }
         }
     },

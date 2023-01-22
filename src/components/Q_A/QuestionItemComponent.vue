@@ -18,7 +18,7 @@
       <div class="flex col-12 q-mb-xs">
          <p v-if="answerCount" class="font-size-down-1 rounded-borders q-px-xs q-mr-sm bg-blue-grey-1"><span
                class="q-mr-xs">۴</span>پاسخ</p>
-         <p @click="viewQuestionClicked" class="font-size-up-2 text-primary cursor-pointer">شسیشسیش</p>
+         <p @click="viewQuestionClicked" class="font-size-up-3 text-primary cursor-pointer">شسیشسیش</p>
       </div>
       <p class="col-12 ellipsis-3-lines q-mb-sm" style="max-height: 74px">
          متن سوال متن
@@ -36,7 +36,7 @@
          <div class="flex items-center justify-between q-pt-sm">
             <div @click="writerClicked" class="flex items-center cursor-pointer">
                <q-icon name="o_3p" size="1.4em" style="padding-top: 2px"></q-icon>
-               <p class="q-ml-xs">بیژن مرتضوی‌زاده اصل</p>
+               <p class="q-ml-xs text-primary">بیژن مرتضوی‌زاده اصل</p>
             </div>
             <div class="flex">
                <q-tooltip :hide-delay="$q.screen.lt.lg ? 1500 : 0">امتیاز این پرسش از نظر کابران</q-tooltip>
