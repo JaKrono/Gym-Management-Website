@@ -14,7 +14,7 @@
                <p class="q-ml-xs" style="margin-top: 2px">{{ model.readDuration }}
                   دقیقه</p>
             </div>
-            
+
             <div @click="viewWriterClicked()" class="flex no-wrap items-center cursor-pointer q-my-xs">
                <q-icon name="fa-solid fa-user-pen"></q-icon>
                <p class="q-ml-sm">{{ model.writerName }}</p>
@@ -41,11 +41,11 @@
                   <p class="q-mt-sm text-white absolute-full flex flex-center">خطا در نمایش تصویر</p>
                </template>
             </q-img>
-            
+
             <p>{{ model.articleContent }}</p>
 
             <!-- Show only to coach and if the article is not valid -->
-            <div v-if="isCoach" class="row q-mt-md">
+            <div v-if="isCoach && !model.isValid" class="row q-mt-md">
                <q-card class="col-xs-12">
                   <q-card-section class="row items-center justify-around q-pa-sm">
                      <p class="q-py-xs">مربی عزیز، آیا صحت مقاله را تایید می‌کنید؟</p>
@@ -66,15 +66,16 @@
 </template>
 <script lang="ts">
 import { CategoryList } from '@/common/category-list';
-import type { CategoryModel } from '@/common/interfaces';
+import type { CategoryModel, ChangeArticleDetailModel } from '@/common/interfaces';
 import { getCssVar } from 'quasar';
 import { defineComponent } from 'vue';
-import store from '@/store';
+import { ArticleService } from "@/repositories/index";
+import articleService from '@/repositories/article-service';
 
 export default defineComponent({
    props: ['model', 'commaSperatedCategories'],
-   mounted(){
-      this.isCoach = (store.state.role === 1);
+   mounted() {
+      this.isCoach = (this.$store.state.user.role === 1);
       this.isCoach = true; //temp value
    },
 
@@ -85,8 +86,31 @@ export default defineComponent({
       viewWriterClicked() {
 
       },
-      isValidClicked() {
+      async isValidClicked() {
+         let changeArticleObject: ChangeArticleDetailModel = {
+            title: this.model.title,
+            description: this.model.description,
+            articleContent: this.model.articleContent,
+            readDuration: this.model.readDuration,
+            picUrl: this.model.picUrl,
+            writerId: this.model.writerId,
+            writerName: this.model.writerName,
+            articleCategory: this.model.articleCategory,
+            isValid: true,
+            articleDescription: this.model.articleDescription
+         }
 
+         try {
+            const result = await articleService.editArticle(changeArticleObject.writerId, changeArticleObject);
+
+            if (result.status === 200 || result.status === 201) {
+               this.model.isValid = true;
+            }
+            else {
+               alert('خطا در ارتباط با سرور');
+            }
+         }
+         catch (err) { }
       }
    },
    data: () => ({

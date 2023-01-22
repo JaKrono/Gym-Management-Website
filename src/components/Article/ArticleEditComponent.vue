@@ -187,7 +187,7 @@ export default defineComponent({
          try {
             const result = await ArticleService.addArticle(this.articleCopied);
 
-            if (result.status !== 201) {
+            if (result.status !== 201 && result.status !== 200) {
                alert('خطا در ذخیره سازی');
             }
          }
