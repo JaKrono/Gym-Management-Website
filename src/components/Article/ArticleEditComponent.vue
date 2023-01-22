@@ -100,7 +100,7 @@
                   <div class="row col-xs-12 justify-end no-wrap">
                      <q-btn @click="discardClicked" class="q-px-sm-xl col-xs-grow q-mr-xs-sm col-sm-auto"
                         color="secondary">لغو</q-btn>
-                     <q-btn @click="saveNewArticle" type="submit" class="q-px-sm-xl col-xs-grow q-ml-xs-sm col-sm-auto"
+                     <q-btn @click="addOrEditArticle" type="submit" class="q-px-sm-xl col-xs-grow q-ml-xs-sm col-sm-auto"
                         color="primary">ذخیره</q-btn>
                   </div>
                </div>
@@ -126,7 +126,7 @@ interface State {
 }
 
 export default defineComponent({
-   props: ['model'],
+   props: ['model', 'isNewArticle'],
    methods: {
       discardClicked() {
          this.$emit('discardEdit', 2)
@@ -172,23 +172,35 @@ export default defineComponent({
             this.articleCopied.articleCategory = this.articleCopied.articleCategory.substr(0, 1)
          }
       },
-      async saveNewArticle() {
+      async addOrEditArticle() {
          if (!this.validArticle()) {
             alert('لطفا فیلد عنوان و متن مقاله را وارد!');
             return;
          }
-         this.articleCopied.writerId = this.$store.state.user.userId;
-         this.articleCopied.articleDescription = "";
+
+         if (this.isNewArticle) {
+            this.articleCopied.writerId = this.$store.state.user.userId;
+            this.articleCopied.articleDescription = "";
+         }
 
          if (this.imageFile) {
             this.articleCopied.picUrl = String(await this.getBase64(this.imageFile));
          }
 
          try {
-            const result = await ArticleService.addArticle(this.articleCopied);
+            if (this.isNewArticle) {
+               const result = await ArticleService.addArticle(this.articleCopied);
 
-            if (result.status !== 201 && result.status !== 200) {
-               alert('خطا در ذخیره سازی');
+               if (result.status !== 201 && result.status !== 200) {
+                  alert('خطا در ذخیره سازی');
+               }
+            }
+            else {
+               const result = await ArticleService.editArticle(this.articleCopied.writerId, this.articleCopied);
+
+               if (result.status !== 201 && result.status !== 200) {
+                  alert('خطا در ذخیره سازی');
+               }
             }
          }
          catch (err) { }
