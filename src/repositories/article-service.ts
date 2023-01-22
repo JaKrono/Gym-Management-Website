@@ -1,4 +1,4 @@
-import type { InviteCoachModel, SearchCoachModel } from "@/common/interfaces";
+import type { ChangeArticleDetailModel } from "@/common/interfaces";
 import client from "./client/axios";
 export default {
 
@@ -8,15 +8,15 @@ export default {
         return response;
     },
 
-    editArticle(coachId: string, coachObject: SearchCoachModel) {
-        const endpoint = ``; //API Url
-        const response = client.put(endpoint, coachObject);
+    editArticle(writerId: string, articleObject: ChangeArticleDetailModel) {
+        const endpoint = `/article/article/${writerId}`;
+        const response = client.put(endpoint, articleObject);
         return response;
     },
 
-    addArticle(coachInvite: InviteCoachModel) {
-        const endpoint = ''; //API Url
-        const response = client.post(endpoint, coachInvite);
+    addArticle(newArticle: ChangeArticleDetailModel) {
+        const endpoint = `/article/article`;
+        const response = client.post(endpoint, newArticle);
         return response;
     }
 }

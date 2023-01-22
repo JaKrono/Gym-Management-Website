@@ -7,8 +7,8 @@
 
                <div class="row col-12">
                   <p class="text-weight-bold col-12 q-mt-sm" v-if="isDense">عنوان مقاله</p>
-                  <q-input class="col-12" type="text" v-model="articleCopied.title" autogrow
-                     :dense="isDense" :rules="[rules.artileTitle]">
+                  <q-input class="col-12" type="text" v-model="articleCopied.title" autogrow :dense="isDense"
+                     :rules="[rules.artileTitle]">
                      <template v-slot:before v-if="!isDense">
                         <p>عنوان مقاله</p>
                      </template>
@@ -18,8 +18,8 @@
                <div class="row col-12">
                   <p class="text-weight-bold col-12 q-mt-sm" v-if="isDense">زمان مطالعه</p>
                   <q-input type="number" min="1" max="300" suffix="دقیقه" class="col-12 col-sm-8 col-md-7 col-lg-6"
-                     hint="یک عدد بین ۱ و ۳۰۰" hide-hint v-model="articleCopied.readDuration" :rules="[rules.readDuration]"
-                     :dense="isDense">
+                     hint="یک عدد بین ۱ و ۳۰۰" hide-hint v-model="articleCopied.readDuration"
+                     :rules="[rules.readDuration]" :dense="isDense">
                      <template v-slot:before v-if="!isDense">
                         <p>زمان مطالعه</p>
                      </template>
@@ -28,8 +28,8 @@
 
                <div class="row col-12">
                   <p class="text-weight-bold col-12 q-mt-sm" v-if="isDense">توضیحات</p>
-                  <q-input type="textarea" class="col-12" autogrow v-model="articleCopied.description"
-                     :dense="isDense" :rules="[rules.artileDescription]">
+                  <q-input type="textarea" class="col-12" autogrow v-model="articleCopied.description" :dense="isDense"
+                     :rules="[rules.artileDescription]">
                      <template v-slot:before v-if="!isDense">
                         <p>توضیحات</p>
                      </template>
@@ -39,14 +39,14 @@
                <div class="row col-12">
                   <div class="row col-12 col-sm-8 col-md-7 col-lg-6 q-mt-xs-none q-mt-sm-md">
                      <p class="text-weight-bold col-12 col-sm-auto q-pt-sm q-mb-xs-sm q-mb-sm-none"
-                        style="min-width: 90px">موضوع مقاله</p>
+                        style="min-width: 90px">دسته بندی مقاله</p>
                      <q-expansion-item class="col-grow" header-class="row" dense>
                         <template v-slot:header>
                            <div class="row items-center col self-start">
                               <div class="q-mr-xs" v-for="c in selectedCategoriesList"
                                  v-if="articleCopied.articleCategory.length !== 0">
-                                 <q-badge @click.stop="removeCategoryFromSelection(c.id)" lazy-load class="q-pa-sm cursor-pointer"
-                                    rounded :color="c.color">
+                                 <q-badge @click.stop="removeCategoryFromSelection(c.id)" lazy-load
+                                    class="q-pa-sm cursor-pointer" rounded :color="c.color">
                                     <template v-slot:default>
                                        <div class="flex items-center">
                                           <q-icon name="highlight_off" class="font-size-up-5 q-mr-xs">
@@ -76,7 +76,7 @@
 
                <div class="row col-12 q-mt-xs-md q-mt-sm-lg q-pt-sm-sm items-center">
                   <p class="text-weight-bold col-12 q-mb-xs-sm q-mb-sm-none" v-if="isDense">عکس مقاله</p>
-                  <q-file filled model-value="" :dense="isDense">
+                  <q-file filled v-model="imageFile" :multiple="false" :dense="isDense">
                      <template v-slot:before v-if="!isDense">
                         <p>عکس مقاله</p>
                      </template>
@@ -100,7 +100,7 @@
                   <div class="row col-xs-12 justify-end no-wrap">
                      <q-btn @click="discardClicked" class="q-px-sm-xl col-xs-grow q-mr-xs-sm col-sm-auto"
                         color="secondary">لغو</q-btn>
-                     <q-btn type="submit" class="q-px-sm-xl col-xs-grow q-ml-xs-sm col-sm-auto"
+                     <q-btn @click="saveNewArticle" type="submit" class="q-px-sm-xl col-xs-grow q-ml-xs-sm col-sm-auto"
                         color="primary">ذخیره</q-btn>
                   </div>
                </div>
@@ -115,6 +115,16 @@ import type { CategoryModel, ChangeArticleDetailModel, ArticleDetailModel } from
 import { getCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 import PropType from 'vue';
+import { ArticleService } from "@/repositories/index";
+
+interface State {
+   CategoryList: CategoryModel[],
+   selectedCategoriesList: CategoryModel[],
+   articleCopied: ChangeArticleDetailModel,
+   imageBase64: string,
+   imageFile: null | File
+}
+
 export default defineComponent({
    props: ['model'],
    methods: {
@@ -161,6 +171,44 @@ export default defineComponent({
             this.selectedCategoriesList.pop()
             this.articleCopied.articleCategory = this.articleCopied.articleCategory.substr(0, 1)
          }
+      },
+      async saveNewArticle() {
+         if (!this.validArticle()) {
+            alert('لطفا فیلد عنوان و متن مقاله را وارد!');
+            return;
+         }
+         this.articleCopied.writerId = this.$store.state.user.userId;
+         this.articleCopied.articleDescription = "";
+
+         if (this.imageFile) {
+            this.articleCopied.picUrl = String(await this.getBase64(this.imageFile));
+         }
+
+         try {
+            const result = await ArticleService.addArticle(this.articleCopied);
+
+            if (result.status !== 201) {
+               alert('خطا در ذخیره سازی');
+            }
+         }
+         catch (err) { }
+      },
+      validArticle(): boolean {
+         return (!!this.articleCopied.title && !!this.articleCopied.articleContent);
+      },
+      async getBase64(file: File) {
+         if (!file) {
+            return new Promise((resolve, reject) => {
+               resolve('');
+            });
+         }
+         return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+               resolve(reader.result);
+            };
+         });
       }
       // !! DO NOT REMOVE !!
       // updateTextAreaHeight() {
@@ -176,30 +224,37 @@ export default defineComponent({
       //    }
       // }
    },
-   data: () => ({
-      CategoryList,
-      selectedCategoriesList: [] as CategoryModel[],
-      articleCopied: {} as ChangeArticleDetailModel,
-      // pageScrollThumbStyle: {
-      //    width: '4px',
-      //    left: '1.5px',
-      //    borderRadius: '5px',
-      //    backgroundColor: getCssVar('primary'),
-      //    opacity: 1
-      // },
-      // pageScrollBarStyle: {
-      //    width: '7px',
-      //    backgroundColor: getCssVar('primary'),
-      //    opacity: 0.4,
-      // }
-   }),
+   data(): State {
+      return {
+         CategoryList,
+         selectedCategoriesList: [] as CategoryModel[],
+         articleCopied: {} as ChangeArticleDetailModel,
+         imageBase64: '',
+         imageFile: null
+         // pageScrollThumbStyle: {
+         //    width: '4px',
+         //    left: '1.5px',
+         //    borderRadius: '5px',
+         //    backgroundColor: getCssVar('primary'),
+         //    opacity: 1
+         // },
+         // pageScrollBarStyle: {
+         //    width: '7px',
+         //    backgroundColor: getCssVar('primary'),
+         //    opacity: 0.4,
+         // }
+      };
+   },
    beforeMount() {
-      console.log(this.model)
-      this.articleCopied = {...this.model}
-      for (var index of this.articleCopied.articleCategory.split(',')) {
-         this.selectedCategoriesList.push(CategoryList[parseInt(index) - 1])
-         console.log(this.selectedCategoriesList)
-      }
+      this.articleCopied = { ...this.model }
+      let tempList = this.articleCopied.articleCategory.split(',');
+      tempList.forEach(item => {
+         let id: number = parseInt(item);
+         if (Number.isNaN(id)) return;
+
+         id -= 1;
+         this.selectedCategoriesList.push(CategoryList[id]);
+      });
    },
    computed: {
       isDense() {
