@@ -173,7 +173,7 @@ const router = createRouter({
       name: 'Q&A',
       meta: { requireAuth: true },
       components: {
-        default: () => import("@/views/Q&A/Questions.vue"),
+        default: () => import("@/views/Q_A/Questions.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     },
@@ -190,7 +190,7 @@ const router = createRouter({
       name: 'View Question',
       meta: { requireAuth: true },
       components: {
-        default: () => import("@/components/Q&A/ViewQuestionComponent.vue"),
+        default: () => import("@/components/Q_A/ViewQuestionComponent.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
     }

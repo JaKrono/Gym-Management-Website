@@ -122,8 +122,7 @@
                      <div class="row col-12 q-mt-sm justify-end">
                         <q-btn @click="discardAnswer" color="secondary"
                            class="q-px-xl col col-sm-auto q-mr-xs">لغو</q-btn>
-                        <q-btn @click="submitAnswer" type="submit" color="primary"
-                           class="q-px-xl col col-sm-auto q-ml-xs">ذخیره</q-btn>
+                        <q-btn type="submit" color="primary" class="q-px-xl col col-sm-auto q-ml-xs">ذخیره</q-btn>
                      </div>
                   </q-form>
                </div>
@@ -133,29 +132,47 @@
    </q-scroll-area>
 </template>
 <script lang="ts">
-import { date } from 'quasar';
+import type { NewAnswerModel } from '@/common/interfaces';
 import { defineComponent } from 'vue';
+import { mapActions, mapState } from 'vuex';
 export default defineComponent({
    data: () => ({
       datesad: '1 شسی 23',
       newAnswerContent: ''
    }),
    methods: {
+      ...mapActions({
+         submitAnswerAM: 'q_a/submitAnswer'
+      }),
       viewWriterClicked(userId: number) {
 
       },
       writeNewQuestionClicked() {
-         console.log((this.$refs['newAnswerBox'] as any).getBoundingClientRect())
-            ; (this.$refs['newAnswerBox'] as any).scrollIntoView({ behavior: 'smooth' })
+         ; (this.$refs['newAnswerBox'] as any).scrollIntoView({ behavior: 'smooth' })
       },
-      submitAnswer() {
+      async submitAnswer() {
+         const newAnswer = {} as NewAnswerModel
+         newAnswer.content = this.newAnswerContent
+         newAnswer.writerId = this.userId
+         ////////////
+         newAnswer.questionId = 'asd'
 
+         console.log(newAnswer)
+         const response = await this.submitAnswerAM(newAnswer)
+         if (response) {
+            window.location.reload()
+         }
       },
       discardAnswer() {
          this.newAnswerContent = ''
             ; (this.$refs['newAnswerForm'] as any).resetValidation()
       }
-   }
+   },
+   computed: {
+      ...mapState({
+         userId: (state: any) => state.user.userId,
+      }),
+   },
 })
 </script>
 <style lang="scss" scoped>

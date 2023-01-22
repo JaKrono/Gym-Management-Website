@@ -39,12 +39,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import type { GymModel } from '@/common/interfaces';
 export default defineComponent({
    data: () => ({
    }),
    props: {
-      model: Object as PropType<GymModel>,
+      model: Object as PropType<{
+         id: number,
+         picUrl: string,
+         adress: string,
+         phone: string,
+         name: string,
+      }>,
       address: Boolean,
       phoneNumber: Boolean
    },

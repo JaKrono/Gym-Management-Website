@@ -8,7 +8,7 @@ export default {
       clubs: [],
    }),
    mutations: {
-      setClubs(state, clubs) {
+      setClubs(state: any, clubs: any) {
          state.clubs = clubs
       },
       setCustomerId(state: any, customerId: number) {
@@ -62,6 +62,16 @@ export default {
          //    console.log(response.data.detail)
          //    return false;
          // }
+      },
+
+      async getGymsOfCustomer({ dispatch }: any, userId: string) {
+         const response = await Customer.getGymsOfCustomer(userId)
+         if (response && response.status === 200) {
+            return response.data
+         } else {
+            dispatch('notification/showNotification', { message: response?.data.detail || "خطا در گرفتن باشگاه‌های ثبت‌نام شده", type: 'negative', timeout: 2000 }, { root: true })
+            return false
+         }
       }
 
    }

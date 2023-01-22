@@ -23,5 +23,11 @@ export default {
       const endpoint = '/api/gym/search-gym-name?name='.concat(gymName)
       const response = client.get(endpoint)
       return response
+   },
+
+   getGymsOfCustomer(userId: string) {
+      const endpoint = `/gym/gyms-of-customer/${userId}`
+      const response = client.get(endpoint)
+      return response
    }
 }
