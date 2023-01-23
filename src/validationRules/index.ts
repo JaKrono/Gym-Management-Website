@@ -59,5 +59,12 @@ export default {
         } else {
             return true
         }
-    }
+    },
+    qaTitleSearch: (content: string) => {
+        if (!content || content.length < 3) {
+            return 'لطفا حداقل ۳ کاراکتر بنویسید.'
+        } else {
+            return true
+        }
+    },
 } 

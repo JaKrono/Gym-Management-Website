@@ -32,9 +32,9 @@
                   </div> -->
                   <div class="row col-12" :style="[$q.screen.lt.md ? { order: 2 } : { order: 1 }]">
                      <div class="col-12">
-                        <div class="row bg-grey-2 rounded-borders">
-                           <q-input class="col-grow q-ma-sm" v-model="searchText" @focus="serachBarFocused" dense
-                              clearable outlined
+                        <q-form ref="searchForm" @submit.prevent="applySearch" class="row bg-grey-2 rounded-borders">
+                           <q-input hide-bottom-space class="col-grow q-ma-sm" v-model="searchText"
+                              @focus="serachBarFocused" dense clearable outlined
                               :placeholder="searching ? 'متن پرسش را وارد کنید...' : 'جستجو در همه پرسش‌ها...'">
                               <template v-slot:prepend>
                                  <q-icon name="search" />
@@ -51,11 +51,11 @@
                                  <q-separator />
                                  <div class="row col-12 justify-between q-py-sm">
                                     <q-btn @click="discardSearch" color="primary" flat>لغو</q-btn>
-                                    <q-btn @click="applySearch" color="primary">اعمال</q-btn>
+                                    <q-btn type="submit" color="primary">اعمال</q-btn>
                                  </div>
                               </div>
                            </Transition>
-                        </div>
+                        </q-form>
                         <div>
                            <q-inner-loading :showing="!hasLoaded" color="primary" />
                            <q-list v-if="hasLoaded && questions.length > 0" class="q-mt-sm" separator>
@@ -89,6 +89,7 @@ export default defineComponent({
       hasLoaded: false,
       searching: false,
       searchText: '',
+      recentQuery: { name: '', category: '' },
       selectedCategory: '',
       categoryOptions: [{}],
       questions: [{}] as [{
@@ -126,18 +127,33 @@ export default defineComponent({
          this.searchText = ''
          this.selectedCategory = ''
          this.searching = false
+            ; (this.$refs['searchForm'] as any).resetValidation()
       },
       async applySearch() {
-         this.hasLoaded = false
-         this.questions = await this.searchQuestionsAM({ name: this.searchText, category: this.selectedCategory.value })
-         if (this.questions) {
-            console.log(this.questions)
-            for (const q of this.questions) {
-               q.questionDetail.writerDetail = await this.getWriterDetailAM(q.questionDetail.writerId)
-               q.questionDetail.categoryLabel = CategoryList[Number(q.questionDetail.category) - 1].title
-            }
-         }
          this.hasLoaded = true
+         let newSearchText = this.searchText
+         if (!this.searchText || this.searchText === '') {
+            newSearchText = ' '
+         }
+         let newCategoryText = ''
+         if (!this.selectedCategory || !this.selectedCategory.value) {
+            newCategoryText = '-1'
+         } else {
+            newCategoryText = this.selectedCategory.value
+         }
+         console.log(newCategoryText, newSearchText)
+         if (!(this.recentQuery.name === newSearchText && this.recentQuery.category === newCategoryText)) {
+            this.recentQuery = { name: newSearchText, category: newCategoryText }
+            this.questions = await this.searchQuestionsAM({ name: newSearchText, category: newCategoryText })
+            if (this.questions) {
+               // console.log(this.questions)
+               for (const q of this.questions) {
+                  q.questionDetail.writerDetail = await this.getWriterDetailAM(q.questionDetail.writerId)
+                  q.questionDetail.categoryLabel = CategoryList[Number(q.questionDetail.category) - 1].title
+               }
+            }
+            this.hasLoaded = true
+         }
       },
       viewMyQuestionsClicked() {
          this.$emit('manageClicked', 2)
@@ -147,14 +163,14 @@ export default defineComponent({
       },
       async refreshPage() {
          this.hasLoaded = false
-         this.questions = await this.searchQuestionsAM({ name: ' ', category: ' ' })
+         this.recentQuery = { name: ' ', category: '-1' }
+         this.questions = await this.searchQuestionsAM({ name: ' ', category: '-1' })
          if (this.questions) {
             for (const q of this.questions) {
                q.questionDetail.writerDetail = await this.getWriterDetailAM(q.questionDetail.writerId)
                q.questionDetail.categoryLabel = CategoryList[Number(q.questionDetail.category) - 1].title
             }
          }
-         // console.log(this.questions)
          this.hasLoaded = true
       }
    },

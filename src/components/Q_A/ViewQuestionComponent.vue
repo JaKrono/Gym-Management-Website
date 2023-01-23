@@ -60,7 +60,7 @@
                               </div>
                               <div class="col-12 q-mt-sm">
                                  <p class="col-shrink">در تاریخ <span class="text-weight-bold">{{
-                                    questionDetail.questionDetail.date
+                                    questionDetail.questionDetail.date.substring(0, 10)
                                  }}</span>
                                  </p>
                               </div>
@@ -131,7 +131,7 @@
                                  </div>
                                  <div class="col-12 q-mt-sm">
                                     <p class="col-shrink">در تاریخ <span class="text-weight-bold">{{
-                                       answer.answerDetail.date
+                                       answer.answerDetail.date.substring(0, 10)
                                     }}</span>
                                     </p>
                                  </div>

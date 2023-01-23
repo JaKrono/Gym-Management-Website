@@ -7,7 +7,7 @@
          <div class="col-12 flex justify-between q-pt-md">
             <div class="flex">
                <q-icon name="calendar_month" size="1.4em"></q-icon>
-               <p class="q-ml-xs">{{ model?.AnswerDetail.date }}</p>
+               <p class="q-ml-xs">{{ model?.AnswerDetail.date.substring(0, 10) }}</p>
             </div>
             <div class="flex">
                <q-tooltip anchor="bottom right" :hide-delay="$q.screen.lt.md ? 1500 : 0">امتیاز این پاسخ از نظر

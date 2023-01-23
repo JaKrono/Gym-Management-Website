@@ -6,7 +6,7 @@
          <div class="col-12 flex justify-between q-pt-md text-secondary">
             <div class="flex">
                <q-icon name="calendar_month" size="1.4em"></q-icon>
-               <p class="q-ml-xs">{{ model?.questionDetail?.date }}</p>
+               <p class="q-ml-xs">{{ model?.questionDetail?.date.substring(0, 10) }}</p>
             </div>
             <p><span class="q-mr-xs">{{ model?.answercount }}</span>پاسخ</p>
          </div>
@@ -39,7 +39,7 @@
          <div class="flex justify-between items-center q-pt-sm">
             <div class="flex">
                <q-icon name="calendar_month" size="1.4em"></q-icon>
-               <p class="q-ml-xs">{{ model?.questionDetail?.date }}</p>
+               <p class="q-ml-xs">{{ model?.questionDetail?.date.substring(0, 10) }}</p>
             </div>
             <p class="bg-blue-grey-1 q-pa-xs rounded-borders">{{ model?.questionDetail?.categoryLabel }}</p>
          </div>
