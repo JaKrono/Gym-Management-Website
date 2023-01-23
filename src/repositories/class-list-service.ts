@@ -18,5 +18,11 @@ export default {
         const endpoint = '/gym/get-post-course';
         const response = client.post(endpoint, classObject);
         return response;
+    },
+
+    getAllCourses(){
+        const endpoint = '/gym/get-post-course';
+        const response = client.get(endpoint);
+        return response;
     }
 }
