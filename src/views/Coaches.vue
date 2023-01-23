@@ -1,6 +1,5 @@
 <template>
     <q-page>
-
         <div class="row content-center q-px-lg" style="align-items:center">
 
             <h5 class="">مربی ها</h5>
@@ -8,11 +7,15 @@
             <q-btn @click="navigateToCoachSearch" color="primary" icon="add" style="height:40px">افزودن مربی</q-btn>
         </div>
         <template v-if="(coaches.length > 0 && !loading)">
-            <div class="row justify-start q-pa-lg" :class="{ 'justify-center': $q.screen.xs }">
-                <div v-for="coach in coaches" class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
-                    <CoachComponent2 :coachObject="coach" :isInAddState="false"></CoachComponent2>
+            <q-scroll-area style="height:90%; width:100%;">
+                <div class="row justify-start q-pa-lg" :class="{ 'justify-center': $q.screen.xs }">
+
+                    <div v-for="coach in coaches" class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
+                        <CoachComponent2 :coachObject="coach" :isInAddState="false"></CoachComponent2>
+                    </div>
+
                 </div>
-            </div>
+            </q-scroll-area>
         </template>
         <template v-else-if="(coaches.length == 0 && !loading)">
             <div class="row q-mt-lg justify-center">

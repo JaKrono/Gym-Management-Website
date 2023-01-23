@@ -16,7 +16,8 @@
                     alt="edit-icon" @click="openEditModal()">
             </div>
             <div class="avatar-detail-field">
-                <RankingCoachComponent style="margin-left: 15px;" :rankNumber="profileDto.rank_number"></RankingCoachComponent>
+                <RankingCoachComponent style="margin-left: 15px;" :rankNumber="profileDto.rank_number">
+                </RankingCoachComponent>
                 <div class="avatar-detail">
                     <div class="font-size-up-5 avatar-name">
                         {{ profileDto.user.first_name + ' ' + profileDto.user.last_name }}
@@ -62,7 +63,7 @@
                     @click="inviteModalShow = false">
             </div>
             <div class="modal-container">
-                <textarea v-model="inviteObject.describtion" class="text-field" cols="30" rows="10"></textarea>
+                <textarea v-model="inviteObject.description" class="text-field" cols="30" rows="10"></textarea>
                 <div class="button-field">
                     <q-btn @click="sendInviteCoach()" color="primary">ارسال دعوتنامه</q-btn>
                 </div>
@@ -207,9 +208,9 @@ export default defineComponent({
             this.inviteModalShow = true;
 
             this.inviteObject = {
-                coach: this.profileDto.user_id,
+                coach: this.profileDto.id,
                 gym: this.gymId,
-                describtion: ''
+                description: ''
             }
         },
         async editProfile() {

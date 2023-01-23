@@ -29,7 +29,12 @@ export default{
         async getCoachesData({commit},gymId:number){
             const response = await Gym.getCoaches(gymId)
             if(response.status === 200){
-                commit('setCoaches', response.data)
+                const list = []
+                response.data.forEach(item => {
+                    let model = {id:item.user_id,user:{id:item.user_id,picUrl:item.picUrl, first_name:item.name, last_name:''}};
+                    list.push(model)
+                });
+                commit('setCoaches', list)
                 return true
             }
             else{

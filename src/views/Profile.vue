@@ -27,8 +27,7 @@
                             :rules="[rules.required]"></q-input>
                     </div>
                     <div class="col-12 col-xl-12 q-px-md q-mt-lg text-center">
-                        <q-btn type="submit" icon="add" outline color="primary"
-                            :label="hasGym ? 'ثبت تغییرات' : 'افزودن باشگاه'"></q-btn>
+                        <q-btn type="submit" color="primary" :label="hasGym ? 'ثبت تغییرات' : 'افزودن باشگاه'"></q-btn>
                     </div>
                 </div>
             </q-form>

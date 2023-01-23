@@ -20,7 +20,7 @@ export default{
     },
 
     getCoaches(gymId:number){
-        const endpoint = `gym/coaches/${gymId}/`
+        const endpoint = `gym/coaches-of-gym/${gymId}`
         const response = client.get(endpoint)
         return response
     },

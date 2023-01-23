@@ -6,12 +6,12 @@
             </div>
 
         </div>
-        <transition mode="out-in" :duration="{ enter: 500, leave: 0 }" appear enter-active-class="animated fadeIn">
+        <transition :duration="{ enter: 500, leave: 0 }" appear enter-active-class="animated fadeIn">
             <div v-if="coaches.length > 0" class="row justify-center q-pa-md flex-gap">
                 <TransitionGroup :duration="{ enter: 1000, leave: 0 }" enter-active-class="animated fadeIn"
                     leaveFromClass="leave-from">
                     <div v-for="coach in coaches" class="col-lg-3 col-md-6 col-sm-6 col-12" :key="coach.id">
-                        <CoachComponent2 :coachObject="coach"></CoachComponent2>
+                        <CoachComponent2 :isInAddState="true" :coachObject="coach"></CoachComponent2>
                     </div>
                 </TransitionGroup>
                 <!-- <div class="col-lg-3">
