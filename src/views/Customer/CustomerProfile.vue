@@ -189,6 +189,7 @@ export default defineComponent({
             this.hasLoaded = false
             this.profileDetail = await this.getProfileAM(this.userId)
             this.copiedProfileDetail = JSON.parse(JSON.stringify(this.profileDetail))
+            this.$store.state.user.picUrl = this.profileDetail.user.picUrl
             this.editing = !this.editing
             this.hasLoaded = true
          }
@@ -205,7 +206,7 @@ export default defineComponent({
          user: (state: any) => state.user
       }),
       hasImage() {
-         return this.copiedProfileDetail.user.picUrl.length !== 0
+         return this.copiedProfileDetail.user.picUrl && this.copiedProfileDetail.user.picUrl.length !== 0
       }
    }
 })

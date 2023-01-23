@@ -33,7 +33,7 @@ export default {
     ssn: (ssn: string) => {
         return ssnRegex.test(ssn) || 'کد ملی وارد شده صحیح نیست.'
     },
-    ////////// Customer Profile //////////
+    ////////// Customer Panel //////////
     name: (content: string) => {
         // if (content.length > 100) {
         // return 'نام وارد شده بیشتر از ۱۰۰ حرف است.'
@@ -45,6 +45,13 @@ export default {
         }
         // }
     },
+    gymNameSearch: (content: string) => {
+        if (!content || content.length < 3) {
+            return 'لطفا حداقل ۳ کاراکتر بنویسید.'
+        } else {
+            return true
+        }
+    },
     ////////// Q&A //////////
     qaTitle: (content: string) => {
         if (!content || content.length < 10) {
@@ -55,7 +62,7 @@ export default {
     },
     qaContent: (content: string) => {
         if (!content || content.length < 10) {
-            return 'لطفا حداقل ۱۰ کاراکتر بنویسید. '
+            return 'لطفا حداقل ۱۰ کاراکتر بنویسید.'
         } else {
             return true
         }

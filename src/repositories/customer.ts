@@ -20,8 +20,8 @@ export default {
       return response
    },
 
-   getGymDetailByName(gymName: string) {
-      const endpoint = '/api/gym/search-gym-name?name='.concat(gymName)
+   searchGym(query: { name: string, address: string, category: string }) {
+      const endpoint = '/api/gym/search-gym-name?name='.concat(query)
       const response = client.get(endpoint)
       return response
    },
