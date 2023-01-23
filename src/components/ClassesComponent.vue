@@ -1,74 +1,91 @@
 <template>
-    <div dir="ltr" class="page">
-        <div class="toolbar">
-            <q-btn @click="openAddClassModal()" color="primary">افزودن کلاس</q-btn>
+    <q-page>
+        <div class="row content-center q-px-lg" style="align-items:center">
+            <h5 class="">کلاس ها</h5>
+            <q-space></q-space>
+            <q-btn @click="openAddClassModal" color="primary" icon="add" style="height:40px">افزودن کلاس</q-btn>
         </div>
-        <div class="class-list">
-            <template v-for="classItem in classList">
-                <ClassComponent :classObject="classItem"></ClassComponent>
-            </template>
-        </div>
-    </div>
+        <template v-if="(classList.length > 0 && !loading)">
+            <q-scroll-area style="height:90%;">
 
-    <div v-if="addClassModalShow" class="modal-shadow">
-        <div class="modal-content">
-            <div class="modal-header">
-                <img class="close-icon" src="src/assets/images/close-icon.svg" alt="close-icon"
-                    @click="addClassModalShow = false">
-            </div>
-            <div class="modal-container">
-                <div class="add-class-form">
-                    <div class="form-item">
-                        <label class="main-font">نام کلاس:</label>
-                        <input v-model="newClassObject.name" class="form-input" type="text">
-                    </div>
-                    <!-- <div class="form-item">
-                        <label class="main-font">نام مربی:</label>
-                        <input v-model="newClassObject.coachname" class="form-input" type="text">
-                    </div> -->
-                    <div class="form-item">
-                        <label class="main-font">ساعت کلاس:</label>
-                        <input v-model="newClassObject.time" class="form-input" type="text">
-                    </div>
-                    <div class="form-item">
-                        <div v-for="cat in categoryListModel" class="category-lable"
-                            :style="{ backgroundColor: cat.color }"
-                            :class="{ 'active-category': selectedCategory.id == cat.id }" @click="selectCategory(cat)">
-                            {{ cat.title }}
-                        </div>
-                    </div>
-                    <div class="form-button-field">
-                        <q-btn @click="addClass()" color="primary">افزودن کلاس</q-btn>
+                <div class="row justify-start q-pa-lg" :class="{ 'justify-center': $q.screen.xs }">
+                    <div v-for="cls in classList" class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
+                        <CoachComponent1 :model="cls"></CoachComponent1>
                     </div>
                 </div>
+            </q-scroll-area>
+        </template>
+        <template v-else-if="(classList.length == 0 && !loading)">
+            <div class="row q-mt-lg justify-center">
+                <div class="col-12 text-center">
+                    <img class="not-found-image" src="noItemFound.png" />
+                    <p class="font-size-up-5">کلاسی ایجاد نشده است.</p>
+                </div>
             </div>
-        </div>
-    </div>
+
+        </template>
+        <q-inner-loading :showing="loading" color="primary" />
+        <q-dialog v-model="addClassModalShow">
+            <q-card style="width:70%;">
+                <q-card-section>
+                    <div class="text-h6">افزودن کلاس</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    <q-input class="q-my-md" label="نام" v-model="newClassObject.name"></q-input>
+                    <q-select class="q-my-md" :options="coaches" option-label="name" option-value="name" label="مربی"
+                        v-model="newClassObject.coachname" map-options emit-value></q-select>
+                    <q-input class="q-my-md" label="زمان" v-model="newClassObject.time"></q-input>
+                    <q-select class="q-my-md" :options="categories" label="دسته بندی ها"
+                        v-model="newClassObject.CourseCategory" option-label="title" option-value="id" map-options
+                        emit-value></q-select>
+                </q-card-section>
+
+                <q-card-actions class="q-px-md" align="right">
+                    <q-btn label="تایید" color="primary" @click="addClass" v-close-popup />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
+    </q-page>
+
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ClassComponent from './ClassComponent.vue';
 import type { CategoryModel, ClassModel, NewClassModel } from '@/common/interfaces';
-import { mapActions } from 'vuex';
-import { ClassListService } from "@/repositories/index";
+import { mapActions, mapState } from 'vuex';
+import { ClassListService, Gym } from "@/repositories/index";
 import { BaseComponent } from '@/common/base-component';
 import { CategoryList } from '@/common/category-list';
-
+import { categories } from '@/common/enums';
+import CoachComponent1 from './CoachComponent1.vue';
 export default defineComponent({
     components: {
-        ClassComponent
+        ClassComponent,
+        CoachComponent1
     },
     data: () => ({
-        gymId: '1',//temp
+        search: '',
+        loading: true,
         addClassModalShow: false,
         classList: [] as ClassModel[],
         newClassObject: {} as NewClassModel,
         baseComponent: new BaseComponent(),
         categoryListModel: CategoryList,
-        selectedCategory: {} as CategoryModel
+        selectedCategory: {} as CategoryModel,
+        categories: [],
+        coaches: []
     }),
+    computed: {
+        ...mapState({
+            gymId: state => state.user.gym.id
+        })
+    },
     async mounted() {
+        await this.getCoaches();
         await this.getClassList();
+        this.loading = false;
+        this.categories = CategoryList as any;
     },
     methods: {
         ...mapActions({
@@ -95,11 +112,12 @@ export default defineComponent({
                 gym: this.gymId,
                 name: '',
                 time: '',
-                categoryTypes: ''
+                CourseCategory: '',
+                coachname: ''
             }
         },
         async addClass() {
-            this.newClassObject.categoryTypes = String(this.selectedCategory.id);
+            // this.newClassObject.categoryTypes = this.selectedCategory.id);
 
             try {
                 // await this.addClassAsync(this.newClassObject);
@@ -114,207 +132,14 @@ export default defineComponent({
         },
         selectCategory(selectedCategory: CategoryModel) {
             this.selectedCategory = selectedCategory;
+        },
+        async getCoaches() {
+            const response = await Gym.getCoaches(this.gymId);
+            this.coaches = response.data;
         }
     }
 })
 </script>
-<style lang="scss">
-.centerlize-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: flex-start;
-}
+<style scoped lang="scss">
 
-.page {
-    @extend .centerlize-item;
-    flex-flow: row wrap;
-    width: 100%;
-    height: 100%;
-    background-color: $background;
-}
-
-@keyframes fadeIn {
-    0% {
-        background: rgba(0, 0, 0, 0);
-    }
-
-    100% {
-        background: rgba(0, 0, 0, 0.6);
-    }
-}
-
-@keyframes blowUpModal {
-    0% {
-        transform: scale(0);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-.modal-shadow {
-    width: 100vw;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba($color: #000000, $alpha: 0.6);
-    overflow-y: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-}
-
-.modal-content {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    min-width: 320px;
-    max-width: 427px;
-    background-color: #ffffff;
-    padding: 19px 19px 25px 21px;
-    border-radius: 12px;
-    font-weight: 500;
-    font-size: 14px;
-    position: absolute;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-
-    .modal-header {
-        display: flex;
-        flex-flow: row nowrap;
-        width: 100%;
-        height: 20px;
-        justify-content: left;
-        margin-bottom: 15px;
-    }
-
-    .close-icon {
-        width: 20px;
-        height: 20px;
-        box-sizing: border-box;
-        cursor: pointer;
-    }
-
-    .modal-container {
-        width: 100%;
-        display: flex;
-        flex-flow: row wrap;
-        align-content: flex-start;
-    }
-
-    .button-field {
-        width: 100%;
-        display: flex;
-        justify-content: left;
-
-        .modal-button {
-            @extend .centerlize-item;
-            width: 120px;
-            height: 40px;
-            border-radius: 5px;
-            color: #ffffff;
-            background-color: #1e90ff;
-            font-size: 16px;
-            font-weight: 500;
-            padding: 10px;
-            cursor: pointer;
-
-            &:hover {
-                background-color: darken(#1e90ff, 10%);
-            }
-        }
-    }
-}
-
-.toolbar {
-    width: 100%;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    padding: 0 40px 0 0;
-}
-
-.class-list {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: left;
-    align-items: flex-start;
-    align-content: flex-start;
-    gap: 20px;
-    padding: 20px 60px;
-}
-
-.add-class-form {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    gap: 20px;
-
-    .form-item {
-        width: 100%;
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        justify-content: left;
-        gap: 5px;
-    }
-
-    .form-input {
-        width: 100%;
-        height: 40px;
-        text-align: left;
-        font-size: 18px;
-        border: 2px solid $background;
-    }
-
-    label {
-        min-width: 100px;
-        text-align: left;
-    }
-
-    .form-button-field {
-        width: 100%;
-        display: flex;
-        justify-content: right;
-        align-items: center;
-    }
-}
-
-.category-lable {
-    width: 120px;
-    height: 40px;
-    border-radius: 10px;
-    padding: 5px 15px;
-}
-
-.active-category {
-    background-color: darken(#000000, 30%);
-}
-
-@media all and (max-width: 599.99px) {
-    .class-list {
-        justify-content: center !important;
-        padding: 20px;
-    }
-}
 </style>

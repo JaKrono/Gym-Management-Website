@@ -69,7 +69,8 @@ export interface NewClassModel {
     gym: string,
     name: string,
     time: string,
-    categoryTypes: string
+    CourseCategory:string,
+    coachname:string
 }
 export interface GymModel {
     id: number,

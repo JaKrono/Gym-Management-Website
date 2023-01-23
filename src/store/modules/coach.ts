@@ -45,6 +45,11 @@ export default {
                 return false
             }
         },
+
+        setCoachId({commit}, coachId){
+            commit('setCoachId', coachId) 
+        },
+
         async getGymInformation({ dispatch }: any, gymId: number) {
             const response = await Coach.getGymInformation(gymId)
             if (response.status === 200) {

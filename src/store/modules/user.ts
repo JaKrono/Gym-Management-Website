@@ -62,7 +62,9 @@ export default {
                 if (state.role == 2) { // customer
                     dispatch('getUser')
                 } else if (state.role == 1) { // coach
-                    dispatch('getUser')
+                    await dispatch('getUser')
+
+
                 } else if (state.role == 0) { // owner
                     dispatch('owner/getOwnerId', null, {root: true})
                 }
@@ -181,10 +183,13 @@ export default {
             commit('setCustomers',response.data)
         },
 
-        async getUser({state, commit}, userId:number){
+        async getUser({state, commit,dispatch}, userId:number){
             const response = await authentication.getUser(state.userId);
             if(response.status === 200){
                 commit('setUser', response.data)
+                if(state.role === '1'){
+                    dispatch('coach/setCoachId',state.role_id, {root:true})
+                }
             }
         }
     },
