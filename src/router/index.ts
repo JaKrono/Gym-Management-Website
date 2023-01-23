@@ -226,7 +226,16 @@ const router = createRouter({
         default: () => import("@/components/Q_A/ViewQuestionComponent.vue"),
         RightSidebar: () => import("@/components/Sidebar.vue")
       }
-    }
+    },
+    {
+      path: '/',
+      name: 'Landing Page',
+      components: {
+        default: () => import("@/views/LandingPage.vue"),
+        // RightSidebar: () => import("@/components/Sidebar.vue")
+      }
+    },
+
 
     // {
     //   path: '/about',

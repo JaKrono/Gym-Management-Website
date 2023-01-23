@@ -45,7 +45,7 @@ export default defineComponent({
             }
         },
         navigateToLandingPage() {
-            this.$
+            this.$router.push('/')
         }
     },
     mounted() {

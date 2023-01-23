@@ -87,7 +87,7 @@ export default defineComponent({
             userLogout: 'user/logout'
         }),
         navigateToLandingPage() {
-
+            this.$router.push('/')
         },
         selectItemFromRoute() {
             const path = this.$route.path
@@ -118,7 +118,7 @@ export default defineComponent({
         },
         logout() {
             this.userLogout();
-            this.$router.push('/login')
+            this.$router.push('/')
         },
         setItems() {
             if (this.role === "0") {
