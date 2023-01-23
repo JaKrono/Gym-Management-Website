@@ -56,7 +56,7 @@ const router = createRouter({
       name:'CustomerDashboard',
       meta:{requireAuth:true},
       components: {
-            default: () => import('@/views/Customer/CustomerHome.vue'),
+            default: () => import('@/views/Customer/CustomerProfile.vue'),
             RightSidebar: () => import("@/components/Sidebar.vue")
           }
     },
@@ -66,29 +66,55 @@ const router = createRouter({
       name:'CoachDashboard',
       meta:{requireAuth:true},
       components: {
-            default: () => import('@/views/Coach/CoachHome.vue'),
+            default: () => import('@/views/Coach/CoachProfile.vue'),
             RightSidebar: () => import("@/components/Sidebar.vue")
           }
     },
 
-
     {
-      path: '/profile',
+      path:'/customer/profile',
+      name:'CustomerProfile',
+      meta:{requireAuth:true},
+      components: {
+            default: () => import('@/views/Customer/CustomerProfile.vue'),
+            RightSidebar: () => import("@/components/Sidebar.vue")
+          }
+    },
+    {
+      path:'/coach/profile',
+      name:'CoachProfile',
+      meta:{requireAuth:true},
+      components: {
+            default: () => import('@/views/Coach/CoachProfile.vue'),
+            RightSidebar: () => import("@/components/Sidebar.vue")
+          }
+    },
+    {
+      path: '/owner/profile',
       name: 'profile',
       meta: { requireAuth: true },
       components: {
         default: () => {
-          if (store.state.user.role == '2') {
-            return import('@/views/Customer/CustomerProfile.vue')
-          } else if (store.state.user.role == '1') {
-            return import('@/views/Coach/CoachProfile.vue')
-          } else if (store.state.user.role == '0') {
-            return import('@/views/CGymProfile.vue')
-          }
+            import('@/views/Coach/CoachProfile.vue')
         },
         RightSidebar: () => import('@/components/Sidebar.vue')
       }
     },
+    // {
+    //   path: '/profile',
+    //   name: 'profile',
+    //   meta: { requireAuth: true },
+    //   components: {
+    //     default: () => {
+    //       if (store.state.user.role == '1') {
+    //         return import('@/views/Coach/CoachProfile.vue')
+    //       } else if (store.state.user.role == '0') {
+    //         return import('@/views/CGymProfile.vue')
+    //       }
+    //     },
+    //     RightSidebar: () => import('@/components/Sidebar.vue')
+    //   }
+    // },
 
     {
       path: '/gyms',

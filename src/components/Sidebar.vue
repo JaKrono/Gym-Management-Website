@@ -126,7 +126,7 @@ export default defineComponent({
                     { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/owner/dashboard', disable: false },
                     { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id },
                     { id: 7, title: 'کلاس ها', icon: 'home', path: '/club-classes', disable: !this.gym.id },
-                    { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id },
+                    // { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id },
                     { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id },
                     { id: 5, title: 'مقالات', icon: 'article', path: '/articles', disable: !this.gym.id },
                     { id: 6, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: !this.gym.id }
@@ -134,8 +134,8 @@ export default defineComponent({
             }
             if (this.role === '1') {
                 this.items = [
-                    { id: 1, title: 'خانه', icon: 'dashboard', path: '/coach/dashboard', disable: false },
-                    { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false },
+                    // { id: 1, title: 'خانه', icon: 'dashboard', path: '/coach/dashboard', disable: false },
+                    { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/coach/profile', disable: false },
                     { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms', disable: false },
                     { id: 4, title: 'کلاس‌ها', icon: 'signpost', path: '/classes', disable: false },
                     { id: 5, title: 'ورزشکارها', icon: 'people', path: '/customers', disable: false },
@@ -145,8 +145,8 @@ export default defineComponent({
             }
             if (this.role === '2') {
                 this.items = [
-                    { id: 1, title: 'خانه', icon: 'home', path: '/customer/dashboard', disable: false },
-                    { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/profile', disable: false },
+                    // { id: 1, title: 'خانه', icon: 'home', path: '/customer/dashboard', disable: false },
+                    { id: 2, title: 'پروفایل', icon: 'account_circle', path: '/customer/profile', disable: false },
                     { id: 3, title: 'باشگاه‌ها', icon: 'fitness_center', path: '/gyms', disable: false },
                     { id: 4, title: 'مقالات', icon: 'article', path: '/articles', disable: false },
                     { id: 5, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
