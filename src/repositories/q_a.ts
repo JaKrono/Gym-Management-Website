@@ -35,6 +35,24 @@ export default {
       const endpoint = '/api/q_a/post-answer-score/'
       const response = client.post(endpoint, obj)
       return response
+   },
+
+   getUserAnswers(userId: number) {
+      const endpoint = `/api/q_a/get-user-answers/${userId}/`
+      const response = client.get(endpoint)
+      return response
+   },
+
+   getUserQuestions(userId: number) {
+      const endpoint = `/api/q_a/get-user-questions/${userId}/`
+      const response = client.get(endpoint)
+      return response
+   },
+
+   getQuestionsByTitleAndCategory(query: { name: string, category: string }) {
+      const endpoint = `/api/q_a/search-questions/${query.category}-${query.name}/`
+      const response = client.get(endpoint)
+      return response
    }
 
 }

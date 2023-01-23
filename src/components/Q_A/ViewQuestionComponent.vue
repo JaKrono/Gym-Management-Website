@@ -1,5 +1,4 @@
 <template>
-   <!-- <h3>Here it is: {{ $route.params.id }}</h3> -->
    <q-scroll-area>
       <q-page>
          <!-- <h3>Here it is: {{ $route.params.id }}</h3> -->
@@ -53,9 +52,9 @@
                               </q-img>
                            </div>
                            <div class="q-ml-sm">
-                              <div class="col-12">
+                              <div class="row col-12">
                                  <p @click="viewWriterClicked(questionDetail.questionDetail.writerId)"
-                                    class="col-shrink cursor-pointer text-primary">{{
+                                    class="cursor-pointer text-primary">{{
                                        questionDetail.questionDetail.writerDetail.username
                                     }}</p>
                               </div>
@@ -124,7 +123,7 @@
                                  </q-img>
                               </div>
                               <div class="q-ml-sm">
-                                 <div class="col-12">
+                                 <div class="row col-12">
                                     <p @click="viewWriterClicked(answer.answerDetail.writerId)"
                                        class="col-shrink cursor-pointer text-primary">{{
                                           answer.answerDetail.writerDetail.username
@@ -163,8 +162,6 @@
 <script lang="ts">
 import { CategoryList } from '@/common/category-list';
 import type { NewAnswerModel } from '@/common/interfaces';
-import { objectToString } from '@vue/shared';
-import { TouchSwipe } from 'quasar';
 import { defineComponent } from 'vue';
 import { mapActions, mapState } from 'vuex';
 export default defineComponent({
@@ -202,7 +199,7 @@ export default defineComponent({
                writerId: number,
                writerDetail: {
                   email: string,
-                  userName: 'asdasd',
+                  username: string,
                   picUrl: string,
                   role_id: string,
                },
@@ -220,7 +217,7 @@ export default defineComponent({
          updateQuestionScoreAM: 'q_a/updateQuestionScore',
          updateAnswerScoreAM: 'q_a/updateAnswerScore',
       }),
-      viewWriterClicked(userId: number) {
+      viewWriterClicked(writerId: number) {
 
       },
       async updateQuestionScore(score: number, questionId: number) {
@@ -260,7 +257,8 @@ export default defineComponent({
       },
       async refreshComponent() {
          this.hasLoaded = false
-         this.questionId = this.$route.params.id[0]
+         this.newAnswerContent = ''
+         this.questionId = String(this.$route.params.id)
          this.questionDetail = await this.getQuestionDetailAM({ userId: this.userId, questionId: this.questionId })
          if (this.questionDetail) {
             this.questionDetail.questionDetail.categoryLabel = CategoryList[Number(this.questionDetail.questionDetail.category) - 1].title
