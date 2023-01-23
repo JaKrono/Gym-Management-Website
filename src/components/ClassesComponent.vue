@@ -10,7 +10,7 @@
 
                 <div class="row justify-start q-pa-lg" :class="{ 'justify-center': $q.screen.xs }">
                     <div v-for="cls in classList" class="q-pa-md col-lg-4 col-sm-6 col-xs-12">
-                        <CoachComponent1 :model="cls"></CoachComponent1>
+                        <CoachComponent1 @view="showDetail" :model="cls"></CoachComponent1>
                     </div>
                 </div>
             </q-scroll-area>
@@ -46,6 +46,32 @@
                 </q-card-actions>
             </q-card>
         </q-dialog>
+
+        <q-dialog v-model="showDetailDialog">
+            <q-card style="width:70%;">
+                <q-card-section>
+                    <div class="text-h6">جزئیات کلاس</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    لیست افراد:
+                    <q-list>
+                        <template v-if="customers.length == 0">
+                            <q-item v-for="customer in customers">
+                                {{ customer }}
+                            </q-item>
+                        </template>
+                        <template v-else>
+                            عضوی یافت نشد.
+                        </template>
+                    </q-list>
+                </q-card-section>
+
+                <q-card-actions class="q-px-md" align="right">
+                    <q-btn label="تایید" color="primary" @click="addClass" v-close-popup />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </q-page>
 
 </template>
@@ -56,9 +82,10 @@ import type { CategoryModel, ClassModel, NewClassModel } from '@/common/interfac
 import { mapActions, mapState } from 'vuex';
 import { ClassListService, Gym } from "@/repositories/index";
 import { BaseComponent } from '@/common/base-component';
-import { CategoryList } from '@/common/category-list';
+import { CategoryList, CourseList } from '@/common/category-list';
 import { categories } from '@/common/enums';
 import CoachComponent1 from './CoachComponent1.vue';
+import gym from '@/repositories/gym';
 export default defineComponent({
     components: {
         ClassComponent,
@@ -68,13 +95,15 @@ export default defineComponent({
         search: '',
         loading: true,
         addClassModalShow: false,
+        showDetailDialog: false,
         classList: [] as ClassModel[],
         newClassObject: {} as NewClassModel,
         baseComponent: new BaseComponent(),
         categoryListModel: CategoryList,
         selectedCategory: {} as CategoryModel,
         categories: [],
-        coaches: []
+        coaches: [],
+        customers: []
     }),
     computed: {
         ...mapState({
@@ -85,7 +114,7 @@ export default defineComponent({
         await this.getCoaches();
         await this.getClassList();
         this.loading = false;
-        this.categories = CategoryList as any;
+        this.categories = CourseList as any;
     },
     methods: {
         ...mapActions({
@@ -136,6 +165,13 @@ export default defineComponent({
         async getCoaches() {
             const response = await Gym.getCoaches(this.gymId);
             this.coaches = response.data;
+        },
+        showDetail() {
+            this.showDetailDialog = true;
+        },
+        async getCustomers() {
+            const response = await gym.getCustomers(this.gymId)
+            this.customers = response.data;
         }
     }
 })

@@ -4,21 +4,29 @@
             <div style="font-size:1.3em">{{ model.name }}</div>
             <div class="q-mt-sm">مربی : {{ model.coachname }}</div>
             <div class="q-mt-sm">ساعت : {{ model.time }} </div>
-            <div class="q-mt-sm">{{ model.CourseCategory }}</div>
+            <div class="q-mt-sm">{{ getDisplayCategroy(model.CourseCategory) }}</div>
         </div>
         <q-space></q-space>
         <div class="col-lg-4 row column justify-end">
-            <q-btn flat color="secondary" class="self-end q-mb-auto" round icon="delete">
-            </q-btn>
-            <q-btn dense outline color="primary">مشاهده </q-btn>
+            <!-- <q-btn flat color="secondary" class="self-end q-mb-auto" round icon="delete">
+            </q-btn> -->
+            <q-btn @click="view" dense outline color="primary">مشاهده </q-btn>
         </div>
     </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-
+import { CourseList } from '@/common/category-list';
 export default defineComponent({
     props: ['model'],
+    methods: {
+        getDisplayCategroy(courseId: number) {
+            return CourseList.find(item => item.id == courseId)?.title
+        },
+        view() {
+            this.$emit('view')
+        }
+    }
 })
 </script>
 <style scoped lang="scss">
@@ -26,7 +34,7 @@ export default defineComponent({
     box-shadow: 0 0 4px 0.3px #000;
     border-radius: 5px;
     transition: all .3s ease-in-out;
-    min-height: 100px;
+    min-height: 120px;
 
     .img-container {
         overflow: hidden;
