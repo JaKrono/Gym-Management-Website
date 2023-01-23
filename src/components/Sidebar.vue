@@ -20,6 +20,15 @@
 
                 <!-- <q-separator class="q-mt-md" style="height: 1px" /> -->
 
+                <div class="flex">
+                    <q-space></q-space>
+                    <q-btn class="" v-if="$q.screen.width < 1024" @click="navigateToLandingPage" flat
+                        round>
+                        <q-img src="/logoBlue.png" style="width:100px;"></q-img>
+                    </q-btn>
+                    <q-space></q-space>
+                </div>
+
                 <q-list class="">
                     <SidebarItemVue v-for="item in items" @itemClicked="itemClicked" class="q-pa-md"
                         :disable="item.disable" :title="item.title" :path="item.path" :icon="item.icon" :id="item.id"
@@ -77,6 +86,9 @@ export default defineComponent({
         ...mapActions({
             userLogout: 'user/logout'
         }),
+        navigateToLandingPage() {
+
+        },
         selectItemFromRoute() {
             const path = this.$route.path
 
@@ -144,8 +156,8 @@ export default defineComponent({
             if (this.role === "0") {
                 this.items = [
                     { id: 1, title: 'پروفایل', icon: 'dashboard', path: '/dashboard', disable: false },
-                    { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id }, 
-                    { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id }, 
+                    { id: 3, title: 'مربی ها', icon: 'person', path: '/coaches', disable: !this.gym.id },
+                    { id: 2, title: 'اعضا', icon: 'groups', path: '/customers', disable: !this.gym.id },
                     { id: 4, title: 'جستجو مربی', icon: 'search', path: '/search-coach', disable: !this.gym.id },
                     { id: 5, title: 'مقالات', icon: 'article', path: '/articles', disable: false },
                     { id: 6, title: 'پرسش و پاسخ', icon: 'question_answer', path: '/questions', regex: /\/questions((\/)\d+(\/)?|(\/))?/g, disable: false }
